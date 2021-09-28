@@ -4,7 +4,14 @@ use master
 drop database botanapoly
 create database botanapoly
 use botanapoly
+drop login pruebas
+create login pruebas with password = 'pruebas', default_database = botanapoly, check_policy = off
 */
+
+
+CREATE USER pruebas FOR LOGIN pruebas WITH DEFAULT_SCHEMA=db_owner
+ALTER ROLE db_owner ADD MEMBER pruebas
+
 
 create table usuarios
 (
@@ -91,6 +98,8 @@ create table propiedades
   id int identity(1,1) primary key,
   jugador int not null references jugadores(id),
   partida int not null references partidas(id),
+  casilla int not null references casillas(id),
+  nivelEdificacion int null --nivel de edificacion de la casilla si procede, si no, null
 )
 
 create table tiposCartas
