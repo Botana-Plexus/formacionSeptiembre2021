@@ -12,8 +12,7 @@ namespace API_Botanapoly
         public int importe { get; set; }
         public int numCasillas { get; set; }
     
-        
-        public Tableros(int id, string descripcion, int importe, int numCasillas)
+        public Tableros (int id, string descripcion, int importe, int numCasillas)
         {
             this.id = id;
             this.descripcion = descripcion;
