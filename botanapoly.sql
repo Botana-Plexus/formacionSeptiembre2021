@@ -1,5 +1,4 @@
 /*
-
 use master
 drop database botanapoly
 create database botanapoly
@@ -308,23 +307,14 @@ as
 
   go
 
-
-  go
-  create procedure procedimiento
-  as
-	SELECT * from partidas where partidas.estado = 1;
-  go
-
 /* datos para pruebas
 insert into tableros values ('clasico',100000,40)
-insert into tableros values ('monopoly',10000,42)
 insert into casillas (nombre, tipo, tablero, orden, precioCompra, precioventa) values ('salida',1,1,1,20000,10000)
 insert into casillas (nombre, tipo, tablero, orden, precioCompra, precioventa) values ('estacion1',3,1,2,20000,10000)
 insert into casillas (nombre, tipo, tablero, orden, precioCompra, precioventa) values ('stacion3',3,1,1,20000,10000)
 exec registrar 'alberto.botanafidalgo@plexus.es','botana','1234','19770620'
-exec registrar 'alberto@plexus','botana3','1234','19770620'
-select * from usuarios
-exec crearPartida 'partida2',3,4,null,null,1 
+exec registrar 'alberto@plexus.es','botana2','1234','19770620'
+exec crearPartida 'partida1',1,4,null,null,1 
 exec anadirJugador 2,1
 exec comenzarPartida 1
 */
@@ -341,7 +331,6 @@ autenticar 'alberto.botanafidalgo@plexus.es','1234'
 */
 
 /* prueba de crear partida
-
 select * from tableros
 select * from casillas
 exec crearPartida 'partida1',1,4,null,null,1 
@@ -394,4 +383,3 @@ select * from jugadores
 select * from propiedades
 select * from casillas
 */
-
