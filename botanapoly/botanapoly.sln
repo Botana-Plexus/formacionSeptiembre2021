@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "database", "database\databa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "util", "util\util.csproj", "{BD7F2829-12D5-4FE9-82AA-79F2F54BB127}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rest", "rest\rest.csproj", "{13FB189B-3FC7-4DDD-AD6F-38211814B252}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{BD7F2829-12D5-4FE9-82AA-79F2F54BB127}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD7F2829-12D5-4FE9-82AA-79F2F54BB127}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD7F2829-12D5-4FE9-82AA-79F2F54BB127}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13FB189B-3FC7-4DDD-AD6F-38211814B252}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13FB189B-3FC7-4DDD-AD6F-38211814B252}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13FB189B-3FC7-4DDD-AD6F-38211814B252}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13FB189B-3FC7-4DDD-AD6F-38211814B252}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
