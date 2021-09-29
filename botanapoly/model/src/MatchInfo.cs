@@ -3,15 +3,15 @@ using controller;
 
 namespace model{
     public class MatchInfo : ModelEntity{
-        private readonly string _code;
-        private readonly PlayerInfo _host;
-        private readonly int _maxPlayerNo;
-        private readonly long _createdDate;
-        private readonly string password;
-        private readonly int _currentPlayerNo;
-        private readonly int _turn;
-        private readonly MatchState _matchState;
-        private readonly BoardInfo _boardInfo;
+        private string _code;
+        private PlayerInfo _host;
+        private int _maxPlayerNo;
+        private long _createdDate;
+        private string password;
+        private int _currentPlayerNo;
+        private int _turn;
+        private MatchState _matchState;
+        private BoardInfo _boardInfo;
 
         public MatchInfo(int id, string code, PlayerInfo host, int maxPlayerNo, long createdDate, string password, int currentPlayerNo, int turn, MatchState matchState, BoardInfo boardInfo) : base(id)
         {
@@ -26,23 +26,58 @@ namespace model{
             _boardInfo = boardInfo;
         }
 
-        public string Code => _code;
+        public string Code
+        {
+            get => _code;
+            set => _code = value;
+        }
 
-        public PlayerInfo Host => _host;
+        public PlayerInfo Host
+        {
+            get => _host;
+            set => _host = value;
+        }
 
-        public int MaxPlayerNo => _maxPlayerNo;
+        public int MaxPlayerNo
+        {
+            get => _maxPlayerNo;
+            set => _maxPlayerNo = value;
+        }
 
-        public long CreatedDate => _createdDate;
+        public long CreatedDate
+        {
+            get => _createdDate;
+            set => _createdDate = value;
+        }
 
-        public string Password => password;
+        public string Password
+        {
+            get => password;
+            set => password = value;
+        }
 
-        public int CurrentPlayerNo => _currentPlayerNo;
+        public int CurrentPlayerNo
+        {
+            get => _currentPlayerNo;
+            set => _currentPlayerNo = value;
+        }
 
-        public int Turn => _turn;
+        public int Turn
+        {
+            get => _turn;
+            set => _turn = value;
+        }
 
-        public MatchState MatchState => _matchState;
+        public MatchState MatchState
+        {
+            get => _matchState;
+            set => _matchState = value;
+        }
 
-        public BoardInfo BoardInfo => _boardInfo;
-        
+        public BoardInfo BoardInfo
+        {
+            get => _boardInfo;
+            set => _boardInfo = value;
+        }
     }
 }
