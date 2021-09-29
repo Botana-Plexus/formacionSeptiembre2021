@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "botanapoly", "botanapoly\bo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "model", "model\model.csproj", "{38626E89-1D42-4402-AAB0-E86451AF98A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "database", "database\database.csproj", "{18870783-FDF9-417F-BAB1-7F896D4747EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{38626E89-1D42-4402-AAB0-E86451AF98A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38626E89-1D42-4402-AAB0-E86451AF98A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38626E89-1D42-4402-AAB0-E86451AF98A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18870783-FDF9-417F-BAB1-7F896D4747EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18870783-FDF9-417F-BAB1-7F896D4747EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18870783-FDF9-417F-BAB1-7F896D4747EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18870783-FDF9-417F-BAB1-7F896D4747EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
