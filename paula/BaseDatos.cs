@@ -14,7 +14,7 @@ namespace BotanaPolyAPI
 
         private QC.SqlConnection connection;
 
-        public BaseDatos(string server, string bd, string user, string pass) //pasar todos los datos
+        public BaseDatos(string server, string bd, string user, string pass)
         {
             this.connection = new QC.SqlConnection(
                 @$"Server={server}; Database={bd};

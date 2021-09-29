@@ -9,60 +9,186 @@ namespace BotanaPolyAPI.Models
     {
         public class Partida
         {
-            public int id { get; set; }
-            public string nombre { get; set; }
-            public int admin { get; set; }
+            protected int id;
+            public int Id
+            {
+                get => id;
+                set => id = value;
+            }
+            protected string nombre;
+            public string Nombre
+            {
+                get => nombre;
+                set => nombre = value;
+            }
+            protected int administrador;
+            public int Administrador
+            {
+                get => administrador;
+                set => administrador = value;
+            }
+            protected int maxJugadores;
+            public int MaxJugadores
+            {
+                get => maxJugadores;
+                set => maxJugadores = value;
+            }
+            protected int maxTiempo;
+            public int MaxTiempo
+            {
+                get => maxTiempo;
+                set => maxTiempo = value;
+            }
+            protected DateTime fechaInicio;
+            public DateTime FechaInicio
+            {
+                get => fechaInicio;
+                set => fechaInicio = value;
+            }
+            protected string pass;
+            public string Pass
+            {
+                get => pass;
+                set => pass = value;
+            }
+            protected int numJugadores;
+            public int NumJugadores
+            {
+                get => numJugadores;
+                set => numJugadores = value;
+            }
+            protected int turno;
+            public int Turno
+            {
+                get => turno;
+                set => turno = value;
+            }
+            protected int estado;
+            public int Estado
+            {
+                get => estado;
+                set => estado = value;
+            }
+            protected int tablero;
+            public int Tablero
+            {
+                get => tablero;
+                set => tablero = value;
+            }
         }
         
 
         public class Jugador
         {
-            public int rol { get; set; }
-            public int dinero { get; set; }
-            public int posicion { get; set; }
-            public int partida { get; set; }
-            public int orden { get; set; }
+            protected int id;
+            protected int idUsuario;
+            protected int idPartida;
+            protected int saldo;
+            protected int orden;
+            protected int posicion;
         }
 
 
         public class Usuario
         {
-            protected int id { get; set; }
-            protected string email { get; set; }
-            protected string nick { get; set; }
-            protected string pass { get; set; }
-            protected DateTime fechaNacimiento { get; set; }
+            protected int id;
+            protected string email;
+            public string Email{
+                get => email;
+                set => email = value;
+            }
+            protected string nick;
+            public string Nick{
+                get => nick;
+                set => nick = value;
+            }
+            protected string pass;
+            public string Pass{
+                get => pass ;
+                set => pass = value;
+            }
+            protected DateTime fechaNacimiento;
+            public DateTime FechaNacimiento{
+                get => fechaNacimiento;
+                set => fechaNacimiento= value;
+            }
         }
 
-        public class Tableros
+        public class Tablero
         {
-            protected int id { get; set; }
-            protected string descripcion { get; set; }
-            protected int importe { get; set; }
-            protected int numCasillas { get; set; }
+            protected int id;
+            public int Id
+            {
+                get => id;
+                set => id = value;
+            }
+            protected string descripcion;
+            public string Descripcion
+            {
+                get => descripcion;
+                set => descripcion = value;
+            }
+            protected int importe;
+            public int Importe {
+                get => importe;
+                set => importe = value;
+            }
+            protected int numCasillas;
+            public int NumCasillas {
+                get => numCasillas;
+                set => numCasillas = value;
+            }
         }
 
-        public class Casillas
+        public class TipoCasillas
         {
-            protected int id { get; set; }
-            protected int tipo { get; set; }
-            protected int tablero { get; set; }
-            protected string nombre { get; set; }
-            protected int orden { get; set; }
-            protected int precioCompra { get; set; }
-            protected int precioVenta { get; set; }
-            protected int nivelEdificacion { get; set; }
-            protected int costeEdificacion { get; set; }
-            protected int precioVentaEdificacion { get; set; }
-            protected int coste1 { get; set; }
-            protected int coste2 { get; set; }
-            protected int coste3 { get; set; }
-            protected int coste4 { get; set; }
-            protected int coste5 { get; set; }
-            protected int conjunto { get; set; }
-            protected int destino { get; set; }
-
+            protected int id;
+            protected string descripcion;
         }
 
+        public class Casilla
+        {
+            protected int id;
+            protected int tipo;
+            protected int tablero;
+            protected string nombre;
+            protected int orden;
+            protected int precioCompra;
+            protected int precioVenta;
+            protected int nivelEdificacion;
+            protected int costeEdificacion;
+            protected int precioVentaEdificacion;
+            protected int coste1;
+            protected int coste2;
+            protected int coste3;
+            protected int coste4;
+            protected int coste5;
+            protected int conjunto;
+            protected int destino;
+        }
+
+        public class Propiedad
+        {
+            protected int id;
+            protected int jugador;
+            protected int partida;
+            protected int casilla;
+            protected int nivelEdificacion;
+        }
+
+        public class TipoCartas
+        {
+            protected int id;
+            protected string descripcion;
+        }
+
+        public class Carta
+        {
+            protected int id;
+            protected int tablero;
+            protected int conjunto;
+            protected int tipo;
+            protected int valor;
+        }
     }
 }

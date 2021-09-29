@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BotanaPolyAPI.Models;
+using System.Text;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,7 +20,7 @@ namespace BotanaPolyAPI.Controllers
         [HttpPost]
         public string Registrarse([FromBody] Modelos.Usuario usuario) 
         {
-            string consulta = $"registrar '{usuario.email}', '{usuario.nick}', '{usuario.passwd}', '{usuario.fecha_nac}';";
+            string consulta = $"registrar '{usuario.Email}', '{usuario.Nick}', '{usuario.Pass}', '{usuario.FechaNacimiento}';";
 
             return BD.ejecutarConsultaMod(consulta);
         }
@@ -28,7 +29,7 @@ namespace BotanaPolyAPI.Controllers
         public string CrearPartida([FromBody] Modelos.Partida partida)
         {
 
-            string consulta = $"CrearPartida '{partida.email_user}', '{partida.nombre}', '{partida.clave}', '{partida.config}', '{partida.no_jugadores}', {partida.no_rondas};";
+            string consulta = $"CrearPartida '{partida.Administrador}', '{partida.Nombre}', '{partida.Pass}', '{partida.Tablero}', '{partida.MaxJugadores}', {partida.MaxTiempo};";
 
             return BD.ejecutarConsultaMod(consulta);
         }
@@ -36,10 +37,6 @@ namespace BotanaPolyAPI.Controllers
         [HttpPost]
         public string ComenzarPartida([FromBody] int partida)
         {
-
-            //recuperar número de jugadores en una partida y número máximo posible
-            //hacer un bucle para añadir jugadores (UnirsePartida NULL, @partida) bot
-
             string consulta = $"ComenzarPartida {partida};";
 
             return BD.ejecutarConsultaMod(consulta);
@@ -73,43 +70,86 @@ namespace BotanaPolyAPI.Controllers
             }
         }
 
-
         [HttpPost]
-        public void turno(int usuario)
+        public string comprar(int usuario)
         {
-            //hacer tres submétodos: preTirada, tirada y postTirada
-            //switch case dependiendo del id del usuario (null = bot)
+            string consulta = $"comprar {usuario};";
 
-            //JUGADOR:
-            //preTirada: switch case con edificar, pasar a tirada o retirarse
-
-            //tirada: se recoge el número de dado, se mueve y se analiza la tarjeta
-            //dependiendo del tipo se hace un switch case y se analiza cada accion
-            //opción recursiva de vender a la banca al terminar lo anterior
-
-            //postTirada: switch case dependiendo del resultado anterior:
-            // comprar, pagar (a jugador o banca), cobrar/pagar tarjeta, retirarse
-
-            //BOT:
-            //preTirada: se comprueba si se puede edificar y si sí, se hace
-
-            //tirada: se tiran dados y avanza
-            //en caso de vender se va por orden
-
-            //si puede comprar lo hace, si no: accion correspondiente
+            return BD.ejecutarConsultaMod(consulta);
         }
 
         [HttpPost]
-        public void juego(Modelos.Partida partida)
+        public string vender(int usuario, int casilla)
         {
-            //si el tiempo está fijado se pone el temporizador a funcionar
-            //si no, número de jugadores actualez
-            //while (Temp > 0 || jug > 1) :: turnos
-            //llamada al método turno, después actualizar el turno
-            //cuando se salga del while:: terminarPartida
+            string consulta = $"comprar {usuario}, {casilla};";
 
+            return BD.ejecutarConsultaMod(consulta);
         }
 
+
+        [HttpPost]
+        public string crearBot(int partida, int numero)
+        {
+            StringBuilder toret = new StringBuilder();
+            string consulta = $"anadirJugador NULL, '{partida}'";
+            for (int i = 0; i < numero; i++)
+            {
+                string msg = BD.ejecutarConsultaMod(consulta);
+                toret.Append("Bot #" + i + "\n" + msg + "\n");
+            }
+
+            return toret.ToString();
+        }
+
+        [HttpGet]
+        public List<Modelos.Tablero> mostrarListadoPlantillas()
+        {
+            string consulta = $"procedimiento";
+            System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
+            List<Modelos.Tablero> lista = new List<Modelos.Tablero>();
+
+            for(int i = 0; i < dt.Rows.Count; i++)
+            {
+                Modelos.Tablero plantilla = new Modelos.Tablero();
+                plantilla.Id = Convert.ToInt32(dt.Rows[i]["id"]);
+                plantilla.Importe = Convert.ToInt32(dt.Rows[i]["importe"]);
+                plantilla.NumCasillas = Convert.ToInt32(dt.Rows[i]["numCasillas"]);
+                plantilla.Descripcion = dt.Rows[i]["descripcion"].ToString();
+                lista.Add(plantilla);
+            }
+
+            return lista;
+        }
+
+        [HttpGet]
+        public List<Modelos.Partida> mostrarListadoPartidasCreadas()
+        {
+            string consulta = $"procedimiento2";
+            System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
+            List<Modelos.Partida> lista = new List<Modelos.Partida>();
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                Modelos.Partida partida = new Modelos.Partida();
+                partida.Id = Convert.ToInt32(dt.Rows[i]["id"]);
+                partida.Administrador = Convert.ToInt32(dt.Rows[i]["administrador"]);
+                partida.Estado = Convert.ToInt32(dt.Rows[i]["Estado"]);
+                if(dt.Rows[i]["maxJugadores"] != System.DBNull.Value)
+                    partida.MaxJugadores = Convert.ToInt32(dt.Rows[i]["maxJugadores"]);
+                if(dt.Rows[i]["maxTiempo"] != System.DBNull.Value)
+                    partida.MaxTiempo = Convert.ToInt32(dt.Rows[i]["maxTiempo"]);
+                partida.Nombre = dt.Rows[i]["nombre"].ToString();
+                if (dt.Rows[i]["pass"] != System.DBNull.Value)
+                    partida.Pass = dt.Rows[i]["pass"].ToString();
+                partida.NumJugadores = Convert.ToInt32(dt.Rows[i]["numJugadores"]);
+                partida.Tablero = Convert.ToInt32(dt.Rows[i]["tablero"]);
+                partida.Turno = Convert.ToInt32(dt.Rows[i]["turno"]);
+                lista.Add(partida);
+            }
+
+            return lista;
+
+        }
 
 
 
