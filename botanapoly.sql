@@ -55,9 +55,9 @@ create table casillas
   orden int not null, --orden dentro del tablero. debe comenzar en 1 y solo puede haber una 1, aunque se podria repetir algun orden
   precioCompra int null,
   precioVenta int null,
-  nivelEdificación int null,
-  costeEdificación int null,
-  precioVentaEdificación int null,
+  nivelEdificacion int null,
+  costeEdificacion int null,
+  precioVentaEdificacion int null,
   Coste1 int null,
   Coste2 int null,
   Coste3 int null,
@@ -86,11 +86,11 @@ create table partidas
 create table jugadores
 (
   id int identity(1,1) primary key,
-  idUsuario int not null references usuarios(id) unique,
+  idUsuario int null references usuarios(id) unique,
   idPartida int not null references partidas(id), 
   saldo int not null,
-  orden int not null, -- orden 0 = no tiene orden, por lo que es observador
-  posicion int null references casillas(id) -- casilla sobre la que esta situado el jugador.
+  orden int not null, -- el orden en el turno. orden 0 = no tiene orden, por lo que es observador
+  posicion int null references casillas(id) -- casilla sobre la que esta situado el jugador. el numero de casilla esta en casilla
 )
 
 create table propiedades
@@ -169,7 +169,7 @@ as
   declare @saldo int
   
   insert into partidas (nombre, administrador, maxJugadores, maxTiempo, fechaInicio, pass, numJugadores, turno, estado,tablero)
-	values (@nombre, @admin, @maxJugadores, @maxTiempo, getdate(), @pass, 1,0,1, @tablero)
+	values (@nombre, @admin, @maxJugadores, @maxTiempo, null, @pass, 1,0,1, @tablero)
 
   set @idPartida = @@IDENTITY
   select @saldo = importe from tableros where id = @tablero
@@ -182,7 +182,7 @@ go
 /*
 Autor: Alberto Botana
 fecha: 20210928
-descripcion: añade un jugador a la partida
+descripcion: añade un jugador a la partida. Si el idusuario es ulo, entonces será un bot
 */
 
 create procedure anadirJugador
@@ -219,9 +219,106 @@ create procedure ComenzarPartida
 as
 
   update jugadores set orden = idUsuario, posicion = 1 where idPartida = @idPartida
-  update partidas set estado = 2 where id = @idPartida
+  update partidas set estado = 2, fechaInicio = getdate() where id = @idPartida
+
+go
 
 
+/*
+Autor: Alberto Botana
+fecha: 20210928
+descripción: actualiza el nivel de construccion de un determinado tipo que tiene un jugador
+version 1: por simplicidad, se asume que solo va a haber un grupo por cada nivel
+*/
+create procedure actualizarNivelConstruccion
+  @idJugador int,
+  @tipo int --el tipo solo puede ser 2 o 3
+as
+  declare @cantidad int
+
+  select @cantidad = count(*) from propiedades a left join casillas b on a.casilla = b.id
+  where b.tipo = @tipo and a.jugador = @idJugador
+  
+  update propiedades set nivelEdificacion = @cantidad where casilla in ( select id from casillas where tipo = @tipo)
+  and jugador = @idJugador
+
+
+go
+/*
+Autor: Alberto Botana
+fecha: 20210928
+descripción: compra la casilla en la que está el jugador. Se valida que la casilla no este vendida
+*/
+create procedure comprar
+  @idJugador int
+as 
+	declare @idCasilla int
+	declare @partida int
+	declare @saldo int
+	declare @importe int
+	declare @tipoCasilla int
+	declare @nivelEdificacion int  
+
+	select @partida = idPartida, @idCasilla = posicion, @saldo = saldo from jugadores where id = @idJugador
+	select @importe = precioCompra, @tipoCasilla = tipo from casillas where id = @idCasilla
+	--validacion del saldo
+	
+	if (@saldo < @importe) begin select 1,'saldo insuficiente' return end --si no tien saldo se sale
+	
+	if not exists (select * from propiedades where partida = @partida and casilla = @idCasilla) --entonces es que está sin vender
+	begin
+      begin tran
+	    insert into propiedades (jugador, partida, casilla, nivelEdificacion) values (@idJugador, @partida, @idCasilla, 0)
+		update jugadores set saldo = saldo -@importe where id = @idJugador
+	  commit
+	
+	  exec actualizarNivelConstruccion @idJugador, @tipoCasilla
+	  select 0,'ok'
+	end
+	else select 1,'casilla ya comprada'
+	
+go
+
+
+/*
+Autor: Alberto Botana
+fecha: 20210928
+descripción: vende a casilla indicada y recalcula posibles edificaciones. Se valida que se apropiedad del jugador
+*/
+create procedure vender
+  @idJugador int,
+  @casilla int
+as
+  declare @partida int
+  declare @precioVenta int
+  declare @tipo int
+  
+  select @partida= idPartida from jugadores where id = @idJugador
+  
+  if not exists (select * from propiedades where partida = @partida and jugador = @idJugador)
+  begin select 1,'casilla no es propiedad del jugador' return end
+
+  select @precioVenta = precioVenta, @tipo = tipo  from casillas where id = @casilla
+  begin tran
+    update jugadores set saldo = saldo + @precioVenta where id = @idJugador
+	delete from propiedades where casilla = @casilla
+  commit
+
+  exec actualizarnivelConstruccion @idJugador, @tipo
+
+  go
+
+/* datos para pruebas
+insert into tableros values ('clasico',100000,40)
+insert into casillas (nombre, tipo, tablero, orden, precioCompra, precioventa) values ('salida',1,1,1,20000,10000)
+insert into casillas (nombre, tipo, tablero, orden, precioCompra, precioventa) values ('estacion1',3,1,2,20000,10000)
+insert into casillas (nombre, tipo, tablero, orden, precioCompra, precioventa) values ('stacion3',3,1,1,20000,10000)
+exec registrar 'alberto.botanafidalgo@plexus.es','botana','1234','19770620'
+exec registrar 'alberto@plexus.es','botana2','1234','19770620'
+exec crearPartida 'partida1',1,4,null,null,1 
+exec anadirJugador 2,1
+exec comenzarPartida 1
+*/
 
 /* prueba de registro
 exec registrar 'alberto.botanafidalgo@plexus.es','botana','1234','19770620'
@@ -235,8 +332,7 @@ autenticar 'alberto.botanafidalgo@plexus.es','1234'
 */
 
 /* prueba de crear partida
-insert into tableros values ('clasico',100000,40)
-insert into casillas (nombre, tipo, tablero, orden, coste1) values ('salida',1,1,1,20000)
+
 select * from tableros
 select * from casillas
 exec crearPartida 'partida1',1,4,null,null,1 
@@ -258,3 +354,35 @@ exec comenzarPartida 1
 select * from partidas
 select * from jugadores where idpartida = 1
 */
+
+/* prueba actualizarNivelConstruccion
+select * from propiedades
+insert into propiedades values (1,1,2,0)
+insert into propiedades values (1,1,3,0)
+exec actualizarNivelConstruccion 1,3
+delete from propiedades 
+select * from propiedades
+*/
+
+/*
+prueba para comprar
+select * from jugadores
+update jugadores set posicion  =2 where id = 1
+exec comprar 1
+update jugadores set posicion  =3 where id = 1
+exec comprar 1
+select * from jugadores
+select * from propiedades
+select * from casillas
+*/
+
+/*pruebas venta
+select * from jugadores
+select * from propiedades
+select * from casillas
+exec vender 1,2
+select * from jugadores
+select * from propiedades
+select * from casillas
+*/
+
