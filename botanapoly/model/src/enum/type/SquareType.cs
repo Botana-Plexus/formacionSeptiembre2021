@@ -1,5 +1,5 @@
 namespace controller{
-    public enum SquareType{
+    public enum SquareType {
         START,
         COMPANY,
         INFRASTRUCTURE,
