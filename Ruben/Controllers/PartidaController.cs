@@ -72,5 +72,30 @@ namespace API_Botanapoly.Controllers
             return dt.Rows[0]["Column2"].ToString();
         }
 
+        [HttpGet("mostrartableros")]
+        public List<Tableros> mostrartableros()
+        {
+            string consulta = $"Select * from tableros";
+            System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
+
+            var lista = new List<Tableros>();
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                Tableros tablero = new Tableros();
+                tablero.id = Convert.ToInt32(dt.Rows[i]["id"]);
+                tablero.descripcion = Convert.ToString(dt.Rows[i]["descripcion"]);
+                tablero.importe = Convert.ToInt32(dt.Rows[i]["importe"]);
+                tablero.numCasillas = Convert.ToInt32(dt.Rows[i]["numCasillas"]);
+            
+                lista.Add(tablero);
+            }
+
+            return lista;
+
+        }
+
+
+
     }
 }
