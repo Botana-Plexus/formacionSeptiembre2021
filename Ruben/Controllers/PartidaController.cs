@@ -64,5 +64,13 @@ namespace API_Botanapoly.Controllers
             return dt.Rows[0]["Column2"].ToString();
         }
 
+        [HttpPost("vender")]
+        public string vender(int idJugador,int idCasilla)
+        {
+            string consulta = $"vender '{idJugador}','{idCasilla}' ";
+            System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
+            return dt.Rows[0]["Column2"].ToString();
+        }
+
     }
 }
