@@ -8,14 +8,32 @@ using System.Threading.Tasks;
 
 namespace botanapoli_api.Controllers
 {
-    //[Route("api/[controller]")]
-    //[ApiController]
-    //public class GamesController : ControllerBase
-    //{
-    //    [HttpPost("{id}/join/{id}")]
-    //    public int JoinGame([FromBody] Autenticado user)
-    //    {
-    //        return 1;
-    //    }
-    //}
+    [Route("api/[controller]/{idPartida}")]
+    [ApiController]
+    public class GamesController : ControllerBase
+    {
+        [HttpGet]
+        public int ListTemplates()
+        {
+            return 1;
+        }
+
+        [HttpGet("PartidasCreadas")]
+        public int GetGames()
+        {
+            return 1;
+        }
+        [HttpPost("PartidasCreadas")]
+        public int CreateGame([FromBody] CrearPartida game)
+        {
+            return 1;
+        }
+        [HttpPost("IniciarPartida")]
+        public int InitiateGame([FromBody] IniciarPartida game)
+        {
+            return 1;
+        }
+
+        []
+    }
 }

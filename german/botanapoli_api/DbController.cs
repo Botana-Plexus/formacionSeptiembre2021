@@ -15,12 +15,12 @@ namespace botanapoli_api
         string password;
         QC.SqlConnection connection;
 
-        public DbController(string serverName, string dbName, string userId, string password)
+        public DbController()
         {
-            this.serverName = serverName;
-            this.dbName = dbName;
-            this.userId = userId;
-            this.password = password;
+            this.serverName = "localhost";
+            this.dbName = "botanapoly";
+            this.userId = "pruebas";
+            this.password = "pruebas";
             this.connection = DbConnect();
         }
 

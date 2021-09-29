@@ -18,4 +18,10 @@ namespace botanapoli_api
         public string pass { get; set; }
         public string fechaNac { get; set; }
     }
+
+    public class AñadirJugador
+    {
+        public int idJugador { get; set; }
+        public int idPartida { get; set; }
+    }
 }
