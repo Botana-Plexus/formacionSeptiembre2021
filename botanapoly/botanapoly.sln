@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "util", "util\util.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rest", "rest\rest.csproj", "{13FB189B-3FC7-4DDD-AD6F-38211814B252}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "controller", "controller\controller.csproj", "{CC930620-22FE-4052-8601-6394480669F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{13FB189B-3FC7-4DDD-AD6F-38211814B252}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13FB189B-3FC7-4DDD-AD6F-38211814B252}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13FB189B-3FC7-4DDD-AD6F-38211814B252}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC930620-22FE-4052-8601-6394480669F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC930620-22FE-4052-8601-6394480669F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC930620-22FE-4052-8601-6394480669F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC930620-22FE-4052-8601-6394480669F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
