@@ -3,16 +3,16 @@ using controller;
 
 namespace model{
     public class SquareInfo : ModelEntity{
-        private readonly SquareType _type;
-        private readonly BoardInfo _board;
-        private readonly string _title;
-        private readonly int _currentPlayerTurn;
-        private readonly double _acquisitionCost;
-        private readonly double _sellBankCost;
-        private readonly int _edificationLevel;
-        private readonly double _edificationLevelIncreaseCost;
-        private readonly double _edificationLevelDecreaseCost;
-        private readonly List<double> _rentCost;
+        private  SquareType _type;
+        private  BoardInfo _board;
+        private  string _title;
+        private  int _currentPlayerTurn;
+        private  double _acquisitionCost;
+        private  double _sellBankCost;
+        private  int _edificationLevel;
+        private  double _edificationLevelIncreaseCost;
+        private  double _edificationLevelDecreaseCost;
+        private  List<double> _rentCost;
 
         public SquareInfo(int id, SquareType type, BoardInfo board, string title, int currentPlayerTurn, double acquisitionCost, double sellBankCost, int edificationLevel, double edificationLevelIncreaseCost, double edificationLevelDecreaseCost, List<double> rentCost) : base(id)
         {
@@ -28,25 +28,64 @@ namespace model{
             _rentCost = rentCost;
         }
 
-        public SquareType Type => _type;
+        public SquareType Type
+        {
+            get => _type;
+            set => _type = value;
+        }
 
-        public BoardInfo Board => _board;
+        public BoardInfo Board
+        {
+            get => _board;
+            set => _board = value;
+        }
 
-        public string Title => _title;
+        public string Title
+        {
+            get => _title;
+            set => _title = value;
+        }
 
-        public int CurrentPlayerTurn => _currentPlayerTurn;
+        public int CurrentPlayerTurn
+        {
+            get => _currentPlayerTurn;
+            set => _currentPlayerTurn = value;
+        }
 
-        public double AcquisitionCost => _acquisitionCost;
+        public double AcquisitionCost
+        {
+            get => _acquisitionCost;
+            set => _acquisitionCost = value;
+        }
 
-        public double SellBankCost => _sellBankCost;
+        public double SellBankCost
+        {
+            get => _sellBankCost;
+            set => _sellBankCost = value;
+        }
 
-        public int EdificationLevel => _edificationLevel;
+        public int EdificationLevel
+        {
+            get => _edificationLevel;
+            set => _edificationLevel = value;
+        }
 
-        public double EdificationLevelIncreaseCost => _edificationLevelIncreaseCost;
+        public double EdificationLevelIncreaseCost
+        {
+            get => _edificationLevelIncreaseCost;
+            set => _edificationLevelIncreaseCost = value;
+        }
 
-        public double EdificationLevelDecreaseCost => _edificationLevelDecreaseCost;
+        public double EdificationLevelDecreaseCost
+        {
+            get => _edificationLevelDecreaseCost;
+            set => _edificationLevelDecreaseCost = value;
+        }
 
-        public List<double> RentCost => _rentCost;
-
+        public List<double> RentCost
+        {
+            get => _rentCost;
+            set => _rentCost = value;
+        }
     }
 }

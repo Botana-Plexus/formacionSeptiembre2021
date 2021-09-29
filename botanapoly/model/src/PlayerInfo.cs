@@ -2,11 +2,11 @@
 
 namespace model{
     public class PlayerInfo : ModelEntity{
-        private readonly UserInfo _user;
-        private readonly MatchInfo _match;
-        private readonly double _balance;
-        private readonly SquareInfo _square;
-        private readonly int turn;
+        private  UserInfo _user;
+        private  MatchInfo _match;
+        private  double _balance;
+        private  SquareInfo _square;
+        private  int turn;
 
         public PlayerInfo(int id, UserInfo user, MatchInfo match, double balance, SquareInfo square, int turn) : base(id)
         {
@@ -17,15 +17,34 @@ namespace model{
             this.turn = turn;
         }
 
-        public UserInfo User => _user;
+        public UserInfo User
+        {
+            get => _user;
+            set => _user = value;
+        }
 
-        public MatchInfo Match => _match;
+        public MatchInfo Match
+        {
+            get => _match;
+            set => _match = value;
+        }
 
-        public double Balance => _balance;
+        public double Balance
+        {
+            get => _balance;
+            set => _balance = value;
+        }
 
-        public SquareInfo Square => _square;
+        public SquareInfo Square
+        {
+            get => _square;
+            set => _square = value;
+        }
 
-        public int Turn => turn;
-        
+        public int Turn
+        {
+            get => turn;
+            set => turn = value;
+        }
     }
 }

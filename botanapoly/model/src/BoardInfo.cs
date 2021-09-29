@@ -3,8 +3,8 @@ using System.Collections.ObjectModel;
 
 namespace model{
     public class BoardInfo : ModelEntity{
-        private readonly List<SquareInfo> _squares;
-        private readonly double _initialBalance;
+        private List<SquareInfo> _squares;
+        private double _initialBalance;
 
         public BoardInfo(int id ,List<SquareInfo> squares, double initialBalance) : base(id)
         {
@@ -12,8 +12,16 @@ namespace model{
             _initialBalance = initialBalance;
         }
 
-        public List<SquareInfo> Squares => _squares;
+        public List<SquareInfo> Squares
+        {
+            get => _squares;
+            set => _squares = value;
+        }
 
-        public double InitialBalance => _initialBalance;
+        public double InitialBalance
+        {
+            get => _initialBalance;
+            set => _initialBalance = value;
+        }
     }
 }
