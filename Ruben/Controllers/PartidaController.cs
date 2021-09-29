@@ -56,7 +56,7 @@ namespace API_Botanapoly.Controllers
             return BD.ejecutarConsultaInsert(consulta);
         }
 
-        [HttpPost("comprar")]
+        [HttpPost("comprarPropiedad")]
         public string comprar(int idJugador)
         {
             string consulta = $"comprar '{idJugador}' ";
@@ -64,7 +64,7 @@ namespace API_Botanapoly.Controllers
             return dt.Rows[0]["Column2"].ToString();
         }
 
-        [HttpPost("vender")]
+        [HttpPost("venderPorpiedad")]
         public string vender(int idJugador,int idCasilla)
         {
             string consulta = $"vender '{idJugador}','{idCasilla}' ";
