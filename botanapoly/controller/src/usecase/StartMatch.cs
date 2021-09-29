@@ -20,7 +20,7 @@ namespace controller{
             if (!matchRepository.exists(matchInfo)) throw new NullReferenceException();
 
             result = ExtensionMethods.DeepClone(matchInfo);
-            result.matchState = MatchState.RUNNING;
+            result.MatchState = MatchState.RUNNING;
             result = matchRepository.saveOrUpdate(matchInfo);
             if (result == null) throw new NullReferenceException();
 
