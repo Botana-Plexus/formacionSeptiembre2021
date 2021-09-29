@@ -4,16 +4,13 @@ namespace model {
     
     [Serializable]
     public abstract class ModelEntity{    //TODO: change to long
-        protected int id;
+        protected readonly int _id;
 
-        public void setId(int id)
+        protected ModelEntity(int id)
         {
-            this.id = id;
+            _id = id;
         }
 
-        public int getId()
-        {
-            return id;
-        }
+        public int Id => _id;
     }
 }

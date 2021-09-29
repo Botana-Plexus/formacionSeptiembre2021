@@ -1,6 +1,5 @@
 ﻿namespace controller{
-    public enum EdificationLevel{
-        NULL_VALUE,
+    public enum EdificationLevel {
         EMPTY,
         HOUSE_1,
         HOUSE_2,
