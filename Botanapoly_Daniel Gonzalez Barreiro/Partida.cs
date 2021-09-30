@@ -19,6 +19,7 @@ namespace API_Botanapoly
         public int turno { set; get; }
         public int estado { set; get; } //estado de la partida, indica si está creada(1) o iniciada(2). No s eespecifica el 3 - finalizada, porque se eliminara
         public int tablero { set; get; }
+        public bool tienePass { set; get; }
 
 
 

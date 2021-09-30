@@ -19,23 +19,61 @@ namespace API_Botanapoly.Controllers
         [HttpPost("crear")]
         public string addPartida([FromBody] Partida partida)
         {
+            string query;
             if(partida.maxJugadores == null )
             {
                 partida.maxJugadores=6;
             }
 
-            string query = $"crearPartida'{partida.nombre}','{partida.administrador}','{partida.maxJugadores}','{partida.maxTiempo}','{partida.pass}','{partida.tablero}'";
+            if (string.IsNullOrEmpty(partida.pass)){ 
+                query = $"crearPartida'{partida.nombre}','{partida.administrador}','{partida.maxJugadores}','{partida.maxTiempo}',null,'{partida.tablero}'";
+            } else { 
+                query = $"crearPartida'{partida.nombre}','{partida.administrador}','{partida.maxJugadores}','{partida.maxTiempo}','{partida.pass}','{partida.tablero}'";
+
+            }
+
 
             return database.insertQuery(query);
         }
 
         [HttpPost("unirse")]
-        public string addJugador( int idUsuario, int idPartida)
+        public string addJugador( int idUsuario, int idPartida, string pass)
         {
-            string query = $"anadirJugador'{idUsuario}','{idPartida}'";
+            string query;
 
-            return database.insertQuery(query);
+            if (string.IsNullOrEmpty(pass))
+            {
+                query = $"anadirJugador'{idUsuario}','{idPartida}',null";
+            } else
+            {
+                query = $"anadirJugador'{idUsuario}','{idPartida}','{pass}'";
+
+            }
+
+            System.Data.DataTable dt = database.selectQuery(query);
+            return dt.Rows[0]["Column2"].ToString();
         }
+
+        [HttpPost("addBot")]
+        public string addBot(int idPartida, string pass)
+        {
+            string query;
+            
+            if (string.IsNullOrEmpty(pass))
+            {
+                query = $"anadirJugador null,'{idPartida}',null";
+            }
+            else
+            {
+                query = $"anadirJugador null,'{idPartida}','{pass}'";
+
+            }
+
+            System.Data.DataTable dt = database.selectQuery(query);
+            return dt.Rows[0]["Column2"].ToString();
+        }
+
+
 
         [HttpPost("comenzar")]
         public string startPartida(int idPartida)
@@ -77,7 +115,7 @@ namespace API_Botanapoly.Controllers
         {
             string query = $"'{idTablero}'";
             System.Data.DataTable dt = database.selectQuery(query);
-            return dt.Rows[0]["Column1"].ToString();
+            return dt.Rows[0]["Column2"].ToString();
         }
 
         [HttpGet("infoJugadores")]
@@ -182,11 +220,77 @@ namespace API_Botanapoly.Controllers
                 partida.turno = Convert.ToInt32(dt.Rows[i]["turno"]);
                 partida.estado = Convert.ToInt32(dt.Rows[i]["estado"]);
                 partida.tablero = Convert.ToInt32(dt.Rows[i]["tablero"]);
+                partida.tienePass = Convert.ToBoolean(dt.Rows[i]["tienePass"]);
 
                 lista.Add(partida);
             }
             return lista;
         }
+        //Retirar Jugador (deja de jugar pero sigue en partida)
+        [HttpPost("retirarJugador")]
+        public string retirarJugador(int idJugador)
+        {
+            string consulta = $"retirarJugador '{idJugador}'";
+
+            return database.insertQuery(consulta);
+        }
+
+        //Abandonar Partida 
+        [HttpPost("abandonarPartida")]
+        public string abandonarPartida(int idJugador)
+        {
+            string consulta = $"abandonarPartida '{idJugador}'";
+
+            return database.insertQuery(consulta);
+        }
+
+        //Edificar
+        [HttpPost("edificar")]
+        public string edificar(int idJugador, int idPartida)
+        {
+            string query = $"edificar '{idJugador}','{idPartida}'";
+
+            System.Data.DataTable dt = database.selectQuery(query);
+            return dt.Rows[0]["Column2"].ToString();
+        }
+
+        //VenderEdificacion
+        [HttpPost("venderEdificacion")]
+        public string venderEdificacion(int idJugador, int idCasilla)
+        {
+            string query = $"venderEdificacion '{idJugador}','{idCasilla}'";
+
+            System.Data.DataTable dt = database.selectQuery(query);
+            return dt.Rows[0]["Column2"].ToString();
+        }
+        //Setdobles
+        [HttpPost("setDobles")]
+        public string setDobles(int idJugador, int reset)
+        {
+            string query = $"setDobles '{idJugador}','{reset}'";
+
+            return database.insertQuery(query);
+        }
+
+        //GetPropiedades
+        [HttpPost("getPropiedades")]
+        public string getPropiedades(int idJugador)
+        {
+            string query = $"getPropiedades '{idJugador}'";
+
+            return database.insertQuery(query);
+        }
+
+        //Mover
+        [HttpPost("mover")]
+        public string mover(int idJugador, int tirada)
+        {
+            string query = $"mover '{idJugador}','{tirada}'";
+            
+            System.Data.DataTable dt = database.selectQuery(query);
+            return dt.Rows[0]["Column2"].ToString();
+        }
+
     }
 }
 
