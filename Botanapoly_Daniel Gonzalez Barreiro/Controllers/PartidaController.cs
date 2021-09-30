@@ -19,9 +19,9 @@ namespace API_Botanapoly.Controllers
         [HttpPost("crear")]
         public string addPartida([FromBody] Partida partida)
         {
-            if(partida.maxJugadores>6)
+            if(partida.maxJugadores == null )
             {
-                return "Numero de xogadores non valido";
+                partida.maxJugadores=6;
             }
 
             string query = $"crearPartida'{partida.nombre}','{partida.administrador}','{partida.maxJugadores}','{partida.maxTiempo}','{partida.pass}','{partida.tablero}'";
@@ -77,43 +77,116 @@ namespace API_Botanapoly.Controllers
         {
             string query = $"'{idTablero}'";
             System.Data.DataTable dt = database.selectQuery(query);
-            return dt.Rows[0]["Column2"].ToString();
+            return dt.Rows[0]["Column1"].ToString();
         }
 
-        [HttpPost("mostrarInfoJugador")]
-        public string mostarInfoJugador(int idPartida)
+        [HttpGet("infoJugadores")]
+        public List<Jugador> getJugadores(int idPartida)
         {
-            string query = $"'{idPartida}'";
+
+            string consulta = $"getJugadoresInfo '{idPartida}'";
+
+            System.Data.DataTable dt = database.selectQuery(consulta);
+
+            var lista = new List<Jugador>();
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                Jugador jugador = new Jugador();
+                jugador.id = Convert.ToInt32(dt.Rows[i]["id"]);
+                jugador.idUsuario =
+                dt.Rows[i]["idUsuario"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["idUsuario"]) : null;
+                jugador.idPartida = Convert.ToInt32(dt.Rows[i]["idPartida"]);
+                jugador.saldo = Convert.ToInt32(dt.Rows[i]["saldo"]);
+                jugador.orden = Convert.ToInt32(dt.Rows[i]["orden"]);
+                jugador.dobles = Convert.ToInt32(dt.Rows[i]["dobles"]);
+                jugador.turnosDeCastigo = Convert.ToInt32(dt.Rows[i]["turnosDeCastigo"]);
+                lista.Add(jugador);
+            }
+
+            return lista;
+        }
+
+        [HttpGet("listarTableros")]
+        public List<Tableros> listarTableros()
+        {
+            string query = $"getTableros";
             System.Data.DataTable dt = database.selectQuery(query);
-            return dt.Rows[0]["Column2"].ToString();
+
+            var lista = new List<Tableros>();
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                Tableros tablero = new Tableros();
+                tablero.id = Convert.ToInt32(dt.Rows[i]["id"]);
+                tablero.descripcion = Convert.ToString(dt.Rows[i]["descripcion"]);
+                tablero.importe = Convert.ToInt32(dt.Rows[i]["importe"]);
+                tablero.numCasillas = Convert.ToInt32(dt.Rows[i]["numCasillas"]);
+
+                lista.Add(tablero);
+            }
+            return lista;
         }
-        //[HttpGet("listarPlantillas")]
-        //public List<Tableros>listarTableros()
-        //{
-        //    string query = @"SELECT * FROM tableros";
-        //    System.Data.DataTable dt = database.selectQuery(query);
-
-        //    var lista = new List<Tableros>();
-
-        //    for (int i = 0; i < dt.Rows.Count; i++)
-        //    {
-        //        Tableros tablero = new Tableros();
-        //        tablero.id = Convert.ToInt32(dt.Rows[i]["id"]);
-        //        tablero.descripcion = Convert.ToString(dt.Rows[i]["descripcion"]);
-        //        tablero.importe = Convert.ToInt32(dt.Rows[i]["importe"]);
-        //        tablero.numCasillas = Convert.ToInt32(dt.Rows[i]["numCasillas"]);
-
-        //        lista.Add(tablero);
-        //    }
-        //    return lista;
-        //}
-
-        [HttpGet("listarPlantillas")]
-        public List<Tableros>listarTableros()
+        [HttpGet("listarCasillas")]
+        public List<Casilla> getCasillas(int idTablero)
         {
-            string query = @"SELECT * FROM tableros";
-        }
+            string query = $"getCasillas'{idTablero}'";
+            System.Data.DataTable dt = database.selectQuery(query);
 
+            var lista = new List<Casilla>();
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                Casilla casilla = new Casilla();
+                casilla.id = Convert.ToInt32(dt.Rows[i]["id"]);
+                casilla.tipo = Convert.ToInt32(dt.Rows[i]["tipo"]);
+                casilla.nombre = Convert.ToString(dt.Rows[i]["nombre"]);
+                casilla.precioCompra = dt.Rows[i]["precioCompra"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["precioCompra"]) : null;
+                casilla.precioVenta = dt.Rows[i]["precioVenta"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["precioVenta"]) :null;
+                casilla.costeEdificacion = dt.Rows[i]["costeEdificacion"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["costeEdificacion"]) : null;
+                casilla.precioVentaEdificacion = dt.Rows[i]["precioVentaEdificacion"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["precioVentaEdificacion"]) :null;
+                casilla.Coste1 = dt.Rows[i]["Coste1"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["Coste1"]):null;
+                casilla.Coste2 = dt.Rows[i]["Coste2"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["Coste2"]) : null;
+                casilla.Coste3 = dt.Rows[i]["Coste3"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["Coste3"]) : null;
+                casilla.Coste4 = dt.Rows[i]["Coste4"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["Coste4"]) : null;
+                casilla.Coste5 = dt.Rows[i]["Coste5"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["Coste5"]) : null;
+                casilla.conjunto = dt.Rows[i]["conjunto"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["conjunto"]) : null;
+                casilla.destino = dt.Rows[i]["destino"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["destino"]) : null;
+
+                lista.Add(casilla);
+            }
+            return lista;
+        }
+        [HttpGet("listarPartidas")]
+        public List<Partida> getPartidas(int? idPartida)
+        {
+            string query = "getPartidas";
+            if (idPartida != null)
+            {
+                query += "'" + idPartida +  "'";
+            }
+            System.Data.DataTable dt = database.selectQuery(query);
+
+            var lista = new List<Partida>();
+
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                Partida partida = new Partida();
+                partida.id = Convert.ToInt32(dt.Rows[i]["id"]);
+                partida.nombre = Convert.ToString(dt.Rows[i]["nombre"]);
+                partida.maxJugadores = Convert.ToInt32(dt.Rows[i]["maxJugadores"]);
+                partida.maxTiempo = dt.Rows[i]["maxTiempo"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["maxTiempo"]) : null;
+                partida.tiempoTranscurrido = dt.Rows[i]["tiempoTranscurrido"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["tiempoTranscurrido"]) : null;
+                partida.numJugadores = Convert.ToInt32(dt.Rows[i]["numJugadores"]);
+                partida.turno = Convert.ToInt32(dt.Rows[i]["turno"]);
+                partida.estado = Convert.ToInt32(dt.Rows[i]["estado"]);
+                partida.tablero = Convert.ToInt32(dt.Rows[i]["tablero"]);
+
+                lista.Add(partida);
+            }
+            return lista;
+        }
     }
 }
 
