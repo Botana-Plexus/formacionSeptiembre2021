@@ -1,21 +1,21 @@
 using System.Collections.Generic;
 
 namespace controller{
-    public class RunningMatchStateCommand : AbstractStateCommand<MatchState, TurnAction>{
-        public RunningMatchStateCommand() : base(MatchState.CREATED, new Dictionary<TurnAction, MatchState>()
+    public class RunningMatchStateCommand : AbstractStateCommand<TurnState, TurnAction>{
+        public RunningMatchStateCommand() : base(TurnState.ROLLED, new Dictionary<TurnAction, TurnState>()
         {
-            {TurnAction.ROLL_1_2, MatchState.NULL},
-            {TurnAction.ROLL_3, MatchState.NULL},
-            {TurnAction.GIVE_UP, MatchState.TERMINATED},
-            {TurnAction.INCREASE_EDIFICATION_LEVEL, MatchState.NULL},
-            {TurnAction.DECREASE_EDIFICATION_LEVEL, MatchState.NULL},
-            {TurnAction.PAY_RENT, MatchState.TERMINATED},
-            {TurnAction.MOVEMENT, MatchState.TERMINATED},
-            {TurnAction.PAY_TO_CARD, MatchState.TERMINATED},
-            {TurnAction.RECEIVE_FROM_CARD, MatchState.TERMINATED},
-            {TurnAction.CARD_ACTION, MatchState.TERMINATED},
-            {TurnAction.BUY_PROPERTY, MatchState.TERMINATED},
-            {TurnAction.SELL_PROPERTY ,MatchState.RUNNING}
+            {TurnAction.ROLL_1_2, TurnState.NULL},
+            {TurnAction.ROLL_3, TurnState.NULL},
+            {TurnAction.GIVE_UP, TurnState.FINALIZED},
+            {TurnAction.INCREASE_EDIFICATION_LEVEL, TurnState.NULL},
+            {TurnAction.DECREASE_EDIFICATION_LEVEL, TurnState.ROLLED},
+            {TurnAction.PAY_RENT, TurnState.FINALIZED},
+            {TurnAction.MOVEMENT, TurnState.FINALIZED},
+            {TurnAction.PAY_TO_CARD, TurnState.FINALIZED},
+            {TurnAction.RECEIVE_FROM_CARD, TurnState.FINALIZED},
+            {TurnAction.CARD_ACTION, TurnState.FINALIZED},
+            {TurnAction.BUY_PROPERTY, TurnState.FINALIZED},
+            {TurnAction.SELL_PROPERTY ,TurnState.ROLLED}
         })
         {
         }

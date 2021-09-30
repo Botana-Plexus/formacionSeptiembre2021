@@ -5,18 +5,19 @@ using model;
 
 namespace controller{
     public class ListMatches : IUseCaseFunctionality<List<MatchInfo>>{
-        private readonly Func<MatchInfo, bool> matchFilter;
-        private readonly IMatchRepository matchRepository;
 
-        public ListMatches(IMatchRepository matchRepository, Func<MatchInfo, bool> matchFilter)
+        private readonly IMatchRepository _matchRepository;
+        private readonly Func<MatchInfo, bool> _filter;
+
+        public ListMatches(IMatchRepository matchRepository, Func<MatchInfo, bool> filter)
         {
-            this.matchRepository = matchRepository;
-            this.matchFilter = matchFilter;
+            _matchRepository = matchRepository;
+            _filter = _filter;
         }
 
         public List<MatchInfo> execute()
         {
-            return matchRepository.findAll(matchFilter ?? (_ => true));
+            return this._matchRepository.getMatches(_filter);
         }
     }
 }

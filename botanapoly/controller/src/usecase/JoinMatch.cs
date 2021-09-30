@@ -1,38 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using database;
 using model;
 using util;
 
 namespace controller {
     public class JoinMatch : IUseCaseFunctionality<MatchInfo>{
-        private readonly IMatchRepository matchRepository;
-        private readonly IPlayerRepository playerRepository;
-        private readonly MatchInfo matchInfo;
-        private readonly PlayerInfo playerInfo;
 
-        public JoinMatch(IMatchRepository matchRepository, IPlayerRepository playerRepository, MatchInfo matchInfo, PlayerInfo playerInfo)
+        private readonly IMatchRepository _matchRepository;
+        private readonly MatchInfo _matchInfo;
+        private readonly UserInfo _userInfo;
+        private readonly string _password;
+
+        public JoinMatch(IMatchRepository matchRepository, MatchInfo matchInfo, UserInfo userInfo, string password)
         {
-            this.matchRepository = matchRepository;
-            this.playerRepository = playerRepository;
-            this.matchInfo = matchInfo;
-            this.playerInfo = playerInfo;
+            _matchRepository = matchRepository;
+            _matchInfo = matchInfo;
+            _userInfo = userInfo;
+            _password = password;
         }
 
         public MatchInfo execute()
         {
-            MatchInfo result = null;
-            List<PlayerInfo> players = null;
-            if (!playerRepository.exists(playerInfo) || !matchRepository.exists(matchInfo)) throw new NullReferenceException();
-
-            result = ExtensionMethods.DeepClone(matchInfo);
-            players = result.players;
-            players.Add(playerInfo);
-            result.players = players;
-            result = matchRepository.saveOrUpdate(result);
-            if (result == null) throw new NullReferenceException();
-
-            return result;
+            return _matchRepository.joinMatch(_matchInfo, _userInfo, _password);
         }
     }
 }
