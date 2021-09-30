@@ -342,6 +342,7 @@ as
   select * from partidas
 
 go
+select * from casillas;
 
 /*
 Autor: Alberto Botana
@@ -359,7 +360,7 @@ go
  descripcion: Devuelve la información de las plantillas existentes
 */
 go
-alter procedure getCasillas
+create procedure getCasillas
   @idTablero int
 as
   select id, tipo, nombre, orden, precioCompra, precioVenta, costeEdificacion, precioVentaEdificacion, Coste1,

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-
+using static botanapoli_api.Models.Modelos;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace botanapoli_api.Controllers
@@ -11,7 +11,7 @@ namespace botanapoli_api.Controllers
     [ApiController]
     public class GamesController : ControllerBase
     {
-        [HttpGet("tableros")]
+        [HttpGet]
         public List<Models.Modelos.Tablero> ListTemplates()
         {
             string query = "getTableros";
@@ -112,7 +112,7 @@ namespace botanapoli_api.Controllers
                 throw new Exception(e.GetType() + ": " + e.Message);
             }
         }
-        [HttpPost("IniciarPartida")]
+        [HttpPost]
         public int InitiateGame([FromBody] Models.Modelos.Partida game)
         {
             string query = $"ComenzarPartida {game.Id}";
@@ -130,7 +130,7 @@ namespace botanapoli_api.Controllers
 
         [HttpGet]
         [ActionName("getTablero")]
-        public List<Models.Modelos.Casilla> GetGameTable(int tableroId)
+        public List<Models.Modelos.Casilla> GetTablero(int tableroId)
         {
             string query = $"getCasillas {tableroId}";
             DbController conexion = new DbController();
@@ -145,13 +145,12 @@ namespace botanapoli_api.Controllers
                     Models.Modelos.Casilla casilla = new Models.Modelos.Casilla();
                     casilla.Id = (int)db.Rows[i]["id"];
                     casilla.Tipo = (int)db.Rows[i]["tipo"];
-                    casilla.Tablero = (int)db.Rows[i]["tablero"];
                     casilla.Nombre = (string)db.Rows[i]["nombre"];
                     casilla.Orden = (int)db.Rows[i]["orden"];
-                    casilla.PrecioCompra = (int)db.Rows[i]["precioCompra"];
-                    casilla.PrecioVenta = (int)db.Rows[i]["precioVenta"];
-                    casilla.CosteEdificacion = (int)db.Rows[i]["costeEdificacion"];
-                    casilla.PrecioVentaEdificacion = (int)db.Rows[i]["precioVentaEdificacion"];
+                    casilla.PrecioCompra = System.DBNull.Value != db.Rows[i]["precioCompra"] ? (int)db.Rows[i]["precioCompra"] : null;
+                    casilla.PrecioVenta = System.DBNull.Value != db.Rows[i]["precioVenta"] ? (int)db.Rows[i]["precioVenta"] : null;
+                    casilla.CosteEdificacion = System.DBNull.Value != db.Rows[i]["costeEdificacion"] ? (int)db.Rows[i]["costeEdificacion"] : null;
+                    casilla.PrecioVentaEdificacion = System.DBNull.Value != db.Rows[i]["precioVentaEdificacion"] ? (int)db.Rows[i]["precioVentaEdificacion"] : null;
                     casilla.Coste1 = System.DBNull.Value != db.Rows[i]["Coste1"] ? (int)db.Rows[i]["Coste1"] : null;
                     casilla.Coste2 = System.DBNull.Value != db.Rows[i]["Coste2"] ? (int)db.Rows[i]["Coste2"] : null;
                     casilla.Coste3 = System.DBNull.Value != db.Rows[i]["Coste3"] ? (int)db.Rows[i]["Coste3"] : null;
@@ -170,5 +169,42 @@ namespace botanapoli_api.Controllers
                 throw new Exception(e.GetType() + ": " + e.Message);
             }
         }
+
+        [HttpGet]
+        [ActionName("GetInfoJugadores")]
+        public List<Jugador> GetInfoJugadores(int idPartida)
+        {
+            string query = $"getJugadoresInfo {idPartida}";
+            DbController conexion = new DbController();
+            List<Jugador> listaInfoJugadores = new List<Jugador>();
+
+            try
+            {
+                DataTable dt = conexion.DbRetrieveQuery(query);
+                
+                for(int i = 0; i < dt.Rows.Count ; i++)
+                {
+                    Jugador player = new Jugador();
+                    player.Id = (int)dt.Rows[i]["id"];
+                    player.IdUsuario = (int)dt.Rows[i]["idusuario"];
+                    player.IdPartida = (int)dt.Rows[i]["idPartida"];
+                    player.Saldo = (int)dt.Rows[i]["saldo"];
+                    player.Orden = (int)dt.Rows[i]["orden"];
+                    player.Posicion = (int)dt.Rows[i]["posicion"];
+                    player.Dobles = (int)dt.Rows[i]["dobles"];
+                    player.TurnosDeCastigo = (int)dt.Rows[i]["turnosDeCastigo"];
+                    listaInfoJugadores.Add(player);
+                }
+                return listaInfoJugadores;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.GetType() + ": " + e.Message);
+            }
+        }
+
+
+
+
     }
 }
