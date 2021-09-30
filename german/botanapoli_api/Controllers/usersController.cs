@@ -15,18 +15,18 @@ namespace botanapoli_api.Controllers
     {
         // POST api/<ValuesController>
         [HttpPost("autenticar")]
-        public int Authenticate([FromBody] Autenticado usuario)
+        public int Authenticate([FromBody] Models.Modelos.Usuario user)
         {
-            string query = $"autenticar '{usuario.email}', '{usuario.pass}';";
+            string query = $"autenticar '{user.Email}', '{user.Pass}';";
             DbController conexion = new DbController();
             return conexion.DbInsertQuery(query);
         }
 
         // POST api/<ValuesController>
         [HttpPost("registrar")]
-        public object Register([FromBody] Registrado user)
+        public object Register([FromBody] Models.Modelos.Usuario user)
         {
-            string query = $"registrar '{user.email}', '{user.nick}', '{user.pass}', '{user.fechaNac}';";
+            string query = $"registrar '{user.Email}', '{user.Nick}', '{user.Pass}', '{user.FechaNacimiento}';";
             DbController conexion = new DbController();
 
             try
@@ -41,9 +41,9 @@ namespace botanapoli_api.Controllers
 
         // POST api/<ValuesController>
         [HttpPost("añadirJugador")]
-        public object AddPlayer([FromBody] AñadirJugador addPLayer)
+        public object AddPlayer([FromBody] Models.Modelos.Usuario user)
         {
-            string query = $"añadirJugador {addPLayer.idJugador}, {addPLayer.idPartida}";
+            string query = $"añadirJugador {user.Id}, {user.Id}";
             DbController conexion = new DbController();
 
             try
@@ -57,9 +57,9 @@ namespace botanapoli_api.Controllers
         }
         // POST api/<ValuesController>
         [HttpPost("añadirBots")]
-        public object AddBot([FromBody] AñadirJugador addBot)
+        public object AddBot([FromBody] Models.Modelos.Jugador bot)
         {
-            string query = $"añadirJugador NULL, {addBot.idPartida}";
+            string query = $"añadirJugador NULL, {bot.IdPartida}";
             DbController conexion = new DbController();
 
             try
