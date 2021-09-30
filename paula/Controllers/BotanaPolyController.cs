@@ -21,7 +21,6 @@ namespace BotanaPolyAPI.Controllers
         public string Registrarse([FromBody] Modelos.Usuario usuario) 
         {
             string consulta = $"registrar '{usuario.Email}', '{usuario.Nick}', '{usuario.Pass}', '{usuario.FechaNacimiento}';";
-
             return BD.ejecutarConsultaMod(consulta);
         }
 
@@ -30,34 +29,30 @@ namespace BotanaPolyAPI.Controllers
         {
 
             string consulta = $"CrearPartida '{partida.Administrador}', '{partida.Nombre}', '{partida.Pass}', '{partida.Tablero}', '{partida.MaxJugadores}', {partida.MaxTiempo};";
-
             return BD.ejecutarConsultaMod(consulta);
         }
 
-        [HttpPost]
-        public string ComenzarPartida([FromBody] int partida)
+        [HttpPost("idPartida")]
+        public string ComenzarPartida(int idPartida)
         {
-            string consulta = $"ComenzarPartida {partida};";
-
+            string consulta = $"ComenzarPartida {idPartida};";
             return BD.ejecutarConsultaMod(consulta);
         }
 
 
-        [HttpPost]
-        public string UnirsePartida([FromBody] int usuario, int partida)
+        [HttpPost("idUsuario, idPartida")]
+        public string UnirsePartida(int idUsuario, int idPartida)
         {
-          string consulta = $"anadirJugador '{usuario}', '{partida}'";
-
+          string consulta = $"anadirJugador '{idUsuario}', '{idPartida}'";
           return BD.ejecutarConsultaMod(consulta);
         }
         
 
-        [HttpGet]
+        [HttpGet("email,pass")]
         public string autenticar(string email, string pass)
         {
             
             string consulta = $"autenticar '{email}', '{pass}'";
-
             System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
 
             if(dt.Rows[0]["Column1"].Equals(0))
@@ -70,11 +65,10 @@ namespace BotanaPolyAPI.Controllers
             }
         }
 
-        [HttpPost]
-        public string comprar(int usuario)
+        [HttpPost("idJugador")]
+        public string comprar(int idJugador)
         {
-            string consulta = $"comprar {usuario};";
-
+            string consulta = $"comprar {idJugador};";
             return BD.ejecutarConsultaMod(consulta);
         }
 
@@ -82,7 +76,6 @@ namespace BotanaPolyAPI.Controllers
         public string vender(int usuario, int casilla)
         {
             string consulta = $"comprar {usuario}, {casilla};";
-
             return BD.ejecutarConsultaMod(consulta);
         }
 
@@ -97,14 +90,29 @@ namespace BotanaPolyAPI.Controllers
                 string msg = BD.ejecutarConsultaMod(consulta);
                 toret.Append("Bot #" + i + "\n" + msg + "\n");
             }
-
             return toret.ToString();
         }
 
-        [HttpGet]
-        public List<Modelos.Tablero> mostrarListadoPlantillas()
+
+        [HttpPost("{idJugador}")]
+        public string retirarse(int idJugador)
         {
-            string consulta = $"procedimiento";
+            string consulta = $"retirarJugador {idJugador};";
+            return BD.ejecutarConsultaMod(consulta);
+        }
+
+
+        [HttpPost("{idJugador}")]
+        public string abandonar(int idJugador)
+        {
+            string consulta = $"abandonarPartida {idJugador};";
+            return BD.ejecutarConsultaMod(consulta);
+        }
+
+        [HttpGet]
+        public List<Modelos.Tablero> getTableros()
+        {
+            string consulta = $"getTableros";
             System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
             List<Modelos.Tablero> lista = new List<Modelos.Tablero>();
 
@@ -117,14 +125,13 @@ namespace BotanaPolyAPI.Controllers
                 plantilla.Descripcion = dt.Rows[i]["descripcion"].ToString();
                 lista.Add(plantilla);
             }
-
             return lista;
         }
 
         [HttpGet]
-        public List<Modelos.Partida> mostrarListadoPartidasCreadas()
+        public List<Modelos.Partida> getPartidas()
         {
-            string consulta = $"procedimiento2";
+            string consulta = $"getPartidas";
             System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
             List<Modelos.Partida> lista = new List<Modelos.Partida>();
 
@@ -132,26 +139,115 @@ namespace BotanaPolyAPI.Controllers
             {
                 Modelos.Partida partida = new Modelos.Partida();
                 partida.Id = Convert.ToInt32(dt.Rows[i]["id"]);
-                partida.Administrador = Convert.ToInt32(dt.Rows[i]["administrador"]);
                 partida.Estado = Convert.ToInt32(dt.Rows[i]["Estado"]);
                 if(dt.Rows[i]["maxJugadores"] != System.DBNull.Value)
                     partida.MaxJugadores = Convert.ToInt32(dt.Rows[i]["maxJugadores"]);
                 if(dt.Rows[i]["maxTiempo"] != System.DBNull.Value)
                     partida.MaxTiempo = Convert.ToInt32(dt.Rows[i]["maxTiempo"]);
+                if (dt.Rows[i]["tiempoTranscurrido"] != System.DBNull.Value)
+                    partida.TiempoTranscurrido = Convert.ToInt32(dt.Rows[i]["tiempoTranscurrido"]);
                 partida.Nombre = dt.Rows[i]["nombre"].ToString();
-                if (dt.Rows[i]["pass"] != System.DBNull.Value)
-                    partida.Pass = dt.Rows[i]["pass"].ToString();
                 partida.NumJugadores = Convert.ToInt32(dt.Rows[i]["numJugadores"]);
                 partida.Tablero = Convert.ToInt32(dt.Rows[i]["tablero"]);
                 partida.Turno = Convert.ToInt32(dt.Rows[i]["turno"]);
                 lista.Add(partida);
             }
-
             return lista;
+        }
 
+        [HttpGet("{idPartida}")]
+        public List<Modelos.Partida> getPartida(int idPartida)
+        {
+            string consulta = $"getPartidas {idPartida}";
+            System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
+            List<Modelos.Partida> lista = new List<Modelos.Partida>();
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                Modelos.Partida partida = new Modelos.Partida();
+                partida.Id = Convert.ToInt32(dt.Rows[i]["id"]);
+                partida.Estado = Convert.ToInt32(dt.Rows[i]["Estado"]);
+                if (dt.Rows[i]["maxJugadores"] != System.DBNull.Value)
+                    partida.MaxJugadores = Convert.ToInt32(dt.Rows[i]["maxJugadores"]);
+                if (dt.Rows[i]["maxTiempo"] != System.DBNull.Value)
+                    partida.MaxTiempo = Convert.ToInt32(dt.Rows[i]["maxTiempo"]);
+                partida.Nombre = dt.Rows[i]["nombre"].ToString();
+                partida.NumJugadores = Convert.ToInt32(dt.Rows[i]["numJugadores"]);
+                partida.Tablero = Convert.ToInt32(dt.Rows[i]["tablero"]);
+                partida.Turno = Convert.ToInt32(dt.Rows[i]["turno"]);
+                lista.Add(partida);
+            }
+            return lista;
         }
 
 
+        [HttpGet("{idTablero}")]
+        public List<Modelos.Casilla> getTablero(int idTablero)
+        {
+            string consulta = $"getCasillas {idTablero}";
+            System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
+            List<Modelos.Casilla> lista = new List<Modelos.Casilla>();
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                Modelos.Casilla tablero = new Modelos.Casilla();
+                tablero.Id = Convert.ToInt32(dt.Rows[i]["id"]);
+                if (dt.Rows[i]["conjunto"] != System.DBNull.Value)
+                    tablero.Conjunto = Convert.ToInt32(dt.Rows[i]["conjunto"]);
+                if (dt.Rows[i]["coste1"] != System.DBNull.Value)
+                    tablero.Coste1 = Convert.ToInt32(dt.Rows[i]["coste1"]);
+                if (dt.Rows[i]["coste2"] != System.DBNull.Value)
+                tablero.Coste2 = Convert.ToInt32(dt.Rows[i]["coste2"]);
+                if (dt.Rows[i]["coste3"] != System.DBNull.Value)
+                    tablero.Coste3 = Convert.ToInt32(dt.Rows[i]["coste3"]);
+                if (dt.Rows[i]["coste4"] != System.DBNull.Value)
+                    tablero.Coste4 = Convert.ToInt32(dt.Rows[i]["coste4"]);
+                if (dt.Rows[i]["coste5"] != System.DBNull.Value)
+                    tablero.Coste5 = Convert.ToInt32(dt.Rows[i]["coste5"]);
+                if (dt.Rows[i]["coste6"] != System.DBNull.Value)
+                    tablero.Coste6 = Convert.ToInt32(dt.Rows[i]["coste6"]);
+                if (dt.Rows[i]["costeEdificacion"] != System.DBNull.Value)
+                    tablero.CosteEdificacion = Convert.ToInt32(dt.Rows[i]["costeEdificacion"]);
+                if (dt.Rows[i]["destino"] != System.DBNull.Value)
+                    tablero.Destino = Convert.ToInt32(dt.Rows[i]["destino"]);
+                tablero.Orden = Convert.ToInt32(dt.Rows[i]["orden"]);
+                if (dt.Rows[i]["precioCompra"] != System.DBNull.Value)
+                    tablero.PrecioCompra = Convert.ToInt32(dt.Rows[i]["precioCompra"]);
+                if (dt.Rows[i]["precioVenta"] != System.DBNull.Value)
+                    tablero.PrecioVenta = Convert.ToInt32(dt.Rows[i]["precioVenta"]);
+                if (dt.Rows[i]["precioVentaEdificacion"] != System.DBNull.Value)
+                    tablero.PrecioVentaEdificacion = Convert.ToInt32(dt.Rows[i]["precioVentaEdificacion"]);
+                tablero.Tipo = Convert.ToInt32(dt.Rows[i]["tipo"]);
+                tablero.Nombre = dt.Rows[i]["nombre"].ToString();
+                lista.Add(tablero);
+            }
+            return lista;
+        }
+
+        [HttpGet("{idPartida}")]
+        public List<Modelos.Jugador> getJugadoresPartida(int idPartida)
+        {
+            string consulta = $"getJugadoresInfo {idPartida}";
+            System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
+            List<Modelos.Jugador> lista = new List<Modelos.Jugador>();
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                Modelos.Jugador jugador = new Modelos.Jugador();
+                jugador.Id = Convert.ToInt32(dt.Rows[i]["id"]);
+                if (dt.Rows[i]["idUsuario"] != System.DBNull.Value)
+                    jugador.IdUsuario = Convert.ToInt32(dt.Rows[i]["idUsuario"]);
+                jugador.IdPartida = Convert.ToInt32(dt.Rows[i]["idPartida"]);
+                jugador.Saldo = Convert.ToInt32(dt.Rows[i]["saldo"]);
+                jugador.Orden = Convert.ToInt32(dt.Rows[i]["orden"]);
+                if (dt.Rows[i]["posicion"] != System.DBNull.Value)
+                    jugador.Posicion = Convert.ToInt32(dt.Rows[i]["posicion"]);
+                jugador.Dobles = Convert.ToInt32(dt.Rows[i]["dobles"]);
+                jugador.TurnosDeCastigo = Convert.ToInt32(dt.Rows[i]["turnosDeCastigo"]);
+                lista.Add(jugador);
+            }
+            return lista;
+        }
 
 
     } 

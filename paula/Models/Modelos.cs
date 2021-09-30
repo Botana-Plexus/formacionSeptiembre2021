@@ -45,6 +45,12 @@ namespace BotanaPolyAPI.Models
                 get => fechaInicio;
                 set => fechaInicio = value;
             }
+            protected int tiempoTranscurrido;
+            public int TiempoTranscurrido
+            {
+                get => tiempoTranscurrido;
+                set => tiempoTranscurrido = value;
+            }
             protected string pass;
             public string Pass
             {
@@ -85,6 +91,24 @@ namespace BotanaPolyAPI.Models
             {
                 get => id;
                 set => id = value;
+            }
+            protected int acreedor;
+            public int Acreedor
+            {
+                get => acreedor;
+                set => acreedor = value;
+            }
+            protected int turnosDeCastigo;
+            public int TurnosDeCastigo
+            {
+                get => turnosDeCastigo;
+                set => turnosDeCastigo = value;
+            }
+            protected int dobles;
+            public int Dobles
+            {
+                get => dobles;
+                set => dobles = value;
             }
             protected int idUsuario;
             public int IdUsuario
@@ -231,11 +255,6 @@ namespace BotanaPolyAPI.Models
                 get => precioVenta;
                 set => precioVenta = value;
                 }
-            protected int nivelEdificacion;
-            public int NivelEdificacion{
-                get => nivelEdificacion;
-                set => nivelEdificacion = value;
-                }
             protected int costeEdificacion;
             public int CosteEdificacion{
                 get => costeEdificacion;
@@ -271,6 +290,12 @@ namespace BotanaPolyAPI.Models
                 get => coste5;
                 set => coste5 = value;
                 }
+            protected int coste6;
+            public int Coste6
+            {
+                get => coste6;
+                set => coste6 = value;
+            }
             protected int conjunto;
             public int Conjunto{
                 get => conjunto;
@@ -356,6 +381,12 @@ namespace BotanaPolyAPI.Models
                 get => tipo;
                 set => tipo = value;
                 }
+            protected string texto;
+            public string Texto
+            {
+                get => texto;
+                set => texto = value;
+            }
             protected int valor;
             public int Valor{
                 get => valor;
