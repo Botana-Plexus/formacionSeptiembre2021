@@ -204,7 +204,7 @@ as
   begin tran
     select @maxJugadores = case  when maxJugadores is null then 6 else maxJugadores end, @numJugadores = numJugadores, @tablero = tablero 
 	  from partidas 
-	  where id = @idPartida and pass = @pass
+	  where id = @idPartida and (pass is null or pass = @pass)
 
     if (@@ROWCOUNT = 0 ) begin rollback select 1,'partida inexistente o sin permisos' return end
 
@@ -337,12 +337,12 @@ as
 create procedure getPartidas
   @id int=null
 as
-  select id, nombre,maxJugadores,maxTiempo,datediff(mi,fechaInicio,getdate()) as tiempoTranscurrido, numJugadores,turno,estado,tablero from partidas
+  select id, nombre,maxJugadores,maxTiempo,datediff(mi,fechaInicio,getdate()) as tiempoTranscurrido,
+    case when pass is not null then 1 else 0 end as tienePass, numJugadores,turno,estado,tablero from partidas
   where @id is null or @id = id 
-
+  select * from partidas
 
 go
-
 
 /*
 Autor: Alberto Botana
@@ -360,14 +360,20 @@ go
  descripcion: Devuelve la informaciï¿½n de las plantillas existentes
 */
 go
-create procedure getCasillas
+alter procedure getCasillas
   @idTablero int
 as
+<<<<<<< HEAD
   select id, tipo, nombre, orden, precioCompra, precioVenta, costeEdificaciï¿½n, precioVentaEdificaciï¿½n, Coste1,
     Coste2, Coste3, Coste4, Coste5, conjunto, destino 
+=======
+  select id, tipo, nombre, orden, precioCompra, precioVenta, costeEdificacion, precioVentaEdificacion, Coste1,
+    Coste2, Coste3, Coste4, Coste5, Coste6, conjunto, destino 
+>>>>>>> master
   from casillas 
   where tablero = @idTablero
 go 
+
 
  /*
  Autor: Pablo Costa
@@ -552,6 +558,22 @@ as
 
 go
 
+
+/*
+Autor: alberto Botana
+fecha: 20210930
+descripción: devuelve el listado d elas propiedades de un jugador
+*/
+create procedure getPropiedades
+  @idJugador int
+as
+  select b.id, b.tipo, b.tablero, b.nombre, b.orden, b.precioCompra, b.precioVenta, b.costeEdificacion, b.precioVentaEdificacion,
+    b.Coste1, b.Coste2, b.Coste3, b.Coste4, b.Coste5, b.Coste6, b.conjunto, b.destino, a.nivelEdificacion
+  from propiedades a left join casillas b on a.casilla = b.id
+  where a.jugador = @idJugador
+
+go
+
 /* datos para pruebas
 insert into tableros values (1,'clasico',100000,3)
 insert into casillas (nombre, tipo, tablero, orden, precioCompra, precioventa) values ('salida',1,1,1,20000,10000)
@@ -660,3 +682,10 @@ select * from jugadores
 mover 1,1
 select * from jugadores
 */
+<<<<<<< HEAD
+=======
+
+/*
+exec getPropiedades 4
+*/
+>>>>>>> master
