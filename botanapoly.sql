@@ -337,12 +337,12 @@ as
 create procedure getPartidas
   @id int=null
 as
-  select id, nombre,maxJugadores,maxTiempo,datediff(mi,fechaInicio,getdate()) as tiempoTranscurrido, numJugadores,turno,estado,tablero from partidas
+  select id, nombre,maxJugadores,maxTiempo,datediff(mi,fechaInicio,getdate()) as tiempoTranscurrido,
+    case when pass is not null then 1 else 0 end as tienePass, numJugadores,turno,estado,tablero from partidas
   where @id is null or @id = id 
-
+  select * from partidas
 
 go
-
 
 /*
 Autor: Alberto Botana
