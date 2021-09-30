@@ -14,7 +14,7 @@ namespace API_Botanapoly.Controllers
     {
         public Database BD = new Database();
 
-        //getCasillas (partida)
+        //getCasillas 
         [HttpGet("listaCasillas")]
         public List<Casillas> getCasillas(int idTablero)
         {
@@ -57,21 +57,41 @@ namespace API_Botanapoly.Controllers
             return lista;
 
         }
-        //getPartidas (partida)
+        //getPartidas 
         [HttpGet("listaPartidas")]
         public List<Partidas> getPartidas(int idPartida)
         {
-            string consulta = $"getPartidas '{idPartida}'";
+
+            string consulta = "";
+            if (idPartida != 0)
+            {
+             consulta = $"getPartidas '{idPartida}'";
+            }
+            else
+            {
+             consulta = $"getPartidas";
+            }
+
             System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
 
             var lista = new List<Partidas>();
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                Partidas parttida = new Partidas();
-   
+                Partidas partida = new Partidas();
+                partida.id = Convert.ToInt32(dt.Rows[i]["id"]);
+                partida.nombre = Convert.ToString(dt.Rows[i]["nombre"]);
+                partida.maxJugadores = Convert.ToInt32(dt.Rows[i]["maxJugadores"]);
+                partida.maxTiempo =
+                      dt.Rows[i]["maxTiempo"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["maxTiempo"]) : null;
+                partida.tiempoTranscurrido =
+                      dt.Rows[i]["tiempoTranscurrido"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["tiempoTranscurrido"]) : null;
+                partida.numJugadores = Convert.ToInt32(dt.Rows[i]["numJugadores"]);
+                partida.turno = Convert.ToInt32(dt.Rows[i]["turno"]);
+                partida.estado = Convert.ToInt32(dt.Rows[i]["estado"]);
+                partida.tablero = Convert.ToInt32(dt.Rows[i]["tablero"]);
 
-                lista.Add(parttida);
+                lista.Add(partida);
             }
 
             return lista;
@@ -79,8 +99,7 @@ namespace API_Botanapoly.Controllers
         }
 
 
-
-        //getTABLEROS
+        //getTableros
         [HttpGet("listaTableros")]
         public List<Tableros> getTableros()
         {
@@ -105,7 +124,7 @@ namespace API_Botanapoly.Controllers
         }
 
         //getJugadores
-        [HttpGet("listaJugadores")]
+        [HttpGet("infoJugadores")]
         public List<Jugadores> getJugadores(int idPartida)
         {
 
@@ -136,9 +155,9 @@ namespace API_Botanapoly.Controllers
         [HttpPost("crear")]
         public string crearPartida([FromBody] Partidas partida)
         {
-            if ( partida.maxJugadores > 6)
+            if ( partida.maxJugadores == null)
             {
-                return "Numero de jugadores nor válido";
+                partida.maxJugadores = 6;
             }
 
             string consulta = $"crearPartida'{partida.nombre}','{partida.administrador}'," +
@@ -199,11 +218,36 @@ namespace API_Botanapoly.Controllers
         }
 
 
-     
-        //retirarJugador (partida)
-        //abandonarPartida (partida)
+        //Retirar Jugador (deja de jugar pero sigue en partida)
+        [HttpPost("retirarJugador")]
+        public string retirarJugador(int idJugador)
+        {
+            string consulta = $"retirarJugador '{idJugador}'";
+
+            return BD.ejecutarConsultaInsert(consulta);
+        }
+
+        //Abandonar Partida 
+        [HttpPost("abandonarPartida")]
+        public string abandonarPartida(int idJugador)
+        {
+            string consulta = $"abandonarPartida '{idJugador}'";
+
+            return BD.ejecutarConsultaInsert(consulta);
+        }
+
+        //Edificar
+        [HttpPost("edificar")]
+        public string edificar(int idJugador)
+        {
+            string consulta = $"retirarJugador '{idJugador}'";
+
+            return BD.ejecutarConsultaInsert(consulta);
+        }
+
+
+
         //mover (jugador)
-        //edificar (partida)
         //set dobles (partida)
         //venderEdif (partida)
         //edificar (partida)
