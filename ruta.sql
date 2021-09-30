@@ -1,5 +1,5 @@
 
-use botanapoly
+use botanapoly_master
 
 --select * from tableros
 insert into tableros values (2,'Ruta del Tesoro',135000,40)

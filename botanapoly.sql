@@ -1,9 +1,9 @@
 /*
 
 use master
-drop database botanapoly
-create database botanapoly
-use botanapoly
+drop database botanapoly_master
+create database botanapoly_master
+use botanapoly_master
 drop login pruebas
 create login pruebas with password = 'pruebas', default_database = botanapoly, check_policy = off
 */
@@ -360,7 +360,7 @@ go
  descripcion: Devuelve la información de las plantillas existentes
 */
 go
-alter procedure getCasillas
+create procedure getCasillas
   @idTablero int
 as
   select id, tipo, nombre, orden, precioCompra, precioVenta, costeEdificacion, precioVentaEdificacion, Coste1,
@@ -498,7 +498,7 @@ as
 
   if exists ( select a.id from casillas a left join propiedades b on a.id = b.casilla
   where a.tablero = @tablero and conjunto = @conjunto and (b.jugador is null or b.jugador <> @idJugador)) 
-  begin
+  begin		
     select 1,'no es propitario de todo el conjunto'
 	return
   end
@@ -576,7 +576,7 @@ insert into casillas (nombre, tipo, tablero, orden, precioCompra, precioventa) v
 insert into casillas (nombre, tipo, tablero, orden, precioCompra, precioventa) values ('estacion3',3,1,3,20000,10000)
 exec registrar 'alberto.botanafidalgo@plexus.es','botana','1234','19770620'
 exec registrar 'alberto@plexus.es','botana2','1234','19770620'
-exec crearPartida 'partida1',1,4,null,'1234',1 
+exec crearPartida 'partida14',1,4,null,'1234',1 
 exec anadirJugador 2,1,'1234'
 exec anadirJugador null,1,'1234'
 exec comenzarPartida 1
@@ -614,18 +614,21 @@ select * from jugadores
 
 /* prueba de comenzarPartida
 select * from partidas
-exec comenzarPartida 1
+exec comenzarPartida 8
 select * from partidas
 select * from jugadores where idpartida = 1
 */
 
 /* prueba actualizarNivelConstruccion
 select * from propiedades
-insert into propiedades values (1,1,2,0)
-insert into propiedades values (1,1,3,0)
+insert into propiedades values (3,3,2,0)
+insert into propiedades values (3,3,3,0)
 exec actualizarNivelConstruccion 1,3
 delete from propiedades 
 select * from propiedades
+select * from jugadores
+select * from partidas
+select * from casillas
 */
 
 /*
@@ -669,7 +672,7 @@ exec abandonarPartida 1
 
 /* pruebas movimiento
 select * from jugadores
-mover 1,1
+mover 2,1
 select * from jugadores
 mover 1,1
 select * from jugadores

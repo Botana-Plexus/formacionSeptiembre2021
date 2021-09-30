@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using DT = System.Data;
 using QC = Microsoft.Data.SqlClient;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace API_Botanapoly.Controllers
 {
@@ -49,7 +48,6 @@ namespace API_Botanapoly.Controllers
                 query = $"anadirJugador'{idUsuario}','{idPartida}','{pass}'";
 
             }
-
             System.Data.DataTable dt = database.selectQuery(query);
             return dt.Rows[0]["Column2"].ToString();
         }
@@ -73,8 +71,6 @@ namespace API_Botanapoly.Controllers
             return dt.Rows[0]["Column2"].ToString();
         }
 
-
-
         [HttpPost("comenzar")]
         public string startPartida(int idPartida)
         {
@@ -82,6 +78,7 @@ namespace API_Botanapoly.Controllers
 
             return database.insertQuery(query);
         }
+        
         [HttpPost("actualizarNivelEdificacion")]
         public string actualizarNivelEdificacion(int idJugador, int tipo)
         {
@@ -165,6 +162,7 @@ namespace API_Botanapoly.Controllers
             }
             return lista;
         }
+        
         [HttpGet("listarCasillas")]
         public List<Casilla> getCasillas(int idTablero)
         {
@@ -195,6 +193,7 @@ namespace API_Botanapoly.Controllers
             }
             return lista;
         }
+        
         [HttpGet("listarPartidas")]
         public List<Partida> getPartidas(int? idPartida)
         {
@@ -226,6 +225,7 @@ namespace API_Botanapoly.Controllers
             }
             return lista;
         }
+        
         //Retirar Jugador (deja de jugar pero sigue en partida)
         [HttpPost("retirarJugador")]
         public string retirarJugador(int idJugador)
@@ -263,6 +263,7 @@ namespace API_Botanapoly.Controllers
             System.Data.DataTable dt = database.selectQuery(query);
             return dt.Rows[0]["Column2"].ToString();
         }
+        
         //Setdobles
         [HttpPost("setDobles")]
         public string setDobles(int idJugador, int reset)
@@ -273,12 +274,37 @@ namespace API_Botanapoly.Controllers
         }
 
         //GetPropiedades
-        [HttpPost("getPropiedades")]
-        public string getPropiedades(int idJugador)
+        [HttpGet("getPropiedades")]
+        public List<Casilla> getPropiedades(int idJugador)
         {
-            string query = $"getPropiedades '{idJugador}'";
+            string query = $"getPropiedades'{idJugador}'";
+            System.Data.DataTable dt = database.selectQuery(query);
 
-            return database.insertQuery(query);
+            var lista = new List<Casilla>();
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                Casilla casilla = new Casilla();
+                casilla.id = Convert.ToInt32(dt.Rows[i]["id"]);
+                casilla.tipo = Convert.ToInt32(dt.Rows[i]["tipo"]);
+                casilla.nombre = Convert.ToString(dt.Rows[i]["nombre"]);
+                casilla.precioCompra = dt.Rows[i]["precioCompra"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["precioCompra"]) : null;
+                casilla.precioVenta = dt.Rows[i]["precioVenta"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["precioVenta"]) :null;
+                casilla.costeEdificacion = dt.Rows[i]["costeEdificacion"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["costeEdificacion"]) : null;
+                casilla.precioVentaEdificacion = dt.Rows[i]["precioVentaEdificacion"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["precioVentaEdificacion"]) :null;
+                casilla.Coste1 = dt.Rows[i]["Coste1"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["Coste1"]):null;
+                casilla.Coste2 = dt.Rows[i]["Coste2"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["Coste2"]) : null;
+                casilla.Coste3 = dt.Rows[i]["Coste3"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["Coste3"]) : null;
+                casilla.Coste4 = dt.Rows[i]["Coste4"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["Coste4"]) : null;
+                casilla.Coste5 = dt.Rows[i]["Coste5"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["Coste5"]) : null;
+                casilla.conjunto = dt.Rows[i]["conjunto"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["conjunto"]) : null;
+                casilla.destino = dt.Rows[i]["destino"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["destino"]) : null;
+                casilla.nivelEdificacion = dt.Rows[i]["nivelEdificacion"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["nivelEdificacion"]) : null;
+
+
+                lista.Add(casilla);
+            }
+            return lista;
         }
 
         //Mover
@@ -286,7 +312,7 @@ namespace API_Botanapoly.Controllers
         public string mover(int idJugador, int tirada)
         {
             string query = $"mover '{idJugador}','{tirada}'";
-            
+
             System.Data.DataTable dt = database.selectQuery(query);
             return dt.Rows[0]["Column2"].ToString();
         }
