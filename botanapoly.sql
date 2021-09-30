@@ -681,3 +681,4 @@ select * from jugadores
 /*
 exec getPropiedades 4
 */
+jas
