@@ -15,6 +15,9 @@ namespace API_Botanapoly
         public int posicion { set; get; } //casilla sobre la que esta situado el jugador.
         public int turnosDeCastigo { set; get; }
         public int dobles { set; get; }
+        public int turnosCastigo { set; get; }
+        public int deuda { set; get; }
+        public int acreedor { set; get; }
 
     }
 }

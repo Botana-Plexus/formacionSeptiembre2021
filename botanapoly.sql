@@ -22,7 +22,7 @@ create table usuarios
   fechaNacimiento datetime not null
 )
 
---esta tabla contiene los modelos de partida que puede haber, con todos sus parámetros de 
+--esta tabla contiene los modelos de partida que puede haber, con todos sus parï¿½metros de 
 create table tableros
 (
   id int primary key,
@@ -43,7 +43,7 @@ insert into tiposCasillas values (3,'compania')
 insert into tiposCasillas values (4,'infraestructura')
 insert into tiposCasillas values (5,'cartaSorpresa')
 insert into tiposCasillas values (6,'neutra')
-insert into tiposCasillas values (7,'castigar') --no se define la casilla donde se sufre el castigo, será un estado del jugador
+insert into tiposCasillas values (7,'castigar') --no se define la casilla donde se sufre el castigo, serï¿½ un estado del jugador
 insert into tiposCasillas values (8,'pago')
 
 create table casillas
@@ -79,7 +79,7 @@ create table partidas
   pass varchar(255) null, --la clave de la partida, solo si tiene
   numJugadores int not null, --numero de jugadores actual de la partida
   turno int not null, --numero de orden del jugador que tenga el turno
-  estado int not null, --estado de la partida, indica si está creada(1) o iniciada (2). No s eespecifica el 3 - finalizada, porque se eliminara
+  estado int not null, --estado de la partida, indica si estï¿½ creada(1) o iniciada (2). No s eespecifica el 3 - finalizada, porque se eliminara
   tablero int not null references tableros(id)
 )
 
@@ -91,7 +91,7 @@ create table jugadores
   saldo int not null,
   orden int not null, -- el orden en el turno. orden 0 = no tiene orden, por lo que es observador
   posicion int null references casillas(id), -- casilla sobre la que esta situado el jugador. el numero de casilla esta en casilla
-  dobles int not null, --cantidad de dobles consecutivos sacados por el jugador. Al tercer doble, debería ser castigado
+  dobles int not null, --cantidad de dobles consecutivos sacados por el jugador. Al tercer doble, deberï¿½a ser castigado
   turnosDeCastigo int not null, --cantidad de turnos que le quedan de castigo. comienza en 0
   deuda int not null, --cantidad qeu debe un jugador. No podra hacer nada hasta que la pague. comienza con 0
   acreedor int null references jugadores(id) --a quien le debe el jugador. Si tiene deuda y acreedor es nulo, entonces es con la banca
@@ -131,7 +131,7 @@ go
 /*
 Autor: Alberto Botana
 fecha: 20210927
-registra un usuario, se asume que la contraseña ya viene encriptada
+registra un usuario, se asume que la contraseï¿½a ya viene encriptada
 */
 
 create procedure registrar
@@ -145,8 +145,8 @@ go
 /*
 Autor: Alberto Botana
 fecha: 20210927
-autentica un usuario. Simplemente valida que el usuario es válido o no. Sería responsabilidad de la aplicación 
-garantizar que el usuario sigue siendo el mismo durante toda la sesión, pero no se va a implementar
+autentica un usuario. Simplemente valida que el usuario es vï¿½lido o no. Serï¿½a responsabilidad de la aplicaciï¿½n 
+garantizar que el usuario sigue siendo el mismo durante toda la sesiï¿½n, pero no se va a implementar
 */
 create procedure autenticar
   @email varchar(255), @pass varchar(255)
@@ -187,7 +187,7 @@ go
 /*
 Autor: Alberto Botana
 fecha: 20210928
-descripcion: añade un jugador a la partida. Si el idusuario es ulo, entonces será un bot
+descripcion: aï¿½ade un jugador a la partida. Si el idusuario es ulo, entonces serï¿½ un bot
 */
 
 create procedure anadirJugador
@@ -245,7 +245,7 @@ go
 /*
 Autor: Alberto Botana
 fecha: 20210928
-descripción: actualiza el nivel de construccion de un determinado tipo que tiene un jugador
+descripciï¿½n: actualiza el nivel de construccion de un determinado tipo que tiene un jugador
 version 1: por simplicidad, se asume que solo va a haber un grupo por cada nivel
 */
 create procedure actualizarNivelConstruccion
@@ -265,7 +265,7 @@ go
 /*
 Autor: Alberto Botana
 fecha: 20210928
-descripción: compra la casilla en la que está el jugador. Se valida que la casilla no este vendida
+descripciï¿½n: compra la casilla en la que estï¿½ el jugador. Se valida que la casilla no este vendida
 */
 create procedure comprar
   @idJugador int
@@ -285,7 +285,7 @@ as
 		begin
 			if (@saldo < @importe) begin select 1,'saldo insuficiente' return end --si no tien saldo se sale
 	
-			if not exists (select * from propiedades where partida = @partida and casilla = @idCasilla) --entonces es que está sin vender
+			if not exists (select * from propiedades where partida = @partida and casilla = @idCasilla) --entonces es que estï¿½ sin vender
 			begin
 				begin tran
 					insert into propiedades (jugador, partida, casilla, nivelEdificacion) values (@idJugador, @partida, @idCasilla, 0)
@@ -305,7 +305,7 @@ go
 /*
 Autor: Alberto Botana
 fecha: 20210928
-descripción: vende a casilla indicada y recalcula posibles edificaciones. Se valida que se apropiedad del jugador
+descripciï¿½n: vende a casilla indicada y recalcula posibles edificaciones. Se valida que se apropiedad del jugador
 */
 create procedure vender
   @idJugador int,
@@ -336,7 +336,7 @@ as
  /*
  Autor: Pablo Costa
  fecha: 20210929
- descripcion: Devuelve la información de las partidas existentes
+ descripcion: Devuelve la informaciï¿½n de las partidas existentes
 */
 
 create procedure getPartidas
@@ -351,7 +351,7 @@ go
 /*
 Autor: Alberto Botana
 fecha: 20210929
-descripción: devuelve un listado de los tableros disponibles
+descripciï¿½n: devuelve un listado de los tableros disponibles
 */
 create procedure getTableros
 as
@@ -361,7 +361,7 @@ go
 /*
  Autor: Pablo Costa
  fecha: 20210929
- descripcion: Devuelve la información de las plantillas existentes
+ descripcion: Devuelve la informaciï¿½n de las plantillas existentes
 */
 go
 create procedure getCasillas
@@ -377,7 +377,7 @@ go
  /*
  Autor: Pablo Costa
  fecha: 20210929
- descripcion: Devuelve la información de los jugadores de una partida
+ descripcion: Devuelve la informaciï¿½n de los jugadores de una partida
 */
 create procedure getJugadoresInfo
 	@idPartida int
@@ -442,7 +442,7 @@ as
 /*
 autor: Alberto Botana
 fecha: 20210929
-descripción: realiza el movimiento de un jugador, calcula a que posición debe ir, 
+descripciï¿½n: realiza el movimiento de un jugador, calcula a que posiciï¿½n debe ir, 
 se considera movimiento negativo, pero nunca de forma que pueda provocar retroceder antes de la salida
 no s erealizan acciones relativas a la casilla en la que se ha caido
 */
@@ -467,7 +467,7 @@ as
   if ( @nuevaPosicion > @numCasillas)
   begin
     set @nuevaPosicion = @nuevaPosicion - @numCasillas --es que se ha dado una vuelta
-	select @bonificacionVuelta = precioCompra from casillas where tablero = @tablero and tipo = 1 and orden = 1 --esto es incorrecto, habría que consultar si se pasa por encima de una casilla de tipo salida
+	select @bonificacionVuelta = precioCompra from casillas where tablero = @tablero and tipo = 1 and orden = 1 --esto es incorrecto, habrï¿½a que consultar si se pasa por encima de una casilla de tipo salida
 	update jugadores set saldo = saldo + @bonificacionVuelta where id = @idJugador -- en caso de dar vuelta se suma el saldo
   end
 
@@ -482,7 +482,7 @@ go
 /*
 Autor: Alberto Botana
 fecha: 20210929
-descripcion: realiza la edificación de una casa. Se valida que el usuario tenga todo el conjunto de casillas en propiedad, y entonces permite subir 
+descripcion: realiza la edificaciï¿½n de una casa. Se valida que el usuario tenga todo el conjunto de casillas en propiedad, y entonces permite subir 
 un nivel de edificacion bajando el coste correspondiente
 */
 create procedure edificar
@@ -509,7 +509,7 @@ as
   
   select @nivelActual = nivelEdificacion from propiedades where casilla = @idCasilla and jugador = @idJugador
   
-  if @nivelActual = 5 begin select 4,'nivel máximo alcanzado' return end
+  if @nivelActual = 5 begin select 4,'nivel mï¿½ximo alcanzado' return end
 
   update propiedades set nivelEdificacion = nivelEdificacion + 1 where jugador = @idJugador and casilla = @idCasilla
   update jugadores set saldo = saldo - @coste where id = @idJugador
@@ -545,8 +545,8 @@ go
 /*
 autor: Alberto Botana
 fecha: 20210930
-descripcion: permite registrar cuantos dobles lleva el usuario. Se sumará 1 por cada invocacion, y si se quiere resetear hay que 
-añadir 1 como sgundo parametro (reset)
+descripcion: permite registrar cuantos dobles lleva el usuario. Se sumarï¿½ 1 por cada invocacion, y si se quiere resetear hay que 
+aï¿½adir 1 como sgundo parametro (reset)
 */
 create procedure setDobles
   @idJugador int,
@@ -561,7 +561,7 @@ go
 /*
 Autor: alberto Botana
 fecha: 20210930
-descripción: devuelve el listado d elas propiedades de un jugador
+descripciï¿½n: devuelve el listado d elas propiedades de un jugador
 */
 create procedure getPropiedades
   @idJugador int
@@ -572,9 +572,9 @@ as
   where a.jugador = @idJugador
 
 /*
-Autores: Pablo Costa y Adrián García
+Autores: Pablo Costa y Adriï¿½n Garcï¿½a
 fecha: 20210930
-descripción: Actualiza la deuda de un jugador
+descripciï¿½n: Actualiza la deuda de un jugador
 */
 go 
 create procedure actualizarDeuda
@@ -610,9 +610,9 @@ as
 		end
 
 /*
-Autores: Pablo Costa y Adrián García
+Autores: Pablo Costa y Adriï¿½n Garcï¿½a
 fecha: 20210930
-descripción: Realiza pagos
+descripciï¿½n: Realiza pagos
 */
 
 go
@@ -640,9 +640,9 @@ as
 		select 1,'Saldo insuficiente'
 
 /*
-Autores: Pablo Costa y Adrián García
+Autores: Pablo Costa y Adriï¿½n Garcï¿½a
 fecha: 20210930
-descripción: Finalizar partida
+descripciï¿½n: Finalizar partida
 */
 go 
 
@@ -660,9 +660,9 @@ as
 
 
 /*
-Autores: Pablo Costa y Adrián García
+Autores: Pablo Costa y Adriï¿½n Garcï¿½a
 fecha: 20210930
-descripción: Finalizar turno
+descripciï¿½n: Finalizar turno
 */
 go 
 create procedure finalizarTurno
@@ -691,9 +691,9 @@ drop procedure finalizarTurno
 
 
 /*
-Autores: Pablo Costa y Adrián García
+Autores: Pablo Costa y Adriï¿½n Garcï¿½a
 fecha: 20210930
-descripción: Devuelve el id de las cartas de cada casilla aleatoriamente
+descripciï¿½n: Devuelve el id de las cartas de cada casilla aleatoriamente
 */
 go
 create procedure getCartaAleatoria
@@ -713,9 +713,9 @@ as
 
 
 /*
-Autores: Pablo Costa y Adrián García
+Autores: Pablo Costa y Adriï¿½n Garcï¿½a
 fecha: 20210930
-descripción: Devuelve la info de una carta concreta
+descripciï¿½n: Devuelve la info de una carta concreta
 */
 go
 create procedure getInfoCarta
@@ -725,9 +725,9 @@ as
 
 
 /*
-Autores: Pablo Costa y Adrián García
+Autores: Pablo Costa y Adriï¿½n Garcï¿½a
 fecha: 20210930
-descripción: Devuelve el turno
+descripciï¿½n: Devuelve el turno
 */
 
 go
@@ -747,7 +747,7 @@ as
 			if @turnosCastigo != 0
 				begin 
 					exec finalizarTurno @idPartida, @idJugador
-					select 2,'Sigues en la cárcel'
+					select 2,'Sigues en la cï¿½rcel'
 				end
 			else
 				select 1, 'Es tu turno'
@@ -764,17 +764,13 @@ insert into casillas (nombre, tipo, tablero, orden, precioCompra, precioventa) v
 insert into casillas (nombre, tipo, tablero, orden, precioCompra, precioventa) values ('estacion3',3,1,3,20000,10000)
 exec registrar 'alberto.botanafidalgo@plexus.es','botana','1234','19770620'
 exec registrar 'alberto@plexus.es','botana2','1234','19770620'
-<<<<<<< HEAD
-exec crearPartida 'partida3',1,6,null,'',1 
-exec anadirJugador 2,1,'1234'
-exec anadirJugador null,1,'1234'
-exec comenzarPartida 6
-=======
+
+
 exec crearPartida 'partida1',1,4,null,'1234',2
 exec anadirJugador 2,2,'1234'
 exec anadirJugador null,2,'1234'
 exec comenzarPartida 2
->>>>>>> master
+
 
 */
 
@@ -799,7 +795,7 @@ select * from partidas
 select * from jugadores
 */
 
-/*Prueba de añadir Jugador
+/*Prueba de aï¿½adir Jugador
 select * from partidas
 exec anadirJugador 2,1, null
 select * from partidas
