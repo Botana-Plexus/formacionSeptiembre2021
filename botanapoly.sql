@@ -22,7 +22,7 @@ create table usuarios
   fechaNacimiento datetime not null
 )
 
---esta tabla contiene los modelos de partida que puede haber, con todos sus par·metros de 
+--esta tabla contiene los modelos de partida que puede haber, con todos sus par√°metros de 
 create table tableros
 (
   id int identity(1,1) primary key,
@@ -43,7 +43,7 @@ insert into tiposCasillas values (3,'compania')
 insert into tiposCasillas values (4,'infraestructura')
 insert into tiposCasillas values (5,'cartaSorpresa')
 insert into tiposCasillas values (6,'neutra')
-insert into tiposCasillas values (7,'castigar') --no se define la casilla donde se sufre el castigo, ser· un estado del jugador
+insert into tiposCasillas values (7,'castigar') --no se define la casilla donde se sufre el castigo, ser√° un estado del jugador
 insert into tiposCasillas values (8,'pago')
 
 create table casillas
@@ -79,7 +79,7 @@ create table partidas
   pass varchar(255) null, --la clave de la partida, solo si tiene
   numJugadores int not null, --numero de jugadores actual de la partida
   turno int not null, --numero de orden del jugador que tenga el turno
-  estado int not null, --estado de la partida, indica si est· creada(1) o iniciada (2). No s eespecifica el 3 - finalizada, porque se eliminara
+  estado int not null, --estado de la partida, indica si est√° creada(1) o iniciada (2). No s eespecifica el 3 - finalizada, porque se eliminara
   tablero int not null references tableros(id)
 )
 
@@ -126,7 +126,7 @@ go
 /*
 Autor: Alberto Botana
 fecha: 20210927
-registra un usuario, se asume que la contraseÒa ya viene encriptada
+registra un usuario, se asume que la contrase√±a ya viene encriptada
 */
 
 create procedure registrar
@@ -140,8 +140,8 @@ go
 /*
 Autor: Alberto Botana
 fecha: 20210927
-autentica un usuario. Simplemente valida que el usuario es v·lido o no. SerÌa responsabilidad de la aplicaciÛn 
-garantizar que el usuario sigue siendo el mismo durante toda la sesiÛn, pero no se va a implementar
+autentica un usuario. Simplemente valida que el usuario es v√°lido o no. Ser√≠a responsabilidad de la aplicaci√≥n 
+garantizar que el usuario sigue siendo el mismo durante toda la sesi√≥n, pero no se va a implementar
 */
 create procedure autenticar
   @email varchar(255), @pass varchar(255)
@@ -182,7 +182,7 @@ go
 /*
 Autor: Alberto Botana
 fecha: 20210928
-descripcion: aÒade un jugador a la partida. Si el idusuario es ulo, entonces ser· un bot
+descripcion: a√±ade un jugador a la partida. Si el idusuario es ulo, entonces ser√° un bot
 */
 
 create procedure anadirJugador
@@ -227,7 +227,7 @@ go
 /*
 Autor: Alberto Botana
 fecha: 20210928
-descripciÛn: actualiza el nivel de construccion de un determinado tipo que tiene un jugador
+descripci√≥n: actualiza el nivel de construccion de un determinado tipo que tiene un jugador
 version 1: por simplicidad, se asume que solo va a haber un grupo por cada nivel
 */
 create procedure actualizarNivelConstruccion
@@ -247,7 +247,7 @@ go
 /*
 Autor: Alberto Botana
 fecha: 20210928
-descripciÛn: compra la casilla en la que est· el jugador. Se valida que la casilla no este vendida
+descripci√≥n: compra la casilla en la que est√° el jugador. Se valida que la casilla no este vendida
 */
 create procedure comprar
   @idJugador int
@@ -265,7 +265,7 @@ as
 	
 	if (@saldo < @importe) begin select 1,'saldo insuficiente' return end --si no tien saldo se sale
 	
-	if not exists (select * from propiedades where partida = @partida and casilla = @idCasilla) --entonces es que est· sin vender
+	if not exists (select * from propiedades where partida = @partida and casilla = @idCasilla) --entonces es que est√° sin vender
 	begin
       begin tran
 	    insert into propiedades (jugador, partida, casilla, nivelEdificacion) values (@idJugador, @partida, @idCasilla, 0)
@@ -283,7 +283,7 @@ go
 /*
 Autor: Alberto Botana
 fecha: 20210928
-descripciÛn: vende a casilla indicada y recalcula posibles edificaciones. Se valida que se apropiedad del jugador
+descripci√≥n: vende a casilla indicada y recalcula posibles edificaciones. Se valida que se apropiedad del jugador
 */
 create procedure vender
   @idJugador int,
@@ -340,7 +340,7 @@ select * from partidas
 select * from jugadores
 */
 
-/*Prueba de aÒadir Jugador
+/*Prueba de a√±adir Jugador
 select * from partidas
 exec anadirJugador 2,1
 select * from partidas
@@ -385,4 +385,4 @@ select * from jugadores
 select * from propiedades
 select * from casillas
 */
-
+VAMOS RAFA!
