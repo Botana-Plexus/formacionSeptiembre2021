@@ -1,1 +1,0 @@
-[ ] Create rest attribute to validate user data before authentication in UserController
