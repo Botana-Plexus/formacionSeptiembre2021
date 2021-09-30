@@ -2,22 +2,22 @@ using database;
 using model;
 
 namespace controller{
-    public class GiveUp : IUseCaseFunctionality<MatchInfo>{
+    public class MovePlayer : IUseCaseFunctionality<MatchInfo>{
 
         private readonly IMatchRepository _matchRepository;
         private readonly PlayerInfo _playerInfo;
-        private readonly bool _watch;
+        private readonly int _amount;
 
-        public GiveUp(IMatchRepository matchRepository, PlayerInfo playerInfo, bool watch)
+        public MovePlayer(IMatchRepository matchRepository, PlayerInfo playerInfo, int amount)
         {
             _matchRepository = matchRepository;
             _playerInfo = playerInfo;
-            _watch = watch;
+            _amount = amount;
         }
 
         public MatchInfo execute()
         {
-            return this._matchRepository.leaveMatch(_playerInfo, _watch);
+            return _matchRepository.movePlayer(_playerInfo, _amount);
         }
     }
 }

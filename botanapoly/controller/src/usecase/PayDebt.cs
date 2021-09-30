@@ -1,13 +1,13 @@
 using database;
 using model;
 
-namespace controller {
-    public class EndTurn : IUseCaseFunctionality<MatchInfo>{
-        
+namespace controller{
+    public class PayDebt : IUseCaseFunctionality<MatchInfo>{
+
         private readonly IMatchRepository _matchRepository;
         private readonly PlayerInfo _playerInfo;
 
-        public EndTurn(IMatchRepository matchRepository, PlayerInfo playerInfo)
+        public PayDebt(IMatchRepository matchRepository, PlayerInfo playerInfo)
         {
             _matchRepository = matchRepository;
             _playerInfo = playerInfo;
@@ -15,7 +15,7 @@ namespace controller {
 
         public MatchInfo execute()
         {
-            return this._matchRepository.endTurn(this._playerInfo);
+            return _matchRepository.payDebt(_playerInfo);
         }
     }
 }

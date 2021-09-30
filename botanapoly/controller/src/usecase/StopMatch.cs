@@ -16,15 +16,7 @@ namespace controller{
 
         public MatchInfo execute()
         {
-            MatchInfo result = null;
-            if (!matchRepository.exists(matchInfo)) throw new NullReferenceException();
-
-            result = ExtensionMethods.DeepClone(matchInfo);
-            result.matchState = MatchState.TERMINATED;
-            result = matchRepository.saveOrUpdate(matchInfo);
-            if (result == null) throw new NullReferenceException();
-
-            return result;
+            return matchRepository.endMatch(matchInfo);
         }
     }
 }

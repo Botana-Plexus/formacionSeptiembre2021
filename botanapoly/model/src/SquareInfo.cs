@@ -3,41 +3,48 @@ using controller;
 
 namespace model{
     public class SquareInfo : ModelEntity{
-        private  SquareType _type;
-        private  BoardInfo _board;
-        private  string _title;
-        private  int _currentPlayerTurn;
-        private  double _acquisitionCost;
-        private  double _sellBankCost;
-        private  int _edificationLevel;
-        private  double _edificationLevelIncreaseCost;
-        private  double _edificationLevelDecreaseCost;
-        private  List<double> _rentCost;
+        
+        private SquareType _squareType;
+        private BoardInfo _boardInfo;
+        private string _title;
+        private int _order;
+        private double _buyCost;
+        private double _sellCost;
+        private double _edificationLevelBuyCost;
+        private double _edificationLevelSellCost;
+        private List<double> _rentCost;
+        private CollectionInfo _collectionInfo;
+        private int _destination;
+        private PlayerInfo _owner;
+        private int _currentEdificationLevel;
 
-        public SquareInfo(int id, SquareType type, BoardInfo board, string title, int currentPlayerTurn, double acquisitionCost, double sellBankCost, int edificationLevel, double edificationLevelIncreaseCost, double edificationLevelDecreaseCost, List<double> rentCost) : base(id)
+        public SquareInfo(int id, SquareType squareType, BoardInfo boardInfo, string title, int order, double buyCost, double sellCost, double edificationLevelBuyCost, double edificationLevelSellCost, List<double> rentCost, CollectionInfo collectionInfo, int destination, PlayerInfo owner, int currentEdificationLevel) : base(id)
         {
-            _type = type;
-            _board = board;
+            _squareType = squareType;
+            _boardInfo = boardInfo;
             _title = title;
-            _currentPlayerTurn = currentPlayerTurn;
-            _acquisitionCost = acquisitionCost;
-            _sellBankCost = sellBankCost;
-            _edificationLevel = edificationLevel;
-            _edificationLevelIncreaseCost = edificationLevelIncreaseCost;
-            _edificationLevelDecreaseCost = edificationLevelDecreaseCost;
+            _order = order;
+            _buyCost = buyCost;
+            _sellCost = sellCost;
+            _edificationLevelBuyCost = edificationLevelBuyCost;
+            _edificationLevelSellCost = edificationLevelSellCost;
             _rentCost = rentCost;
+            _collectionInfo = collectionInfo;
+            _destination = destination;
+            _owner = owner;
+            _currentEdificationLevel = currentEdificationLevel;
         }
 
-        public SquareType Type
+        public SquareType SquareType
         {
-            get => _type;
-            set => _type = value;
+            get => _squareType;
+            set => _squareType = value;
         }
 
-        public BoardInfo Board
+        public BoardInfo BoardInfo
         {
-            get => _board;
-            set => _board = value;
+            get => _boardInfo;
+            set => _boardInfo = value;
         }
 
         public string Title
@@ -46,46 +53,64 @@ namespace model{
             set => _title = value;
         }
 
-        public int CurrentPlayerTurn
+        public int Order
         {
-            get => _currentPlayerTurn;
-            set => _currentPlayerTurn = value;
+            get => _order;
+            set => _order = value;
         }
 
-        public double AcquisitionCost
+        public double BuyCost
         {
-            get => _acquisitionCost;
-            set => _acquisitionCost = value;
+            get => _buyCost;
+            set => _buyCost = value;
         }
 
-        public double SellBankCost
+        public double SellCost
         {
-            get => _sellBankCost;
-            set => _sellBankCost = value;
+            get => _sellCost;
+            set => _sellCost = value;
         }
 
-        public int EdificationLevel
+        public double EdificationLevelBuyCost
         {
-            get => _edificationLevel;
-            set => _edificationLevel = value;
+            get => _edificationLevelBuyCost;
+            set => _edificationLevelBuyCost = value;
         }
 
-        public double EdificationLevelIncreaseCost
+        public double EdificationLevelSellCost
         {
-            get => _edificationLevelIncreaseCost;
-            set => _edificationLevelIncreaseCost = value;
-        }
-
-        public double EdificationLevelDecreaseCost
-        {
-            get => _edificationLevelDecreaseCost;
-            set => _edificationLevelDecreaseCost = value;
+            get => _edificationLevelSellCost;
+            set => _edificationLevelSellCost = value;
         }
 
         public List<double> RentCost
         {
             get => _rentCost;
             set => _rentCost = value;
+        }
+
+        public CollectionInfo CollectionInfo
+        {
+            get => _collectionInfo;
+            set => _collectionInfo = value;
+        }
+
+        public int Destination
+        {
+            get => _destination;
+            set => _destination = value;
+        }
+
+        public PlayerInfo Owner
+        {
+            get => _owner;
+            set => _owner = value;
+        }
+
+        public int CurrentEdificationLevel
+        {
+            get => _currentEdificationLevel;
+            set => _currentEdificationLevel = value;
         }
     }
 }

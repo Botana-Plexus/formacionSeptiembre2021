@@ -5,39 +5,29 @@ using model;
 
 namespace controller{
     public class CreateMatch : IUseCaseFunctionality<MatchInfo>{
-        private readonly IMatchRepository matchRepository;
-        private readonly IPlayerRepository playerRepository;
-        private readonly PlayerInfo hostPlayer;
-        private readonly MatchTemplateInfo matchTemplateInfo;
-        private readonly bool visibility;
-        private readonly long hash;
-        private readonly Dictionary<string, object> matchTemplateConfiguration;
 
-        public CreateMatch(IMatchRepository matchRepository, IPlayerRepository playerRepository, PlayerInfo hostPlayer, MatchTemplateInfo matchTemplate, bool visibility, long hash, Dictionary<string, object> matchTemplateConfiguration)
+        private IMatchRepository _matchRepository;
+        private PlayerInfo _playerInfo;
+        private string _name;
+        private int? _maxPlayers;
+        private int? _maxDuration;
+        private string _password;
+        private BoardInfo _boardInfo;
+
+        public CreateMatch(IMatchRepository matchRepository, PlayerInfo playerInfo, string name, int? maxPlayers, int? maxDuration, string password, BoardInfo boardInfo)
         {
-            this.matchRepository = matchRepository;
-            this.playerRepository = playerRepository;
-            this.hostPlayer = hostPlayer;
-            matchTemplateInfo = matchTemplate;
-            this.visibility = visibility;
-            this.hash = hash;
-            this.matchTemplateConfiguration = matchTemplateConfiguration;
+            _matchRepository = matchRepository;
+            _playerInfo = playerInfo;
+            _name = name;
+            _maxPlayers = maxPlayers;
+            _maxDuration = maxDuration;
+            _password = password;
+            _boardInfo = boardInfo;
         }
 
         public MatchInfo execute()
         {
-            MatchInfo matchInfo;
-            if (!playerRepository.exists(hostPlayer)) throw new NullReferenceException();
-
-            matchInfo = new MatchInfo();
-            matchInfo.hash = hash;
-            matchInfo.visibility = visibility;
-            matchInfo.host = hostPlayer;
-            matchInfo.matchTemplateInfo = matchTemplateInfo;
-            matchInfo = matchRepository.saveOrUpdate(matchInfo);
-            if (matchInfo == null) throw new NullReferenceException();
-
-            return matchInfo;
+            return this._matchRepository.createMatch(_playerInfo, _maxPlayers, _maxDuration, _password, _boardInfo);
         }
     }
 }

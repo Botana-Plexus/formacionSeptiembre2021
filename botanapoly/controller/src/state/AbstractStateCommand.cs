@@ -1,24 +1,28 @@
 ﻿using System.Collections.Generic;
 
-namespace controller{
+namespace controller {
     public abstract class AbstractStateCommand<S, A> : IStateCommand<S, A>{
-        protected readonly Dictionary<S, S> mappings;
-        protected readonly A action;
+        protected readonly Dictionary<A, S> _mappings;
+        protected readonly S _initialState;
 
-        protected AbstractStateCommand(A action, Dictionary<S, S> mappings)
+        protected AbstractStateCommand(S initialState, Dictionary<A, S> mappings)
         {
-            this.mappings = mappings;
-            this.action = action;
+            this._initialState = initialState;
+            this._mappings = mappings;
         }
 
         public bool validate(S currentState, A action)
         {
-            return action.Equals(this.action) && mappings.ContainsKey(currentState);
+            return this._initialState.Equals(currentState) && this._mappings.ContainsKey(action);
         }
 
-        public virtual S execute(S currentState, A action)
+        public S execute(S currentState, A action)
         {
-            return mappings[currentState];
+            return this._mappings[action];
         }
+
+        public Dictionary<A, S> Mappings => _mappings;
+
+        public S InitialState => _initialState;
     }
 }

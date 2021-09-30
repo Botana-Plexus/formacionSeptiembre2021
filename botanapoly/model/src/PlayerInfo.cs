@@ -2,19 +2,28 @@
 
 namespace model{
     public class PlayerInfo : ModelEntity{
+        
         private  UserInfo _user;
         private  MatchInfo _match;
         private  double _balance;
         private  SquareInfo _square;
-        private  int turn;
+        private  int? _turn;
+        private int? _remainingPunishmentRounds;
+        private int? _doubleRollsCounter;
+        private int? _debt;
+        private PlayerInfo _creditor;
 
-        public PlayerInfo(int id, UserInfo user, MatchInfo match, double balance, SquareInfo square, int turn) : base(id)
+        public PlayerInfo(int id, UserInfo user, MatchInfo match, double balance, SquareInfo square, int? turn, int? remainingPunishmentRounds, int? doubleRollsCounter, int? debt, PlayerInfo creditor) : base(id)
         {
             _user = user;
             _match = match;
             _balance = balance;
             _square = square;
-            this.turn = turn;
+            _turn = turn;
+            _remainingPunishmentRounds = remainingPunishmentRounds;
+            _doubleRollsCounter = doubleRollsCounter;
+            _debt = debt;
+            _creditor = creditor;
         }
 
         public UserInfo User
@@ -41,10 +50,34 @@ namespace model{
             set => _square = value;
         }
 
-        public int Turn
+        public int? Turn
         {
-            get => turn;
-            set => turn = value;
+            get => _turn;
+            set => _turn = value;
+        }
+
+        public int? RemainingPunishmentRounds
+        {
+            get => _remainingPunishmentRounds;
+            set => _remainingPunishmentRounds = value;
+        }
+
+        public int? DoubleRollsCounter
+        {
+            get => _doubleRollsCounter;
+            set => _doubleRollsCounter = value;
+        }
+
+        public int? Debt
+        {
+            get => _debt;
+            set => _debt = value;
+        }
+
+        public PlayerInfo Creditor
+        {
+            get => _creditor;
+            set => _creditor = value;
         }
     }
 }
