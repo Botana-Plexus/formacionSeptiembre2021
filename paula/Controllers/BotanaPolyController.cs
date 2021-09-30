@@ -27,9 +27,16 @@ namespace BotanaPolyAPI.Controllers
         [HttpPost]
         public string CrearPartida([FromBody] Modelos.Partida partida)
         {
-
-            string consulta = $"CrearPartida '{partida.Administrador}', '{partida.Nombre}', '{partida.Pass}', '{partida.Tablero}', '{partida.MaxJugadores}', {partida.MaxTiempo};";
-            return BD.ejecutarConsultaMod(consulta);
+            if (String.IsNullOrEmpty(partida.Pass))
+            {
+                string consulta = $"CrearPartida '{partida.Nombre}', '{partida.Administrador}', '{partida.MaxJugadores}', {partida.MaxTiempo},'{partida.Pass}', '{partida.Tablero}';";
+                return BD.ejecutarConsultaMod(consulta);
+            }
+            else
+            {
+                string consulta = $"CrearPartida '{partida.Nombre}', '{partida.Administrador}', '{partida.MaxJugadores}', {partida.MaxTiempo},'{partida.Pass}', '{partida.Tablero}';";
+                return BD.ejecutarConsultaMod(consulta);
+            } 
         }
 
         [HttpPost("idPartida")]
@@ -40,11 +47,19 @@ namespace BotanaPolyAPI.Controllers
         }
 
 
-        [HttpPost("idUsuario, idPartida")]
-        public string UnirsePartida(int idUsuario, int idPartida)
+        [HttpPost("idUsuario, idPartida, pass")]
+        public string UnirsePartida(int idUsuario, int idPartida, string pass)
         {
-          string consulta = $"anadirJugador '{idUsuario}', '{idPartida}'";
-          return BD.ejecutarConsultaMod(consulta);
+            if (String.IsNullOrEmpty(pass))
+            {
+                string consulta = $"anadirJugador {idUsuario}, {idPartida}, NULL";
+                return BD.ejecutarConsulta(consulta).Rows[0]["Column1"].ToString();
+            }
+            else
+            {
+                string consulta = $"anadirJugador {idUsuario}, {idPartida}, '{pass}'";
+                return BD.ejecutarConsulta(consulta).Rows[0]["Column1"].ToString();
+            }
         }
         
 
@@ -55,14 +70,8 @@ namespace BotanaPolyAPI.Controllers
             string consulta = $"autenticar '{email}', '{pass}'";
             System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
 
-            if(dt.Rows[0]["Column1"].Equals(0))
-            {
-                return "Autenticación realizada con éxito";
-            }
-            else
-            {
-                return "Error en la autenticación";
-            }
+            return dt.Rows[0]["Column2"].ToString();
+            
         }
 
         [HttpPost("idJugador")]
@@ -81,16 +90,10 @@ namespace BotanaPolyAPI.Controllers
 
 
         [HttpPost]
-        public string crearBot(int partida, int numero)
+        public string crearBot(int partida,string pass)
         {
-            StringBuilder toret = new StringBuilder();
-            string consulta = $"anadirJugador NULL, '{partida}'";
-            for (int i = 0; i < numero; i++)
-            {
-                string msg = BD.ejecutarConsultaMod(consulta);
-                toret.Append("Bot #" + i + "\n" + msg + "\n");
-            }
-            return toret.ToString();
+            string consulta = $"anadirJugador NULL, {partida}, '{pass}'";
+            return BD.ejecutarConsulta(consulta).ToString();
         }
 
 
@@ -106,6 +109,14 @@ namespace BotanaPolyAPI.Controllers
         public string abandonar(int idJugador)
         {
             string consulta = $"abandonarPartida {idJugador};";
+            return BD.ejecutarConsultaMod(consulta);
+        }
+
+
+        [HttpPost("{idJugador}, {tirada}")]
+        public string mover(int idJugador, int tirada)
+        {
+            string consulta = $"mover {idJugador}, {tirada};";
             return BD.ejecutarConsultaMod(consulta);
         }
 
@@ -245,6 +256,51 @@ namespace BotanaPolyAPI.Controllers
                 jugador.Dobles = Convert.ToInt32(dt.Rows[i]["dobles"]);
                 jugador.TurnosDeCastigo = Convert.ToInt32(dt.Rows[i]["turnosDeCastigo"]);
                 lista.Add(jugador);
+            }
+            return lista;
+        }
+
+        [HttpGet("{idJugador}")]
+        public List<Modelos.PropiedadesJugador> getPropiedades(int idJugador)
+        {
+            string consulta = $"getPropiedades {idJugador}";
+            System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
+            List<Modelos.PropiedadesJugador> lista = new List<Modelos.PropiedadesJugador>();
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                Modelos.PropiedadesJugador propiedad = new Modelos.PropiedadesJugador();
+                propiedad.Id = Convert.ToInt32(dt.Rows[i]["id"]);
+                if (dt.Rows[i]["conjunto"] != System.DBNull.Value)
+                    propiedad.Conjunto = Convert.ToInt32(dt.Rows[i]["conjunto"]);
+                if (dt.Rows[i]["coste1"] != System.DBNull.Value)
+                    propiedad.Coste1 = Convert.ToInt32(dt.Rows[i]["coste1"]);
+                if (dt.Rows[i]["coste2"] != System.DBNull.Value)
+                    propiedad.Coste2 = Convert.ToInt32(dt.Rows[i]["coste2"]);
+                if (dt.Rows[i]["coste3"] != System.DBNull.Value)
+                    propiedad.Coste3 = Convert.ToInt32(dt.Rows[i]["coste3"]);
+                if (dt.Rows[i]["coste4"] != System.DBNull.Value)
+                    propiedad.Coste4 = Convert.ToInt32(dt.Rows[i]["coste4"]);
+                if (dt.Rows[i]["coste5"] != System.DBNull.Value)
+                    propiedad.Coste5 = Convert.ToInt32(dt.Rows[i]["coste5"]);
+                if (dt.Rows[i]["coste6"] != System.DBNull.Value)
+                    propiedad.Coste6 = Convert.ToInt32(dt.Rows[i]["coste6"]);
+                if (dt.Rows[i]["costeEdificacion"] != System.DBNull.Value)
+                    propiedad.CosteEdificacion = Convert.ToInt32(dt.Rows[i]["costeEdificacion"]);
+                if (dt.Rows[i]["destino"] != System.DBNull.Value)
+                    propiedad.Destino = Convert.ToInt32(dt.Rows[i]["destino"]); // NECESARIO?
+                propiedad.Orden = Convert.ToInt32(dt.Rows[i]["orden"]);
+                if (dt.Rows[i]["precioCompra"] != System.DBNull.Value)
+                    propiedad.PrecioCompra = Convert.ToInt32(dt.Rows[i]["precioCompra"]);
+                if (dt.Rows[i]["precioVenta"] != System.DBNull.Value)
+                    propiedad.PrecioVenta = Convert.ToInt32(dt.Rows[i]["precioVenta"]);
+                if (dt.Rows[i]["precioVentaEdificacion"] != System.DBNull.Value)
+                    propiedad.PrecioVentaEdificacion = Convert.ToInt32(dt.Rows[i]["precioVentaEdificacion"]);
+                propiedad.Tipo = Convert.ToInt32(dt.Rows[i]["tipo"]);
+                propiedad.Tablero = Convert.ToInt32(dt.Rows[i]["tablero"]);
+                propiedad.NivelEdificacion = Convert.ToInt32(dt.Rows[i]["nivelEdificacion"]);
+                propiedad.Nombre = dt.Rows[i]["nombre"].ToString();
+                lista.Add(propiedad);
             }
             return lista;
         }
