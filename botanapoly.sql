@@ -91,7 +91,7 @@ create table jugadores
   saldo int not null,
   orden int not null, -- el orden en el turno. orden 0 = no tiene orden, por lo que es observador
   posicion int null references casillas(id), -- casilla sobre la que esta situado el jugador. el numero de casilla esta en casilla
-  dobles int not null, --cantidad de dobles consecutivos sacados por el jugador. Al tercer doble, debería ser castigado
+  dobles int not null, --cantidad de dobles consecutivos sacados por el jugador. Al tercer doble, deberï¿½a ser castigado
   turnosDeCastigo int not null, --cantidad de turnos que le quedan de castigo. comienza en 0
   deuda int not null, --cantidad qeu debe un jugador. No podra hacer nada hasta que la pague. comienza con 0
   acreedor int null references jugadores(id) --a quien le debe el jugador. Si tiene deuda y acreedor es nulo, entonces es con la banca
@@ -331,7 +331,7 @@ as
  /*
  Autor: Pablo Costa
  fecha: 20210929
- descripcion: Devuelve la información de las partidas existentes
+ descripcion: Devuelve la informaciï¿½n de las partidas existentes
 */
 
 create procedure getPartidas
@@ -347,7 +347,7 @@ go
 /*
 Autor: Alberto Botana
 fecha: 20210929
-descripción: devuelve un listado de los tableros disponibles
+descripciï¿½n: devuelve un listado de los tableros disponibles
 */
 create procedure getTableros
 as
@@ -357,13 +357,13 @@ go
 /*
  Autor: Pablo Costa
  fecha: 20210929
- descripcion: Devuelve la información de las plantillas existentes
+ descripcion: Devuelve la informaciï¿½n de las plantillas existentes
 */
 go
 create procedure getCasillas
   @idTablero int
 as
-  select id, tipo, nombre, orden, precioCompra, precioVenta, costeEdificación, precioVentaEdificación, Coste1,
+  select id, tipo, nombre, orden, precioCompra, precioVenta, costeEdificaciï¿½n, precioVentaEdificaciï¿½n, Coste1,
     Coste2, Coste3, Coste4, Coste5, conjunto, destino 
   from casillas 
   where tablero = @idTablero
@@ -372,7 +372,7 @@ go
  /*
  Autor: Pablo Costa
  fecha: 20210929
- descripcion: Devuelve la información de los jugadores de una partida
+ descripcion: Devuelve la informaciï¿½n de los jugadores de una partida
 */
 create procedure getJugadoresInfo
 	@idPartida int
@@ -437,7 +437,7 @@ as
 /*
 autor: Alberto Botana
 fecha: 20210929
-descripción: realiza el movimiento de un jugador, calcula a que posición debe ir, 
+descripciï¿½n: realiza el movimiento de un jugador, calcula a que posiciï¿½n debe ir, 
 se considera movimiento negativo, pero nunca de forma que pueda provocar retroceder antes de la salida
 no s erealizan acciones relativas a la casilla en la que se ha caido
 */
@@ -462,7 +462,7 @@ as
   if ( @nuevaPosicion > @numCasillas)
   begin
     set @nuevaPosicion = @nuevaPosicion - @numCasillas --es que se ha dado una vuelta
-	select @bonificacionVuelta = precioCompra from casillas where tablero = @tablero and tipo = 1 and orden = 1 --esto es incorrecto, habría que consultar si se pasa por encima de una casilla de tipo salida
+	select @bonificacionVuelta = precioCompra from casillas where tablero = @tablero and tipo = 1 and orden = 1 --esto es incorrecto, habrï¿½a que consultar si se pasa por encima de una casilla de tipo salida
 	update jugadores set saldo = saldo + @bonificacionVuelta where id = @idJugador -- en caso de dar vuelta se suma el saldo
   end
 
@@ -477,7 +477,7 @@ go
 /*
 Autor: Alberto Botana
 fecha: 20210929
-descripcion: realiza la edificación de una casa. Se valida que el usuario tenga todo el conjunto de casillas en propiedad, y entonces permite subir 
+descripcion: realiza la edificaciï¿½n de una casa. Se valida que el usuario tenga todo el conjunto de casillas en propiedad, y entonces permite subir 
 un nivel de edificacion bajando el coste correspondiente
 */
 create procedure edificar
@@ -504,7 +504,7 @@ as
   
   select @nivelActual = nivelEdificacion from propiedades where casilla = @idCasilla and jugador = @idJugador
   
-  if @nivelActual = 5 begin select 4,'nivel máximo alcanzado' return end
+  if @nivelActual = 5 begin select 4,'nivel mï¿½ximo alcanzado' return end
 
   update propiedades set nivelEdificacion = nivelEdificacion + 1 where jugador = @idJugador and casilla = @idCasilla
   update jugadores set saldo = saldo - @coste where id = @idJugador
@@ -540,8 +540,8 @@ go
 /*
 autor: Alberto Botana
 fecha: 20210930
-descripcion: permite registrar cuantos dobles lleva el usuario. Se sumará 1 por cada invocacion, y si se quiere resetear hay que 
-añadir 1 como sgundo parametro (reset)
+descripcion: permite registrar cuantos dobles lleva el usuario. Se sumarï¿½ 1 por cada invocacion, y si se quiere resetear hay que 
+aï¿½adir 1 como sgundo parametro (reset)
 */
 create procedure setDobles
   @idJugador int,
@@ -641,8 +641,6 @@ exec getTableros
 exec getCasillas 1
 exec getJugadoresInfo 1
 */
-<<<<<<< HEAD
-=======
 
 /*
 update  jugadores set deuda = 20010, acreedor = 3 where id = 1
@@ -662,4 +660,3 @@ select * from jugadores
 mover 1,1
 select * from jugadores
 */
->>>>>>> master
