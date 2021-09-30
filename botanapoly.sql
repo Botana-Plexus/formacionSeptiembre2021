@@ -385,4 +385,3 @@ select * from jugadores
 select * from propiedades
 select * from casillas
 */
-VAMOS RAFA!
