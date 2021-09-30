@@ -77,7 +77,7 @@ namespace rest{
                 }.ToList()}
             };
             _states = new GameStateControlFlow<TurnState, TurnAction>(actions.ToList(), states);
-            _matchRepository = null;
+            _matchRepository = new MatchRepositoryMock();
         }
 
         public static Configuration Instance
@@ -99,5 +99,7 @@ namespace rest{
         }
 
         public GameStateControlFlow<TurnState, TurnAction> States => _states;
+
+        public IMatchRepository MatchRepository => _matchRepository;
     }
 }
