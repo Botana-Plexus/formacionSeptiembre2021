@@ -35,37 +35,6 @@ namespace API_Botanapoly.Controllers
             return BD.ejecutarConsultaInsert(consulta);
 
         }
-
-        //GET USERS
-        [HttpGet("listaUsuarios")]
-        public List<Usuarios> listarUsuarios()
-        {
-
-            string consulta = @"select * from usuarios";
-
-            System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
-
-            var lista = new List<Usuarios>();
-
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                Usuarios usuario = new Usuarios();
-                usuario.id = Convert.ToInt32(dt.Rows[i]["id"]);
-                usuario.email = dt.Rows[i]["email"].ToString();
-                usuario.nick = dt.Rows[i]["nick"].ToString();
-                usuario.fechaNacimiento = (DateTime)dt.Rows[i]["fechaNacimiento"];
-                lista.Add(usuario);
-            }
-
-            return lista;
-        }
-
-            
-        
-        }
-
-
-
-
     }
+}
 
