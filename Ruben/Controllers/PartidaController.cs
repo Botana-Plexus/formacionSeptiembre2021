@@ -262,20 +262,50 @@ namespace API_Botanapoly.Controllers
         }
 
         //Edificar
-        [HttpPost("crearBot")]
-        public string edificar(int idJugador)
+        [HttpPost("edificar")]
+        public string edificar(int idJugador, int idPartida)
         {
-            string consulta = $"anadirJugadores '{idJugador}'";
+            string query = $"edificar '{idJugador}','{idPartida}'";
 
-            return BD.ejecutarConsultaInsert(consulta);
+            System.Data.DataTable dt = BD.ejecutarConsulta(query);
+            return dt.Rows[0]["Column2"].ToString();
+        }
+
+        //Crear Bots
+        [HttpPost("crearBot")]
+        public string crearBot(int idPartida,string pass)
+        {
+            string consulta;
+            if (string.IsNullOrEmpty(pass))
+            {
+                consulta = $"anadirJugador null,'{idPartida}',null";
+            }
+            else
+            {
+                consulta = $"anadirJugador null,'{idPartida}','{pass}'";
+            }
+
+            System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
+            return dt.Rows[0]["Column2"].ToString();
         }
 
 
+        //Vender Edificación
+        [HttpPost("venderEdificacion")]
+        public string venderEdificacion(int idJugador, int idCasilla)
+        {
+            string consulta = $"venderEdificacion '{idJugador}','{idCasilla}'";
 
-        //mover (jugador)
+            System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
+            return dt.Rows[0]["Column2"].ToString();
+        }
+
+
+        //Mover Jugador
+
+
+        
         //set dobles (partida)
-        //venderEdif (partida)
-        //edificar (partida)
 
     }
 }
