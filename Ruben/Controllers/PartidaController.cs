@@ -90,6 +90,7 @@ namespace API_Botanapoly.Controllers
                 partida.turno = Convert.ToInt32(dt.Rows[i]["turno"]);
                 partida.estado = Convert.ToInt32(dt.Rows[i]["estado"]);
                 partida.tablero = Convert.ToInt32(dt.Rows[i]["tablero"]);
+                partida.tienePass = Convert.ToBoolean(dt.Rows[i]["tienePass"]);
 
                 lista.Add(partida);
             }
@@ -155,13 +156,27 @@ namespace API_Botanapoly.Controllers
         [HttpPost("crear")]
         public string crearPartida([FromBody] Partidas partida)
         {
+            string consulta;
+            
+
             if ( partida.maxJugadores == null)
             {
                 partida.maxJugadores = 6;
             }
+            if (string.IsNullOrEmpty(partida.pass))
+            {
 
-            string consulta = $"crearPartida'{partida.nombre}','{partida.administrador}'," +
-            $"'{partida.maxJugadores}','{partida.maxTiempo}','{partida.pass}','{partida.tablero}'";
+                consulta = $"crearPartida'{partida.nombre}','{partida.administrador}'," +
+               $"'{partida.maxJugadores}','{partida.maxTiempo}',null,'{partida.tablero}'";
+            }
+            else
+            {
+                consulta = $"crearPartida'{partida.nombre}','{partida.administrador}'," +
+               $"'{partida.maxJugadores}','{partida.maxTiempo}','{partida.pass}','{partida.tablero}'";
+            }
+
+     
+
 
             return BD.ejecutarConsultaInsert(consulta);
         }
@@ -169,11 +184,21 @@ namespace API_Botanapoly.Controllers
 
         //Unirse Partida
         [HttpPost("unirse")]
-        public string añadirJugador(int idJugador, int idPartida)
+        public string añadirJugador(int idJugador, int idPartida, string pass)
         {
-            string consulta = $"anadirJugador  '{idJugador }','{idPartida}'";
+            string consulta;
+            if (string.IsNullOrEmpty(pass))
+            {
+             consulta = $"anadirJugador  '{idJugador }','{idPartida}',null";
+            }
+            else
+            {
+                consulta = $"anadirJugador '{idJugador}','{idPartida}','{pass}'";
+            }
 
-            return BD.ejecutarConsultaInsert(consulta);
+            System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
+            return dt.Rows[0]["Column2"].ToString();
+
         }
 
 
@@ -237,10 +262,10 @@ namespace API_Botanapoly.Controllers
         }
 
         //Edificar
-        [HttpPost("edificar")]
+        [HttpPost("crearBot")]
         public string edificar(int idJugador)
         {
-            string consulta = $"retirarJugador '{idJugador}'";
+            string consulta = $"anadirJugadores '{idJugador}'";
 
             return BD.ejecutarConsultaInsert(consulta);
         }
