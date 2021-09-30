@@ -360,7 +360,7 @@ go
  descripcion: Devuelve la información de las plantillas existentes
 */
 go
-alter procedure getCasillas
+create procedure getCasillas
   @idTablero int
 as
   select id, tipo, nombre, orden, precioCompra, precioVenta, costeEdificacion, precioVentaEdificacion, Coste1,
@@ -576,10 +576,10 @@ insert into casillas (nombre, tipo, tablero, orden, precioCompra, precioventa) v
 insert into casillas (nombre, tipo, tablero, orden, precioCompra, precioventa) values ('estacion3',3,1,3,20000,10000)
 exec registrar 'alberto.botanafidalgo@plexus.es','botana','1234','19770620'
 exec registrar 'alberto@plexus.es','botana2','1234','19770620'
-exec crearPartida 'partida1',1,4,null,'1234',1 
+exec crearPartida 'partida3',1,6,null,'',1 
 exec anadirJugador 2,1,'1234'
 exec anadirJugador null,1,'1234'
-exec comenzarPartida 1
+exec comenzarPartida 6
 
 */
 
@@ -679,5 +679,5 @@ select * from jugadores
 */
 
 /*
-exec getPropiedades 4
+exec getPropiedades 1
 */

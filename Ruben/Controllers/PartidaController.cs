@@ -14,6 +14,52 @@ namespace API_Botanapoly.Controllers
     {
         public Database BD = new Database();
 
+        //getPorpiedades de jugador 
+        [HttpGet("listarPropiedadesJugador")]
+        public List<Casillas> getPropiedades(int idJugador)
+        {
+            string consulta = $"getPropiedades '{idJugador}'";
+            System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
+
+            var lista = new List<Casillas>();
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                Casillas casilla = new Casillas();
+                casilla.id = Convert.ToInt32(dt.Rows[i]["id"]);
+                casilla.tipo = Convert.ToInt32(dt.Rows[i]["tipo"]);
+                casilla.nombre = Convert.ToString(dt.Rows[i]["nombre"]);
+                casilla.precioCompra =
+                    dt.Rows[i]["precioCompra"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["precioCompra"]) : null;
+                casilla.precioVenta =
+                    dt.Rows[i]["precioVenta"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["precioVenta"]) : null;
+                casilla.costeEdificacion =
+                    dt.Rows[i]["costeEdificacion"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["costeEdificacion"]) : null;
+                casilla.precioVentaEdificacion =
+                    dt.Rows[i]["precioVentaEdificacion"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["precioVentaEdificacion"]) : null;
+                casilla.Coste1 =
+                    dt.Rows[i]["Coste1"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["Coste1"]) : null;
+                casilla.Coste2 =
+                    dt.Rows[i]["Coste2"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["Coste2"]) : null;
+                casilla.Coste3 =
+                    dt.Rows[i]["Coste3"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["Coste3"]) : null;
+                casilla.Coste4 =
+                    dt.Rows[i]["Coste4"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["Coste4"]) : null;
+                casilla.Coste5 =
+                    dt.Rows[i]["Coste5"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["Coste5"]) : null;
+                casilla.conjunto =
+                    dt.Rows[i]["conjunto"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["conjunto"]) : null;
+                casilla.destino =
+                    dt.Rows[i]["destino"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["destino"]) : null;
+                casilla.nivelEdificacion =
+                    dt.Rows[i]["nivelEdificacion"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["nivelEdificacion"]) : null;
+                lista.Add(casilla);
+            }
+
+            return lista;
+
+        }
+
         //getCasillas 
         [HttpGet("listaCasillas")]
         public List<Casillas> getCasillas(int idTablero)
@@ -211,18 +257,7 @@ namespace API_Botanapoly.Controllers
             return BD.ejecutarConsultaInsert(consulta);
         }
 
-        //Actualizar Nivel Edificación
-        [HttpPost("actualizarNivelEdificacion")]
-        public string actualizarNivelEdificacion(int idJugador,int tipo)
-        {
-            if(tipo != 2 || tipo != 3)
-            {
-                return "Tipo de casilla no valido";
-            }
-
-            string consulta = $"actualizarNivelConstruccion '{idJugador}','{tipo}'"; 
-            return BD.ejecutarConsultaInsert(consulta);
-        }
+      
 
         //Comprar casilla
         [HttpPost("comprar")]
@@ -260,6 +295,8 @@ namespace API_Botanapoly.Controllers
 
             return BD.ejecutarConsultaInsert(consulta);
         }
+
+        
 
         //Edificar
         [HttpPost("edificar")]
@@ -302,10 +339,26 @@ namespace API_Botanapoly.Controllers
 
 
         //Mover Jugador
+        [HttpPost("moverJugador")]
+
+        public string moverJudador(int idJugador,int tirada)
+        {
+            string consulta = $"mover '{idJugador}','{tirada}'";
+
+            System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
+            return dt.Rows[0]["Column2"].ToString();
+        }
 
 
-        
-        //set dobles (partida)
+        //Aumentar valor dobles en jugador
+        [HttpPost("dobles")]
+
+        public string setDobles(int idJugador, int reseteo)
+        {
+            string consulta = $"setDobles '{idJugador}','{reseteo}'";
+            return BD.ejecutarConsultaInsert(consulta);
+
+        }
 
     }
 }
