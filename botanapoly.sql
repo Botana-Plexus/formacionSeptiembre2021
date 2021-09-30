@@ -1,16 +1,15 @@
 /*
 
 use master
-drop database botanapoly_Botana
-create database botanapoly_Botana
+drop database botanapoly
+create database botanapoly
 use botanapoly_Botana
 drop login pruebas
 create login pruebas with password = 'pruebas', default_database = botanapoly_Botana, check_policy = off
 */
 
-
-CREATE USER pruebas FOR LOGIN pruebas WITH DEFAULT_SCHEMA=db_owner
-ALTER ROLE db_owner ADD MEMBER pruebas
+--CREATE USER pruebas FOR LOGIN pruebas WITH DEFAULT_SCHEMA=db_owner
+--ALTER ROLE db_owner ADD MEMBER pruebas
 
 
 create table usuarios
@@ -787,9 +786,10 @@ autenticar 'alberto.botanafidalgo@plexus.es','1234'
 select * from tableros
 select * from casillas
 exec crearPartida 'partida7',1,4,null,null,2
-
+delete from jugadores
+delete from partidas
 select * from partidas
-select * from jugadores
+select * from usuarios
 */
 
 /*Prueba de añadir Jugador
