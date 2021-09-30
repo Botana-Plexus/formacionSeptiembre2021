@@ -120,6 +120,21 @@ namespace BotanaPolyAPI.Controllers
             return BD.ejecutarConsultaMod(consulta);
         }
 
+        [HttpPost("{idJugador}, {idCasilla}")]
+        public string edificar(int idJugador, int idCasilla)
+        {
+            string consulta = $"edificar {idJugador}, {idCasilla};";
+            return BD.ejecutarConsultaMod(consulta);
+        }
+
+
+        [HttpPost("{idJugador}, {idCasilla}")]
+        public string venderEdificacion(int idJugador, int idCasilla)
+        {
+            string consulta = $"venderEdificacion {idJugador}, {idCasilla};";
+            return BD.ejecutarConsultaMod(consulta);
+        }
+
         [HttpGet]
         public List<Modelos.Tablero> getTableros()
         {
@@ -167,28 +182,24 @@ namespace BotanaPolyAPI.Controllers
         }
 
         [HttpGet("{idPartida}")]
-        public List<Modelos.Partida> getPartida(int idPartida)
+        public Modelos.Partida getPartida(int idPartida)
         {
             string consulta = $"getPartidas {idPartida}";
             System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
-            List<Modelos.Partida> lista = new List<Modelos.Partida>();
 
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                Modelos.Partida partida = new Modelos.Partida();
-                partida.Id = Convert.ToInt32(dt.Rows[i]["id"]);
-                partida.Estado = Convert.ToInt32(dt.Rows[i]["Estado"]);
-                if (dt.Rows[i]["maxJugadores"] != System.DBNull.Value)
-                    partida.MaxJugadores = Convert.ToInt32(dt.Rows[i]["maxJugadores"]);
-                if (dt.Rows[i]["maxTiempo"] != System.DBNull.Value)
-                    partida.MaxTiempo = Convert.ToInt32(dt.Rows[i]["maxTiempo"]);
-                partida.Nombre = dt.Rows[i]["nombre"].ToString();
-                partida.NumJugadores = Convert.ToInt32(dt.Rows[i]["numJugadores"]);
-                partida.Tablero = Convert.ToInt32(dt.Rows[i]["tablero"]);
-                partida.Turno = Convert.ToInt32(dt.Rows[i]["turno"]);
-                lista.Add(partida);
-            }
-            return lista;
+            Modelos.Partida partida = new Modelos.Partida();
+            partida.Id = Convert.ToInt32(dt.Rows[0]["id"]);
+            partida.Estado = Convert.ToInt32(dt.Rows[0]["Estado"]);
+            if (dt.Rows[0]["maxJugadores"] != System.DBNull.Value)
+                partida.MaxJugadores = Convert.ToInt32(dt.Rows[0]["maxJugadores"]);
+            if (dt.Rows[0]["maxTiempo"] != System.DBNull.Value)
+                partida.MaxTiempo = Convert.ToInt32(dt.Rows[0]["maxTiempo"]);
+            partida.Nombre = dt.Rows[0]["nombre"].ToString();
+            partida.NumJugadores = Convert.ToInt32(dt.Rows[0]["numJugadores"]);
+            partida.Tablero = Convert.ToInt32(dt.Rows[0]["tablero"]);
+            partida.Turno = Convert.ToInt32(dt.Rows[0]["turno"]);
+
+            return partida;
         }
 
 
@@ -303,6 +314,24 @@ namespace BotanaPolyAPI.Controllers
                 lista.Add(propiedad);
             }
             return lista;
+        }
+
+        [HttpGet("{idPartida}")]
+        public int getTurno(int idPartida)
+        {
+            string consulta = $"getPartidas {idPartida}";
+            System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
+            List<Modelos.Partida> lista = new List<Modelos.Partida>();
+
+            return Convert.ToInt32(dt.Rows[0]["turno"]);
+        }
+
+
+        [HttpPost("{idJugador}, {dobles}")]
+        public string setDobles(int idJugador, int dobles)
+        {
+            string consulta = $"setDobles {idJugador}, {dobles};";
+            return BD.ejecutarConsultaMod(consulta);
         }
 
 
