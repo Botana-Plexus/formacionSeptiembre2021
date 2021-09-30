@@ -8,6 +8,7 @@ using model;
 namespace rest {
     [ApiController]
     [Route("/api/match/{matchId}/execute/")]
+    [MatchValidation]
     public class MatchActionController : ControllerBase {
 
         [HttpPost]
