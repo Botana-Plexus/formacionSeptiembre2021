@@ -57,29 +57,175 @@ namespace botanapoli_api.Controllers
             }
         }
 
-        // GET api/<ValuesController1>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // Get turno de jugador en una partida
+        [HttpGet]
+        [ActionName("GetTurnoJugador")]
+        public object[] GetTurnoJugador(int idJugador, int idPartida)
         {
-            return "value";
+            object[] resTurno = new object[2];
+            DbController conexion = new DbController();
+
+            try
+            {
+                DataTable res = conexion.DbRetrieveQuery($"getTurno {idPartida}, {idJugador}");
+                resTurno[0] = res.Rows[0][0];
+                resTurno[1] = res.Rows[0][1];
+                return resTurno;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.GetType() + ": " + e.Message);
+            }
         }
 
-        // POST api/<ValuesController1>
+        // Post edificar en una casilla
         [HttpPost]
-        public void Post([FromBody] string value)
+        [ActionName("Edificar")]
+        public object[] Edificar(int idJugador, int idCasilla)
         {
+            object[] resEdificar = new object[2];
+            DbController conexion = new DbController();
+
+            try
+            {
+                DataTable res = conexion.DbRetrieveQuery($"edificar {idJugador}, {idCasilla}");
+                resEdificar[0] = res.Rows[0][0];
+                resEdificar[1] = res.Rows[0][1];
+                return resEdificar;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.GetType() + ": " + e.Message);
+            }
         }
 
-        // PUT api/<ValuesController1>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // Post moverse por el tablero
+        [HttpPost]
+        [ActionName("MoverJugador")]
+        public string MoverJugador(int idJugador, int tirada)
         {
+            DbController conexion = new DbController();
+
+            try
+            {
+                DataTable res = conexion.DbRetrieveQuery($"mover {idJugador}, {tirada}");
+                return (string)res.Rows[0][0];
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.GetType() + ": " + e.Message);
+            }
         }
 
-        // DELETE api/<ValuesController1>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // Post vender propiedad
+        [HttpPost]
+        [ActionName("VenderPropiedad")]
+        public object[] VenderPropiedad(int idJugador, int idCasilla)
         {
+            object[] resVender = new object[2];
+            DbController conexion = new DbController();
+
+            try
+            {
+                DataTable res = conexion.DbRetrieveQuery($"vender {idJugador}, {idCasilla}");
+                resVender[0] = res.Rows[0][0];
+                resVender[1] = res.Rows[0][1];
+                return resVender;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.GetType() + ": " + e.Message);
+            }
+        }
+
+        // Post comprar propiedad
+        [HttpPost]
+        [ActionName("ComprarPropiedad")]
+        public object[] ComprarPropiedad(int idJugador)
+        {
+            object[] resComprar = new object[2];
+            DbController conexion = new DbController();
+
+            try
+            {
+                DataTable res = conexion.DbRetrieveQuery($"comprar {idJugador}");
+                resComprar[0] = res.Rows[0][0];
+                resComprar[1] = res.Rows[0][1];
+                return resComprar;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.GetType() + ": " + e.Message);
+            }
+        }
+
+        // Post vender nivel de edificacion
+        [HttpPost]
+        [ActionName("VenderEdificacion")]
+        public object[] VenderEdificacion (int idJUgador, int idcasilla)
+        {
+            object[] resVender = new object[2];
+            DbController conexion = new DbController();
+
+            try
+            {
+                DataTable res = conexion.DbRetrieveQuery($"venderEdificacion {idJUgador}, {idcasilla}");
+                resVender[0] = res.Rows[0][0];
+                resVender[1] = res.Rows[0][1];
+                return resVender;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.GetType() + ": " + e.Message);
+            }
+        }
+
+        // Post pagar deuda
+        [HttpPost]
+        [ActionName("PagarDeuda")]
+        public object[] PagarDeuda(int idJUgador)
+        {
+            object[] resPagar = new object[2];
+            DbController conexion = new DbController();
+
+            try
+            {
+                DataTable res = conexion.DbRetrieveQuery($"pagarDeuda {idJUgador}");
+                resPagar[0] = res.Rows[0][0];
+                resPagar[1] = res.Rows[0][1];
+                return resPagar;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.GetType() + ": " + e.Message);
+            }
+        }
+
+        // Get carta
+        [HttpGet]
+        [ActionName("ObtenerCarta")]
+        public Modelos.Carta ObtenerCarta(int idJUgador)
+        {
+            Modelos.Carta carta = new Modelos.Carta();
+            DbController conexion = new DbController();
+
+            try
+            {
+                DataTable res = conexion.DbRetrieveQuery($"getCartaAleatoria {idJUgador}");
+                int idCarta = (int)res.Rows[0][0];
+                
+                DataTable info = conexion.DbRetrieveQuery("getInfoCarta");
+                carta.Id = (int)info.Rows[0]["id"];
+                carta.Texto = (string)info.Rows[0]["texto"];
+                carta.Valor = (int)info.Rows[0]["valor"];
+                carta.Tipo = (int)info.Rows[0]["tipo"];
+
+                return carta;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.GetType() + ": " + e.Message);
+            }
         }
     }
 }
