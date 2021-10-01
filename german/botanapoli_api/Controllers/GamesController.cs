@@ -128,6 +128,24 @@ namespace botanapoli_api.Controllers
             }
         }
 
+        // Post Finalizar Partida
+        [HttpPost]
+        [ActionName("FinalizarPartida")]
+        public int FinalizarPartida(int idPartida)
+        {
+            DbController conexion = new DbController();
+
+            try
+            {
+                int res = conexion.DbInsertQuery($"finalizarPartida {idPartida}");
+                return res;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.GetType() + ": " + e.Message);
+            }
+        }
+
         [HttpGet]
         [ActionName("getTablero")]
         public List<Models.Modelos.Casilla> GetTablero(int tableroId)

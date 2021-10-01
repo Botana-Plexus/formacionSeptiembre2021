@@ -227,5 +227,64 @@ namespace botanapoli_api.Controllers
                 throw new Exception(e.GetType() + ": " + e.Message);
             }
         }
+
+        // Post retirar Jugador
+        [HttpPost]
+        [ActionName("RetirarJugador")]
+        public int RetirarJugador(int idJugador)
+        {
+            DbController conexion = new DbController();
+
+            try
+            {
+                int res = conexion.DbInsertQuery($"retirarJugador {idJugador}");
+                return res;
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.GetType() + ": " + e.Message);
+            }
+        }
+
+        // Post Abandonar Jugador
+        [HttpPost]
+        [ActionName("AbandonarJugador")]
+        public int AbandonarPartida(int idJugador)
+        {
+            DbController conexion = new DbController();
+
+            try
+            {
+                int res = conexion.DbInsertQuery($"abandonarPartida {idJugador}");
+                return res;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.GetType() + ": " + e.Message);
+            }
+        }
+
+        // Post Finalizar turno
+        [HttpPost]
+        [ActionName("FinalizarTurno")]
+        public int FinalizarTurno([FromBody] int idPartida, int idJugador)
+        {
+            DbController conexion = new DbController();
+
+            try
+            {
+                int res = conexion.DbInsertQuery($"finalizarTurno {idJugador}, {idPartida}");
+                return res;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.GetType() + ": " + e.Message);
+            }
+        }
+
+        // Post Hacer Tirada
+        [HttpPost]
+        [ActionName("HacerTirada")]
+
     }
 }
