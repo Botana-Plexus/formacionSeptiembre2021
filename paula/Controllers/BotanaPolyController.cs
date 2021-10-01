@@ -84,7 +84,7 @@ namespace BotanaPolyAPI.Controllers
         [HttpPost]
         public string vender(int usuario, int casilla)
         {
-            string consulta = $"comprar {usuario}, {casilla};";
+            string consulta = $"vender {usuario}, {casilla};";
             return BD.ejecutarConsultaMod(consulta);
         }
 
@@ -117,7 +117,7 @@ namespace BotanaPolyAPI.Controllers
 
 
         [HttpPost("{idJugador}, {tirada}")]
-        public string mover(int idJugador, int tirada)
+        public string moverse(int idJugador, int tirada)
         {
             string consulta = $"mover {idJugador}, {tirada};";
             StringBuilder toret = new StringBuilder();
@@ -132,7 +132,6 @@ namespace BotanaPolyAPI.Controllers
                 case 2: case 3: case 4: case 8:
                     consulta = $"actualizarDeudaCompleta {idJugador}, NULL;";
                     toret.Append(BD.ejecutarConsultaMod(consulta));
-                    //actualizar deuda
                     break;
                 case 5:
                     consulta = $"getCartaAleatoria {idJugador};";
@@ -150,22 +149,16 @@ namespace BotanaPolyAPI.Controllers
                             break;
                         case 3:
                             int valor = Convert.ToInt32(tipoCarta.Rows[0]["valor"]);
-                            consulta = $"mover {idJugador}, {valor};";
-                            System.Data.DataTable mover2 = BD.ejecutarConsulta(consulta);
-                            toret.Append(mover2.Rows[0]["Column2"].ToString());
+                            string mover2 = moverse(idJugador, valor);
+                            toret.Append(mover2);
                             break;
                     }
-                    //carta
                     break;
                 case 7:
                     consulta = $"castigar {idJugador}";
                     toret.Append(BD.ejecutarConsultaMod(consulta));
-                    //castigo
                     break;
             }
-                
-
-
             return toret.ToString();
         }
 
@@ -423,7 +416,7 @@ namespace BotanaPolyAPI.Controllers
         public string setDobles(int idJugador, int dobles)
         {
             string consulta = $"setDobles {idJugador}, {dobles};";
-            return BD.ejecutarConsultaMod(consulta);
+            return BD.ejecutarConsulta(consulta).Rows[0]["Column2"].ToString();
         }
 
 
@@ -449,6 +442,63 @@ namespace BotanaPolyAPI.Controllers
             string consulta = $"finalizarTurno {idJugador};";
             return BD.ejecutarConsultaMod(consulta);
         }
+
+
+        [HttpPost("{idPartida}")]
+        public string comprobarTiempo(int idPartida)
+        {
+            string consulta = $"getTiempo {idPartida};";
+            System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
+            int tiempoRestante = Convert.ToInt32(dt.Rows[0]["Column1"]);
+            if (tiempoRestante == 0)
+            {
+                Modelos.Jugador ganador = determinarGanador(idPartida);
+                return $"Ha ganado el jugador con id = {ganador.Id}";
+            }
+            else
+                return "Aun queda tiempo";
+        }
+
+        private Modelos.Jugador determinarGanador(int idPartida)
+        {
+            string consulta = $"getJugadoresInfo {idPartida};";
+            System.Data.DataTable jugadores = BD.ejecutarConsulta(consulta);
+            for(int i = 0; i < jugadores.Rows.Count; i++)
+            {
+                int idJugador = Convert.ToInt32(jugadores.Rows[i]["id"]);
+                string consulta2 = $"getPropiedades {idJugador}";
+                System.Data.DataTable propiedades = BD.ejecutarConsulta(consulta2);
+                for (int j = 0; j < propiedades.Rows.Count; j++)
+                {
+                    int propiedad = Convert.ToInt32(propiedades.Rows[j]["id"]);
+                    int nivelEdificacion = Convert.ToInt32(propiedades.Rows[j]["nivelEdificacion"]);
+                    System.Data.DataTable edificaciones = BD.ejecutarConsulta(consulta2);
+                    for (int k = 0; k < nivelEdificacion; k++){
+                        string consulta3 = $"venderEdificacion {idJugador},{propiedad}";
+                        BD.ejecutarConsulta(consulta3);
+                    }
+                    vender(idJugador, propiedad);
+                }
+            }
+
+            string ganador = $"getMasRico {idPartida}";
+            System.Data.DataTable dt = BD.ejecutarConsulta(ganador);
+
+            Modelos.Jugador jugador = new Modelos.Jugador();
+            jugador.Id = Convert.ToInt32(dt.Rows[0]["id"]);
+            if (dt.Rows[0]["idUsuario"] != System.DBNull.Value)
+                jugador.IdUsuario = Convert.ToInt32(dt.Rows[0]["idUsuario"]);
+            jugador.IdPartida = Convert.ToInt32(dt.Rows[0]["idPartida"]);
+            jugador.Saldo = Convert.ToInt32(dt.Rows[0]["saldo"]);
+            jugador.Orden = Convert.ToInt32(dt.Rows[0]["orden"]);
+            if (dt.Rows[0]["posicion"] != System.DBNull.Value)
+                jugador.Posicion = Convert.ToInt32(dt.Rows[0]["posicion"]);
+            jugador.Dobles = Convert.ToInt32(dt.Rows[0]["dobles"]);
+            jugador.TurnosDeCastigo = Convert.ToInt32(dt.Rows[0]["turnosDeCastigo"]);
+
+            return jugador;
+        }
+
 
     } 
 }
