@@ -203,47 +203,45 @@ namespace BotanaPolyAPI.Controllers
         }
 
 
-        [HttpGet("{idTablero}")]
-        public List<Modelos.Casilla> getCasilla(int idCasilla)
+        [HttpGet("{idCasilla}")]
+        public Modelos.Casilla getCasilla(int idCasilla)
         {
             string consulta = $"getCasillas NULL, {idCasilla}";
             System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
-            List<Modelos.Casilla> lista = new List<Modelos.Casilla>();
 
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                Modelos.Casilla tablero = new Modelos.Casilla();
-                tablero.Id = Convert.ToInt32(dt.Rows[i]["id"]);
-                if (dt.Rows[i]["conjunto"] != System.DBNull.Value)
-                    tablero.Conjunto = Convert.ToInt32(dt.Rows[i]["conjunto"]);
-                if (dt.Rows[i]["coste1"] != System.DBNull.Value)
-                    tablero.Coste1 = Convert.ToInt32(dt.Rows[i]["coste1"]);
-                if (dt.Rows[i]["coste2"] != System.DBNull.Value)
-                    tablero.Coste2 = Convert.ToInt32(dt.Rows[i]["coste2"]);
-                if (dt.Rows[i]["coste3"] != System.DBNull.Value)
-                    tablero.Coste3 = Convert.ToInt32(dt.Rows[i]["coste3"]);
-                if (dt.Rows[i]["coste4"] != System.DBNull.Value)
-                    tablero.Coste4 = Convert.ToInt32(dt.Rows[i]["coste4"]);
-                if (dt.Rows[i]["coste5"] != System.DBNull.Value)
-                    tablero.Coste5 = Convert.ToInt32(dt.Rows[i]["coste5"]);
-                if (dt.Rows[i]["coste6"] != System.DBNull.Value)
-                    tablero.Coste6 = Convert.ToInt32(dt.Rows[i]["coste6"]);
-                if (dt.Rows[i]["costeEdificacion"] != System.DBNull.Value)
-                    tablero.CosteEdificacion = Convert.ToInt32(dt.Rows[i]["costeEdificacion"]);
-                if (dt.Rows[i]["destino"] != System.DBNull.Value)
-                    tablero.Destino = Convert.ToInt32(dt.Rows[i]["destino"]);
-                tablero.Orden = Convert.ToInt32(dt.Rows[i]["orden"]);
-                if (dt.Rows[i]["precioCompra"] != System.DBNull.Value)
-                    tablero.PrecioCompra = Convert.ToInt32(dt.Rows[i]["precioCompra"]);
-                if (dt.Rows[i]["precioVenta"] != System.DBNull.Value)
-                    tablero.PrecioVenta = Convert.ToInt32(dt.Rows[i]["precioVenta"]);
-                if (dt.Rows[i]["precioVentaEdificacion"] != System.DBNull.Value)
-                    tablero.PrecioVentaEdificacion = Convert.ToInt32(dt.Rows[i]["precioVentaEdificacion"]);
-                tablero.Tipo = Convert.ToInt32(dt.Rows[i]["tipo"]);
-                tablero.Nombre = dt.Rows[i]["nombre"].ToString();
-                lista.Add(tablero);
-            }
-            return lista;
+                Modelos.Casilla casilla = new Modelos.Casilla();
+                casilla.Id = Convert.ToInt32(dt.Rows[0]["id"]);
+                if (dt.Rows[0]["conjunto"] != System.DBNull.Value)
+                    casilla.Conjunto = Convert.ToInt32(dt.Rows[0]["conjunto"]);
+                if (dt.Rows[0]["coste1"] != System.DBNull.Value)
+                    casilla.Coste1 = Convert.ToInt32(dt.Rows[0]["coste1"]);
+                if (dt.Rows[00]["coste2"] != System.DBNull.Value)
+                    casilla.Coste2 = Convert.ToInt32(dt.Rows[0]["coste2"]);
+                if (dt.Rows[0]["coste3"] != System.DBNull.Value)
+                    casilla.Coste3 = Convert.ToInt32(dt.Rows[0]["coste3"]);
+                if (dt.Rows[0]["coste4"] != System.DBNull.Value)
+                    casilla.Coste4 = Convert.ToInt32(dt.Rows[0]["coste4"]);
+                if (dt.Rows[0]["coste5"] != System.DBNull.Value)
+                    casilla.Coste5 = Convert.ToInt32(dt.Rows[0]["coste5"]);
+                if (dt.Rows[0]["coste6"] != System.DBNull.Value)
+                    casilla.Coste6 = Convert.ToInt32(dt.Rows[0]["coste6"]);
+                if (dt.Rows[0]["costeEdificacion"] != System.DBNull.Value)
+                    casilla.CosteEdificacion = Convert.ToInt32(dt.Rows[0]["costeEdificacion"]);
+                if (dt.Rows[00]["destino"] != System.DBNull.Value)
+                    casilla.Destino = Convert.ToInt32(dt.Rows[0]["destino"]);
+                casilla.Orden = Convert.ToInt32(dt.Rows[00]["orden"]);
+                if (dt.Rows[0]["precioCompra"] != System.DBNull.Value)
+                    casilla.PrecioCompra = Convert.ToInt32(dt.Rows[0]["precioCompra"]);
+                if (dt.Rows[0]["precioVenta"] != System.DBNull.Value)
+                    casilla.PrecioVenta = Convert.ToInt32(dt.Rows[0]["precioVenta"]);
+                if (dt.Rows[0]["precioVentaEdificacion"] != System.DBNull.Value)
+                    casilla.PrecioVentaEdificacion = Convert.ToInt32(dt.Rows[0]["precioVentaEdificacion"]);
+                if (dt.Rows[0]["jugador"] != System.DBNull.Value)
+                    casilla.Propietario = Convert.ToInt32(dt.Rows[0]["jugador"]);
+                casilla.Tipo = Convert.ToInt32(dt.Rows[0]["tipo"]);
+                casilla.Nombre = dt.Rows[0]["nombre"].ToString();
+
+            return casilla;
         }
 
 
@@ -283,6 +281,8 @@ namespace BotanaPolyAPI.Controllers
                     tablero.PrecioVenta = Convert.ToInt32(dt.Rows[i]["precioVenta"]);
                 if (dt.Rows[i]["precioVentaEdificacion"] != System.DBNull.Value)
                     tablero.PrecioVentaEdificacion = Convert.ToInt32(dt.Rows[i]["precioVentaEdificacion"]);
+                if (dt.Rows[i]["jugador"] != System.DBNull.Value)
+                    tablero.Propietario = Convert.ToInt32(dt.Rows[i]["jugador"]);
                 tablero.Tipo = Convert.ToInt32(dt.Rows[i]["tipo"]);
                 tablero.Nombre = dt.Rows[i]["nombre"].ToString();
                 lista.Add(tablero);

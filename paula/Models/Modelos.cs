@@ -306,6 +306,12 @@ namespace BotanaPolyAPI.Models
                 get => destino;
                 set => destino = value;
                 }
+            protected int propietario;
+            public int Propietario
+            {
+                get => propietario;
+                set => propietario = value;
+            }
         }
 
         public class Propiedad
