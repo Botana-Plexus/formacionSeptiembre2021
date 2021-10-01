@@ -575,6 +575,7 @@ Autores: Pablo Costa y Adrián García
 fecha: 20210930
 descripción: Actualiza la deuda de un jugador
 */
+drop procedure actualizarDeuda
 go 
 create procedure actualizarDeuda
 	@idJugador int,
@@ -584,28 +585,40 @@ as
 	declare @idCasilla int
 	declare @tipoCasilla int
 	declare @nivelEdificacion int 
-	declare @propietario int		
+	declare @propietario int
 
-	if @idJugador != @propietario
+	select @idCasilla = posicion from jugadores where id = @idJugador
+	select @tipoCasilla = tipo, @nivelEdificacion = (p.nivelEdificacion+1), @propietario = p.jugador from casillas c left join propiedades p on p.casilla=c.id where c.id = @idCasilla
+
+	if ISNULL(@idCarta,0) != 0
 		begin
-			if ISNULL(@idCarta,0) != 0
-				update jugadores set deuda = (select valor from cartas where id = @idCarta) where id = @idJugador
-			else
-				begin
-					begin tran
-						select @saldo = saldo, @idCasilla = posicion from jugadores where id = @idJugador
-
-						select @tipoCasilla = tipo,@nivelEdificacion  =(p.nivelEdificacion+1),@propietario=p.jugador from casillas c left join propiedades p on p.casilla=c.id where c.id=@idCasilla
-
-				
-						if @tipoCasilla = 2 or @tipoCasilla = 3 or @tipoCasilla = 4
-							begin 
-								exec('update jugadores set acreedor ='+@propietario+',deuda = (select coste'+@nivelEdificacion+' from casillas where id = '+@idCasilla+') where id = ' +@idJugador)
+			update jugadores set deuda = (select valor from cartas where id = @idCarta) where id = @idJugador
+			select 2, 'Deuda actualizada'
+		end
+	else
+		begin
+			begin tran
+				if @tipoCasilla = 8
+					begin 
+						exec('update jugadores set acreedor ='+@propietario+',deuda = (select coste'+@nivelEdificacion+' from casillas where id = '+@idCasilla+') where id = ' +@idJugador)
+						select 2, 'Deuda actualizada'
+					end
+				else if @tipoCasilla = 2 or @tipoCasilla = 3 or @tipoCasilla = 4
+					begin
+						if ISNULL(@propietario,0) != 0
+							begin
+								if @propietario != @idJugador
+									begin
+										update jugadores set acreedor = @propietario, deuda = (select precioCompra from casillas where id = @idCasilla) where id = @idJugador
+										select 2, 'Deuda actualizada'
+									end
+								else
+								select 1, 'Eres el propietario'
 							end
-						else if @tipoCasilla = 8
-							update jugadores set deuda = (select precioCompra from casillas where id = @idCasilla) where id = @idJugador
-					commit
-				end
+						else
+							select 0, 'La casilla se puede comprar'
+					end
+			commit
 		end
 
 /*
@@ -764,18 +777,21 @@ insert into casillas (nombre, tipo, tablero, orden, precioCompra, precioventa) v
 exec registrar 'alberto.botanafidalgo@plexus.es','botana','1234','19770620'
 exec registrar 'alberto@plexus.es','botana2','1234','19770620'
 exec crearPartida 'partida1',1,4,null,'1234',2
-exec anadirJugador 2,2,'1234'
-exec anadirJugador null,2,'1234'
-exec comenzarPartida 2
+exec anadirJugador 2,11,'1234'
+exec anadirJugador null,11,'1234'
+exec comenzarPartida 11
 
 */
-
+exec mover 12, 1
 /* prueba de registro
 exec registrar 'alberto.botanafidalgo@plexus.es','botana','1234','19770620'
 exec registrar 'alberto@plexus.es','botana2','1234','19770620'
 select * from usuarios
 */
-
+exec comprar 12
+exec mover 11, 1
+exec pagarDeuda 11
+exec actualizarDeuda 11, null
 /* prueba de autenticar
 autenticar 'sdfdfsdf','dsfafdsf'
 autenticar 'alberto.botanafidalgo@plexus.es','1234'
@@ -789,7 +805,7 @@ exec crearPartida 'partida7',1,4,null,null,2
 delete from jugadores
 delete from partidas
 select * from partidas
-select * from usuarios
+select * from jugadores
 */
 
 /*Prueba de añadir Jugador

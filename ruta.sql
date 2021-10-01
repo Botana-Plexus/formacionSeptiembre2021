@@ -66,6 +66,8 @@ insert into casillas  values (7,2,'Vaya a Galeras',31,null, null, null, null, nu
 insert into casillas  values (8,2,'Alcabalas',5,20000, null, null, null, null, null, null, null, null, null, null, null)
 insert into casillas  values (8,2,'Compra de Armas',39,10000, null, null, null, null, null, null, null, null, null, null, null)
 
+select * from casillas
+
 --cartas
 insert into cartas values (2,11,1,'Prestamo de la corona', 20000);
 insert into cartas values (2,11,1,'Venta de mercancias', 5000);
@@ -77,7 +79,6 @@ insert into cartas values (2,11,2,'Impuestos', 5000);
 insert into cartas values (2,11,2,'Póliza de seguros', 5000);
 
 insert into cartas values (2,11,4,'Vaya a galeras', 0);
-
 
 insert into cartas values (2,12,1,'Compañía de seguros', 5000);
 insert into cartas values (2,12,1,'Barco abandonado', 15000);
