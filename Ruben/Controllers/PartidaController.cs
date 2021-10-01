@@ -479,11 +479,67 @@ namespace API_Botanapoly.Controllers
                     }
 
 
-                    //Mover Jugador
-                    [HttpPost("moverJugador")]
-                    public string moverJudador(int idJugador, int tirada)
+        //Mover Jugador
+        [HttpPost("moverJugador")]
+        public string moverJudador(int idJugador, int tirada)
+        {
+            string consulta;
+            consulta = $"mover '{idJugador},'{tirada}'";
+            System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
+            int idCasillaNueva = Convert.ToInt32(dt.Rows[0][0]);
+
+
+            consulta = $"getCasillas 'null','{idCasillaNueva}'";
+            System.Data.DataTable dt1 = BD.ejecutarConsulta(consulta);
+            int tipoCasilla = Convert.ToInt32(dt1.Rows[0]["tipo"]);
+
+            switch (tipoCasilla)
+            {
+                case 2:
+                case 3:
+                case 4:
+                case 8:
+
+                    consulta = $"actualizarDeudaCompleta '{idJugador}','{idCasillaNueva}'";
+                    return BD.ejecutarConsultaInsert(consulta);
+
+
+                case 1:
+                case 6:
+
+                    return "Casilla neutra";
+
+
+                case 7:
+                    consulta = $"castigar '{idJugador}'";
+                    return BD.ejecutarConsultaInsert(consulta);
+
+                case 5:
+                    consulta = $"getCartaAleatoria '{idJugador}'";
+                    System.Data.DataTable dt2 = BD.ejecutarConsulta(consulta);
+                    int idCarta = Convert.ToInt32(dt2.Rows[0][0]);
+                    consulta = $"getInfoCarta '{idCarta}'";
+                    System.Data.DataTable dt3 = BD.ejecutarConsulta(consulta);
+                    int valor = Convert.ToInt32(dt3.Rows[0]["valor"]);
+                    int tipoCarta = Convert.ToInt32(dt3.Rows[0]["tipo"]);
+                    if (tipoCarta == 3)
                     {
-                       
+                        return "moverse(valor)";
                     }
-    } 
-}
+
+                    else
+                    {
+                        consulta = $"actualizarDeudaCompleta '{idJugador}','{idCasillaNueva}'";
+                        return BD.ejecutarConsultaInsert(consulta);
+                    }
+
+            }
+            return"";
+           
+                 
+
+        }
+        }
+    }
+    
+
