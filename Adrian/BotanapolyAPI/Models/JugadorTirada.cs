@@ -19,5 +19,11 @@ namespace BotanapolyAPI.Models
             get => tirada;
             set => tirada = value;
         }
+
+        public JugadorTirada(int? idJugador, int? tirada)
+        {
+            this.idJugador = idJugador;
+            this.tirada = tirada;
+        }
     }
 }

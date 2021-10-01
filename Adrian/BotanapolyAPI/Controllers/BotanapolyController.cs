@@ -19,6 +19,10 @@ namespace BotanapolyAPI.Controllers
 
         [HttpPost]
         [ActionName("Registrarse")]
+        /*
+        ~ - registrado
+        0 - no registrado
+        */
         public int Registrarse([FromBody] UsuarioRegistro usuarioRegistro)
         {
             string consulta = $"registrar '{usuarioRegistro.Email}', '{usuarioRegistro.Nick}', '{usuarioRegistro.Pass}', '{usuarioRegistro.FechaNacimiento}'";
@@ -27,14 +31,21 @@ namespace BotanapolyAPI.Controllers
 
         [HttpPost]
         [ActionName("Autenticar")]
-        public string Autenticar([FromBody] UsuarioAutenticar usuarioAutenticar)
+        /*
+        1 - autenticado
+        0 - no autenticado
+        */
+        public int Autenticar([FromBody] UsuarioAutenticar usuarioAutenticar)
         {
             string consulta = $"autenticar '{usuarioAutenticar.Email}', '{usuarioAutenticar.Pass}'";
-            return baseDatos.generarConsulta(consulta)[0][1].ToString();
+            return (int)baseDatos.generarConsulta(consulta)[0][0];
         }
 
         [HttpGet]
         [ActionName("ObtenerTableros")]
+        /*
+        Lista de Tableros
+        */
         public IEnumerable<Tablero> ObtenerTableros()
         {
             string consulta = "getTableros";
@@ -44,6 +55,10 @@ namespace BotanapolyAPI.Controllers
 
         [HttpPost]
         [ActionName("CrearPartida")]
+        /*
+        ~ - partida creada
+        0 - partida no creada
+        */
         public int CrearPartida([FromBody] PartidaCrear partidaCrear)
         {
             string passParameter = partidaCrear.Pass == null ? "null" : $"'{partidaCrear.Pass}'";
@@ -53,6 +68,9 @@ namespace BotanapolyAPI.Controllers
 
         [HttpGet]
         [ActionName("ObtenerListadoPartidas")]
+        /*
+        Lista de Partidas
+        */
         public IEnumerable<Partida> ObtenerListadoPartidas()
         {
             string consulta = "getPartidas";
@@ -62,15 +80,23 @@ namespace BotanapolyAPI.Controllers
 
         [HttpPost]
         [ActionName("UnirsePartida")]
-        public string UnirsePartida([FromBody]PartidaUnirse partidaUnirse)
+        /*
+        0 - Unido a la Partida
+        1 - Partida completa
+        */
+        public int UnirsePartida([FromBody]PartidaUnirse partidaUnirse)
         {
             string passParameter = partidaUnirse.Pass == null ? "null" : $"'{partidaUnirse.Pass}'";
             string consulta = $"anadirJugador '{partidaUnirse.IdUsuario}', '{partidaUnirse.IdPartida}', {passParameter}";
-            return baseDatos.generarConsulta(consulta)[0][1].ToString();
+            return (int)baseDatos.generarConsulta(consulta)[0][1];
         }
 
         [HttpPost]
         [ActionName("IniciarPartida")]
+        /*
+        0 - Partida no iniciada
+        ~ - Partida iniciada
+        */
         public int IniciarPartida(int idPartida)
         {
             string consulta = $"ComenzarPartida {idPartida};";
@@ -79,6 +105,10 @@ namespace BotanapolyAPI.Controllers
 
         [HttpPost]
         [ActionName("CrearBot")]
+        /*
+        0 - Bot no creado
+        ~ - Bot creado
+        */
         public int crearBot(int partida, string pass)
         {
             string consulta = $"anadirJugador NULL, {partida}, '{pass}'";
@@ -87,6 +117,9 @@ namespace BotanapolyAPI.Controllers
 
         [HttpGet]
         [ActionName("GetTablero")]
+        /*
+        Lista de Casillas
+        */
         public IEnumerable<Casilla> GetTablero(int idTablero)
         {
             string consulta = $"getCasillas {idTablero}";
@@ -96,6 +129,9 @@ namespace BotanapolyAPI.Controllers
 
         [HttpGet]
         [ActionName("GetJugadores")]
+        /*
+        Lista de Jugadores
+        */
         public IEnumerable<Jugador> GetJugadores(int idPartida)
         {
             string consulta = $"getJugadoresInfo {idPartida}";
@@ -105,6 +141,9 @@ namespace BotanapolyAPI.Controllers
 
         [HttpGet]
         [ActionName("GetPropiedadesJugador")]
+        /*
+        Lista de Propiedades
+        */
         public IEnumerable<PropiedadesJugador> GetPropiedadesJugador(int idJugador)
         {
             string consulta = $"getPropiedades  {idJugador}";
@@ -114,62 +153,161 @@ namespace BotanapolyAPI.Controllers
 
         [HttpGet]
         [ActionName("GetTurno")]
-        public string GetTurno(int idPartida, int idJugador)
+        /*
+        0 - No es tu turno
+        1 - Es tu turno
+        2 - Sigues en la carcel
+        */
+        public int GetTurno(int idJugador)
         {
-            string consulta = $"getTurno {idPartida}, {idJugador}";
+            string consulta = $"getTurno {idJugador}";
             object[][] listado = baseDatos.generarConsulta(consulta);
-            return baseDatos.generarConsulta(consulta)[0][1].ToString();
+            return (int)baseDatos.generarConsulta(consulta)[0][0];
         }
 
         [HttpPost]
         [ActionName("Edificar")]
-        public string Edificar([FromBody] JugadorCasilla jugadorCasilla)
+        /*
+        0 - Edificado
+        1 - No es propietario de todo el conjunto
+        2 - No edificable
+        3 - Saldo insuficiente
+        4 - Nivel máximo alcanzado
+        */
+        public int Edificar([FromBody] JugadorCasilla jugadorCasilla)
         {
             string consulta = $"edificar {jugadorCasilla.IdJugador}, {jugadorCasilla.IdCasilla};";
-            return baseDatos.generarConsulta(consulta)[0][1].ToString();
+            return (int)baseDatos.generarConsulta(consulta)[0][0];
         }
 
         [HttpPost]
         [ActionName("Moverse")]
-        public string Moverse([FromBody] JugadorTirada jugadorTirada)
+        /*
+        1 - tipoCasilla 1
+        2 - tipoCasilla 2, 3, 4
+        3 - tipoCasilla 5, TipoCarta = 1
+        4 - tipoCasilla 5, TipoCarta = 2
+        5 - tipoCasilla 5, TipoCarta = 3
+        6 - tipoCasilla 6
+        7 - tipoCasilla 7
+        8 - tipoCasilla 8
+        */
+        public int Moverse([FromBody] JugadorTirada jugadorTirada)
+        {
+            return actionMoverse(jugadorTirada);
+        }
+
+        private int actionMoverse(JugadorTirada jugadorTirada)
         {
             string consulta = $"mover {jugadorTirada.IdJugador}, {jugadorTirada.Tirada};";
-            return baseDatos.generarConsulta(consulta)[0][1].ToString();
+            int idCasilla = (int)baseDatos.generarConsulta(consulta)[0][0];
+            int tipoCasilla = (int)baseDatos.generarConsulta($"getCasillas NULL, {idCasilla}")[0][1];
+            if (tipoCasilla == 1)
+            {
+                return 1;
+            }
+            else if (tipoCasilla == 2 || tipoCasilla == 3 || tipoCasilla == 4 || tipoCasilla == 8)
+            {
+                baseDatos.generarConsulta($"actualizarDeudaCompleta {jugadorTirada.IdJugador}, NULL");
+                return tipoCasilla == 8 ? 8 : 2;
+            }
+            else if (tipoCasilla == 5)
+            {
+                int idCarta = (int)baseDatos.generarConsulta($"getCartaAleatoria {jugadorTirada.IdJugador}")[0][0];
+                object[][] info = baseDatos.generarConsulta($"getInfoCarta NULL, {idCasilla}");
+                if ((int)info[0][3] == 1)
+                    return 3;
+                else if ((int)info[0][3] == 2)
+                {
+                    baseDatos.generarConsulta($"actualizarDeudaCompleta {jugadorTirada.IdJugador}, {idCarta}");
+                    return 4;
+                }
+                else if ((int)info[0][3] == 3)
+                {
+                    return actionMoverse(new JugadorTirada(jugadorTirada.IdJugador, (int)info[0][2])); ;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            else if (tipoCasilla == 7)
+            {
+                baseDatos.generarConsulta($"castigar {jugadorTirada.IdJugador}");
+                return 7;
+            }
+            else
+            {
+                return 6;
+            }
         }
 
         [HttpPost]
         [ActionName("Vender")]
-        public string Vender([FromBody] JugadorCasilla jugadorCasilla)
+        /*
+        0 - Vendido
+        1 - Casilla no es propiedad
+        */
+        public int Vender([FromBody] JugadorCasilla jugadorCasilla)
         {
             string consulta = $"vender {jugadorCasilla.IdJugador}, {jugadorCasilla.IdCasilla};";
-            return baseDatos.generarConsulta(consulta)[0][1].ToString();
+            return (int)baseDatos.generarConsulta(consulta)[0][0];
         }
 
         [HttpPost]
         [ActionName("Comprar")]
-        public string Comprar(int idJugador)
+        /*
+        0 - Comprada
+        1 - No comprada
+        */
+        public int Comprar(int idJugador)
         {
             string consulta = $"comprar {idJugador}";
-            return baseDatos.generarConsulta(consulta)[0][1].ToString();
+            return (int)baseDatos.generarConsulta(consulta)[0][0];
         }
         [HttpPost]
         [ActionName("VenderEdificacion")]
+        /*
+        0 - Edificacion Vendida
+        1 - No realizado
+        */
         public string VenderEdificacion([FromBody] JugadorCasilla jugadorCasilla)
         {
             string consulta = $"venderEdificacion {jugadorCasilla.IdJugador}, {jugadorCasilla.IdCasilla}";
             return baseDatos.generarConsulta(consulta)[0][1].ToString();
         }
 
+
+        [HttpPost]
+        [ActionName("FinalizarTurno")]
+        /*
+        0 - Error al finalizar turno
+        ~ - Turno Finalizado
+        */
+        public int FinalizarTurno(int idPartida, int idJugador)
+        {
+            string consulta = $"finalizarTurno {idPartida}, {idJugador}";
+            return baseDatos.generarMod(consulta);
+        }
+
         [HttpPost]
         [ActionName("Retirarse")]
+        /*
+        0 - No retirado
+        ~ - Retirado
+        */
         public int Retirarse(int idJugador)
         {
-            string consulta = $"retirarJugador {idJugador};";
+            string consulta = $"retirarJugador {idJugador}";
             return baseDatos.generarMod(consulta);
         }
 
         [HttpPost]
         [ActionName("Abandonar")]
+        /*
+        0 - No abandonado
+        ~ - Abandonado
+        */
         public int Abandonar(int idJugador)
         {
             string consulta = $"abandonarPartida {idJugador};";
