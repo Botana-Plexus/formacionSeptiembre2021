@@ -227,9 +227,9 @@ namespace API_Botanapoly.Controllers
 
                         //GetTurno - Muestra si es mi turno, si estoy en castigo o si NO es mi turno
                         [HttpPost("getTurno")]
-                        public string getTurno(int idJugador, int idPartida)
+                        public string getTurno(int idJugador)
                         {
-                            string query = $"getTurno '{idPartida}','{idJugador}'";
+                            string query = $"getTurno '{idJugador}'";
 
                             System.Data.DataTable dt = BD.ejecutarConsulta(query);
                             return dt.Rows[0]["Column2"].ToString();
@@ -433,19 +433,6 @@ namespace API_Botanapoly.Controllers
 
 
 
-                    //Mover Jugador
-                    [HttpPost("moverJugador")]
-                    public string moverJudador(int idJugador, int tirada)
-                    {
-                        string consulta = $"mover '{idJugador}','{tirada}'";
-
-                        System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
-                        return dt.Rows[0]["Column2"].ToString();
-                    }
-
-
-
-
                     //SetDobles - Actualiza el campo dobles en jugador y reseteo
                     [HttpPost("dobles")]
                     public string setDobles(int idJugador, int reseteo)
@@ -492,5 +479,11 @@ namespace API_Botanapoly.Controllers
                     }
 
 
+                    //Mover Jugador
+                    [HttpPost("moverJugador")]
+                    public string moverJudador(int idJugador, int tirada)
+                    {
+                       
+                    }
     } 
 }
