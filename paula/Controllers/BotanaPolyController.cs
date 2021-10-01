@@ -101,7 +101,10 @@ namespace BotanaPolyAPI.Controllers
         public string retirarse(int idJugador)
         {
             string consulta = $"retirarJugador {idJugador};";
-            return BD.ejecutarConsultaMod(consulta);
+            string toret = BD.ejecutarConsultaMod(consulta);
+            string consulta2 = $"finalizarTurno {idJugador};";
+            BD.ejecutarConsultaMod(consulta2);
+            return toret;
         }
 
 
@@ -441,9 +444,9 @@ namespace BotanaPolyAPI.Controllers
 
 
         [HttpPost("{idPartida}, {idJugador}")]
-        public string finalizarTurno(int idPartida, int idJugador)
+        public string finalizarTurno(int idJugador)
         {
-            string consulta = $"finalizarTurno {idPartida}, {idJugador};";
+            string consulta = $"finalizarTurno {idJugador};";
             return BD.ejecutarConsultaMod(consulta);
         }
 
