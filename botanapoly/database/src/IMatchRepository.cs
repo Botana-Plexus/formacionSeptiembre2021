@@ -22,5 +22,8 @@ namespace database{
         MatchInfo addEdification(PlayerInfo playerInfo, SquareInfo squareInfo); //edificar vs venderEdificacion
         MatchInfo removeEdification(PlayerInfo playerInfo, SquareInfo squareInfo);
         MatchInfo payDebt(PlayerInfo playerInfo);
+
+        UserInfo registerUser(UserInfo userInfo);
+        bool authenticate(UserInfo userInfo);
     }
 }
