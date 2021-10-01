@@ -459,9 +459,9 @@ namespace API_Botanapoly.Controllers
                     [HttpPost("pagarDeuda")]
                     public string pagarDeuda(int idJugador)
                     {
-                        string query = $"pagarDeuda '{idJugador}'";
+                        string consulta = $"pagarDeuda '{idJugador}'";
 
-                        System.Data.DataTable dt = BD.ejecutarConsulta(query);
+                        System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
                         return dt.Rows[0]["Column2"].ToString();
 
 
@@ -479,69 +479,75 @@ namespace API_Botanapoly.Controllers
                     }
 
 
-        //Mover Jugador
-        [HttpPost("moverJugador")]
-        public string moverJudador(int idJugador, int tirada)
-        {
-            string consulta;
-            consulta = $"mover '{idJugador},'{tirada}'";
-            System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
-            int idCasillaNueva = Convert.ToInt32(dt.Rows[0][0]);
-
-
-            consulta = $"getCasillas 'null','{idCasillaNueva}'";
-            System.Data.DataTable dt1 = BD.ejecutarConsulta(consulta);
-            int tipoCasilla = Convert.ToInt32(dt1.Rows[0]["tipo"]);
-
-            switch (tipoCasilla)
-            {
-                case 2:
-                case 3:
-                case 4:
-                case 8:
-
-                    consulta = $"actualizarDeudaCompleta '{idJugador}','{idCasillaNueva}'";
-                    return BD.ejecutarConsultaInsert(consulta);
-
-
-                case 1:
-                case 6:
-
-                    return "Casilla neutra";
-
-
-                case 7:
-                    consulta = $"castigar '{idJugador}'";
-                    return BD.ejecutarConsultaInsert(consulta);
-
-                case 5:
-                    consulta = $"getCartaAleatoria '{idJugador}'";
-                    System.Data.DataTable dt2 = BD.ejecutarConsulta(consulta);
-                    int idCarta = Convert.ToInt32(dt2.Rows[0][0]);
-                    consulta = $"getInfoCarta '{idCarta}'";
-                    System.Data.DataTable dt3 = BD.ejecutarConsulta(consulta);
-                    int valor = Convert.ToInt32(dt3.Rows[0]["valor"]);
-                    int tipoCarta = Convert.ToInt32(dt3.Rows[0]["tipo"]);
-                    if (tipoCarta == 3)
+                    //Mover Jugador
+                    [HttpPost("moverJugador")]
+                    [ActionName("moverJugador")]
+                    public string moverJugador(int idJugador, int tirada)
                     {
-                        consulta = $"mover '{idJugador},'{valor}'";
-                        return BD.ejecutarConsultaInsert(consulta);
-                        
+                        return accionMoverse(idJugador,tirada);
                     }
 
-                    else
+                    //Metodo que gestiona las acciones del jugador despues de moverse
+                    public string accionMoverse(int idJugador, int tirada)
                     {
-                        consulta = $"actualizarDeudaCompleta '{idJugador}','{idCasillaNueva}'";
-                        return BD.ejecutarConsultaInsert(consulta);
-                    }
+                        string consulta;
+                        consulta = $"mover '{idJugador},'{tirada}'";
+                        System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
+                        int idCasillaNueva = Convert.ToInt32(dt.Rows[0]["Column2"]);
 
-            }
-            return"";
+
+                        consulta = $"getCasillas 'null','{idCasillaNueva}'";
+                        System.Data.DataTable dt1 = BD.ejecutarConsulta(consulta);
+                        int tipoCasilla = Convert.ToInt32(dt1.Rows[0]["tipo"]);
+
+                        switch (tipoCasilla)
+                        {
+                            case 2:
+                            case 3:
+                            case 4:
+                            case 8:
+
+                                consulta = $"actualizarDeudaCompleta '{idJugador}','{idCasillaNueva}'";
+                                return BD.ejecutarConsultaInsert(consulta);
+
+
+                            case 1:
+                            case 6:
+
+                                return "Casilla neutra";
+
+
+                            case 7:
+                                consulta = $"castigar '{idJugador}'";
+                                return BD.ejecutarConsultaInsert(consulta);
+
+                            case 5:
+                                consulta = $"getCartaAleatoria '{idJugador}'";
+                                System.Data.DataTable dt2 = BD.ejecutarConsulta(consulta);
+                                int idCarta = Convert.ToInt32(dt2.Rows[0]["Column2"]);
+                                consulta = $"getInfoCarta '{idCarta}'";
+                                System.Data.DataTable dt3 = BD.ejecutarConsulta(consulta);
+                                int valor = Convert.ToInt32(dt3.Rows[0]["valor"]);
+                                int tipoCarta = Convert.ToInt32(dt3.Rows[0]["tipo"]);
+                                if (tipoCarta == 3)
+                                {
+                                     return accionMoverse(idJugador, valor);
+
+                                }
+
+                                else
+                                {
+                                    consulta = $"actualizarDeudaCompleta '{idJugador}','{idCasillaNueva}'";
+                                    return BD.ejecutarConsultaInsert(consulta);
+                                }
+
+                        }
+                        return"No hay ningun tipo de carta con ese valor";
            
                  
 
-        }
-        }
+                    }
+                    }
     }
     
 
