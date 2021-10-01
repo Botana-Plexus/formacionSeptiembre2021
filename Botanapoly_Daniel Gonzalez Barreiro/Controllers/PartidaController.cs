@@ -15,7 +15,7 @@ namespace API_Botanapoly.Controllers
     {
         Database database = new Database();
         // POST api/<PartidaController>
-        [HttpPost("crear")]
+        [HttpPost("crearPartida")]
         public string addPartida([FromBody] Partida partida)
         {
             string query;
@@ -35,7 +35,7 @@ namespace API_Botanapoly.Controllers
             return database.insertQuery(query);
         }
 
-        [HttpPost("unirse")]
+        [HttpPost("unirsePartida")]
         public string addJugador( int idUsuario, int idPartida, string pass)
         {
             string query;
@@ -71,7 +71,7 @@ namespace API_Botanapoly.Controllers
             return dt.Rows[0]["Column2"].ToString();
         }
 
-        [HttpPost("comenzar")]
+        [HttpPost("comenzarPartida")]
         public string startPartida(int idPartida)
         {
             string query = $"ComenzarPartida'{idPartida}'";
@@ -164,11 +164,19 @@ namespace API_Botanapoly.Controllers
         }
         
         [HttpGet("listarCasillas")]
-        public List<Casilla> getCasillas(int idTablero)
+        public List<Casilla> getCasillas(int idTablero, int? idCasilla)
         {
-            string query = $"getCasillas'{idTablero}'";
-            System.Data.DataTable dt = database.selectQuery(query);
 
+            string query = "getCasillas";
+            if (idCasilla != null)
+            {
+                query += "'" + idTablero + "'"+","+ "'" + idCasilla + "'";
+            } else
+            {
+                query += "'" + idTablero + "'";
+            }
+            System.Data.DataTable dt = database.selectQuery(query);
+      
             var lista = new List<Casilla>();
 
             for (int i = 0; i < dt.Rows.Count; i++)
@@ -188,6 +196,7 @@ namespace API_Botanapoly.Controllers
                 casilla.Coste5 = dt.Rows[i]["Coste5"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["Coste5"]) : null;
                 casilla.conjunto = dt.Rows[i]["conjunto"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["conjunto"]) : null;
                 casilla.destino = dt.Rows[i]["destino"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["destino"]) : null;
+
 
                 lista.Add(casilla);
             }
@@ -315,6 +324,84 @@ namespace API_Botanapoly.Controllers
 
             System.Data.DataTable dt = database.selectQuery(query);
             return dt.Rows[0]["Column2"].ToString();
+        }
+
+        //GetTurno
+        [HttpPost("getTurno")]
+        public string getTurno(int idJugador, int idPartida)
+        {
+            string query = $"getTurno '{idPartida}','{idJugador}'";
+
+            System.Data.DataTable dt = database.selectQuery(query);
+            return dt.Rows[0]["Column2"].ToString();
+        }
+
+        //GetCartaAleatoria 
+        [HttpPost("cartaAleatoria")]
+        public int getCartaAleatoria(int idJugador)
+        {
+            string query = $"getCartaAleatoria '{idJugador}'";
+
+            System.Data.DataTable dt = database.selectQuery(query);
+
+            return Convert.ToInt32(dt.Rows[0]["id"]);
+        }
+
+        //GetInfoCarta
+        [HttpPost("getInfoCarta")]
+        public Cartas getInfoCarta(int idCarta)
+        {
+            string query = $"getInfoCarta '{idCarta}'";
+
+            System.Data.DataTable dt = database.selectQuery(query);
+            Cartas carta = new Cartas();
+            carta.id = Convert.ToInt32(dt.Rows[0]["id"]);
+            carta.texto = Convert.ToString(dt.Rows[0]["texto"]);
+            carta.valor = Convert.ToInt32(dt.Rows[0]["valor"]);
+            carta.tipo = Convert.ToInt32(dt.Rows[0]["tipo"]);
+
+            return carta;
+        }
+
+        //Finalizar partida     
+        [HttpPost("finalizarPartida")]
+        public string finalizarPartida(int idPartida)
+        {
+            string query = $"finalizarPartida '{idPartida}'";
+
+            return database.insertQuery(query);
+        }
+        
+        //Actualizar deuda
+        [HttpPost("actualizarDeuda")]
+        public string actualizarDeuda(int idJugador, int idCarta)
+        {
+            string query = $"actualizarDeuda '{idJugador}','{idCarta}'";
+            return database.insertQuery(query);
+
+        }
+
+        //Pagar deuda
+        [HttpPost("pagarDeuda")]
+        public string pagarDeuda(int idJugador)
+        {
+            string query = $"pagarDeuda '{idJugador}'";
+
+
+            System.Data.DataTable dt = database.selectQuery(query);
+            return dt.Rows[0]["Column2"].ToString();
+
+        }
+        
+        //Finalizar turno
+        [HttpPost("finalizarTurno")]
+        public string finalizarTurno(int idPartida, int idJugador)
+        {
+            string query = $"pagarDeuda '{idPartida}, '{idJugador}'";
+
+
+            return database.insertQuery(query);
+
         }
 
     }
