@@ -2,7 +2,7 @@ using database;
 using model;
 
 namespace controller{
-    public class ManageProperty : IUseCaseFunctionality<MatchInfo>{
+    public class ManageProperty : IUseCaseFunctionality<int>{
 
         private readonly IMatchRepository _matchRepository;
         private readonly PlayerInfo _playerInfo;
@@ -17,9 +17,11 @@ namespace controller{
             this.buy = buy;
         }
 
-        public MatchInfo execute()
+        public int execute()
         {
-            return _matchRepository.manageProperty(_playerInfo, _squareInfo, buy);
+            return buy
+                ? _matchRepository.buyProperty(_playerInfo, _squareInfo)
+                : _matchRepository.sellProperty(_playerInfo, _squareInfo);
         }
     }
 }

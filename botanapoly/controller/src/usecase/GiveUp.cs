@@ -2,7 +2,7 @@ using database;
 using model;
 
 namespace controller{
-    public class GiveUp : IUseCaseFunctionality<MatchInfo>{
+    public class GiveUp : IUseCaseFunctionality<int>{
 
         private readonly IMatchRepository _matchRepository;
         private readonly PlayerInfo _playerInfo;
@@ -15,9 +15,17 @@ namespace controller{
             _watch = watch;
         }
 
-        public MatchInfo execute()
+        public int execute()
         {
-            return this._matchRepository.leaveMatch(_playerInfo, _watch);
+            if (_watch)
+            {
+                this._matchRepository.switchToObserver(_playerInfo);
+            }
+            else
+            {
+                this._matchRepository.leaveMatch(_playerInfo);
+            }
+            return 0;
         }
     }
 }

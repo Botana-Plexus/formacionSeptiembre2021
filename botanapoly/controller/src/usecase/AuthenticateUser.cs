@@ -2,7 +2,7 @@
 using model;
 
 namespace controller {
-    public class AuthenticateUser : IUseCaseFunctionality<bool>{
+    public class AuthenticateUser : IUseCaseFunctionality<int>{
 
         private readonly IMatchRepository _matchRepository;
         private readonly UserInfo _userInfo;
@@ -13,7 +13,7 @@ namespace controller {
             _userInfo = userInfo;
         }
 
-        public bool execute()
+        public int execute()
         {
             return _matchRepository.authenticate(_userInfo);
         }

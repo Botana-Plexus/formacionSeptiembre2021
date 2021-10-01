@@ -2,7 +2,7 @@
 using model;
 
 namespace controller {
-    public class RegisterUser : IUseCaseFunctionality<UserInfo>{
+    public class RegisterUser : IUseCaseFunctionality<int>{
 
         private readonly IMatchRepository _matchRepository;
         private readonly UserInfo _userInfo;
@@ -13,9 +13,10 @@ namespace controller {
             _userInfo = userInfo;
         }
 
-        public UserInfo execute()
+        public int execute()
         {
-            return _matchRepository.registerUser(_userInfo);
+            _matchRepository.registerUser(_userInfo);
+            return 0;
         }
     }
 }

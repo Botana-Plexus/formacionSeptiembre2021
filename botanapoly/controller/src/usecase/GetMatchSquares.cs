@@ -7,10 +7,10 @@ namespace controller {
     public class GetMatchSquares : IUseCaseFunctionality<List<SquareInfo>>{
 
         private readonly IMatchRepository _matchRepository;
-        private readonly MatchInfo _matchInfo;
+        private readonly BoardInfo _matchInfo;
         private readonly Func<SquareInfo, bool> _filter;
 
-        public GetMatchSquares(IMatchRepository matchRepository, MatchInfo matchInfo, Func<SquareInfo, bool> filter)
+        public GetMatchSquares(IMatchRepository matchRepository, BoardInfo matchInfo, Func<SquareInfo, bool> filter)
         {
             _matchRepository = matchRepository;
             _matchInfo = matchInfo;
