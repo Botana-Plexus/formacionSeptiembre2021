@@ -524,7 +524,9 @@ namespace API_Botanapoly.Controllers
                     int tipoCarta = Convert.ToInt32(dt3.Rows[0]["tipo"]);
                     if (tipoCarta == 3)
                     {
-                        return "moverse(valor)";
+                        consulta = $"mover '{idJugador},'{valor}'";
+                        return BD.ejecutarConsultaInsert(consulta);
+                        
                     }
 
                     else
