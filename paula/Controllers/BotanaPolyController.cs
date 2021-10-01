@@ -14,7 +14,7 @@ namespace BotanaPolyAPI.Controllers
     [ApiController]
     public class BotanaPolyController : ControllerBase
     {
-        private BaseDatos BD = new BaseDatos("localhost", "botanapoly", "pruebas", "pruebas");
+        private BaseDatos BD = new BaseDatos("localhost", "botanapoly_Botana", "pruebas", "pruebas");
 
 
         [HttpPost]
@@ -316,14 +316,13 @@ namespace BotanaPolyAPI.Controllers
             return lista;
         }
 
-        [HttpGet("{idPartida}")]
-        public int getTurno(int idPartida)
+        [HttpGet("{idPartida}, {idJugador}")]
+        public string getTurno(int idPartida, int idJugador)
         {
-            string consulta = $"getPartidas {idPartida}";
+            string consulta = $"getTurno {idPartida}, {idJugador}";
             System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
-            List<Modelos.Partida> lista = new List<Modelos.Partida>();
 
-            return Convert.ToInt32(dt.Rows[0]["turno"]);
+            return dt.Rows[0]["Column2"].ToString();
         }
 
 
@@ -334,6 +333,29 @@ namespace BotanaPolyAPI.Controllers
             return BD.ejecutarConsultaMod(consulta);
         }
 
+
+        [HttpPost("{idJugador}")]
+        public string pagar(int idJugador)
+        {
+            string consulta = $"pagarDeuda {idJugador};";
+            return BD.ejecutarConsultaMod(consulta);
+        }
+
+
+        [HttpPost("{idPartida}")]
+        public string finalizarPartida(int idPartida)
+        {
+            string consulta = $"finalizarPartida {idPartida};";
+            return BD.ejecutarConsultaMod(consulta);
+        }
+
+
+        [HttpPost("{idPartida}, {idJugador}")]
+        public string finalizarTurno(int idPartida, int idJugador)
+        {
+            string consulta = $"finalizarTurno {idPartida}, {idJugador};";
+            return BD.ejecutarConsultaMod(consulta);
+        }
 
     } 
 }
