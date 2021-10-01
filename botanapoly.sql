@@ -368,7 +368,7 @@ create procedure getCasillas
   @idTablero int
 as
   select id, tipo, nombre, orden, precioCompra, precioVenta, costeEdificacion, precioVentaEdificacion, Coste1,
-    Coste2, Coste3, Coste4, Coste5, conjunto, destino 
+    Coste2, Coste3, Coste4, Coste5, Coste6, conjunto, destino 
   from casillas 
   where tablero = @idTablero
 go 
