@@ -47,6 +47,9 @@ namespace rest {
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
             app.UseMiddleware<ApiKeyValidationMiddleware>();
+            
         }
+        
+        
     }
 }

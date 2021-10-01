@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
@@ -9,7 +10,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace rest {
     [AttributeUsage(validOn: AttributeTargets.Class | AttributeTargets.Method)]
-    public class MatchValidationAttribute : Attribute, IAsyncActionFilter {
+    public class MatchValidationAttribute : Attribute, IAsyncActionFilter{
+        //https://blogs.cuttingedge.it/steven/posts/2014/dependency-injection-in-attributes-dont-do-it/
+        private readonly IMatchRepository _matchRepository;
+
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             if (!context.HttpContext.Request.RouteValues.TryGetValue("matchId", out var extractedMatchID))
