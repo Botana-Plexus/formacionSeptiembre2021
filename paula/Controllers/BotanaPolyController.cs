@@ -204,9 +204,53 @@ namespace BotanaPolyAPI.Controllers
 
 
         [HttpGet("{idTablero}")]
+        public List<Modelos.Casilla> getCasilla(int idCasilla)
+        {
+            string consulta = $"getCasillas NULL, {idCasilla}";
+            System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
+            List<Modelos.Casilla> lista = new List<Modelos.Casilla>();
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                Modelos.Casilla tablero = new Modelos.Casilla();
+                tablero.Id = Convert.ToInt32(dt.Rows[i]["id"]);
+                if (dt.Rows[i]["conjunto"] != System.DBNull.Value)
+                    tablero.Conjunto = Convert.ToInt32(dt.Rows[i]["conjunto"]);
+                if (dt.Rows[i]["coste1"] != System.DBNull.Value)
+                    tablero.Coste1 = Convert.ToInt32(dt.Rows[i]["coste1"]);
+                if (dt.Rows[i]["coste2"] != System.DBNull.Value)
+                    tablero.Coste2 = Convert.ToInt32(dt.Rows[i]["coste2"]);
+                if (dt.Rows[i]["coste3"] != System.DBNull.Value)
+                    tablero.Coste3 = Convert.ToInt32(dt.Rows[i]["coste3"]);
+                if (dt.Rows[i]["coste4"] != System.DBNull.Value)
+                    tablero.Coste4 = Convert.ToInt32(dt.Rows[i]["coste4"]);
+                if (dt.Rows[i]["coste5"] != System.DBNull.Value)
+                    tablero.Coste5 = Convert.ToInt32(dt.Rows[i]["coste5"]);
+                if (dt.Rows[i]["coste6"] != System.DBNull.Value)
+                    tablero.Coste6 = Convert.ToInt32(dt.Rows[i]["coste6"]);
+                if (dt.Rows[i]["costeEdificacion"] != System.DBNull.Value)
+                    tablero.CosteEdificacion = Convert.ToInt32(dt.Rows[i]["costeEdificacion"]);
+                if (dt.Rows[i]["destino"] != System.DBNull.Value)
+                    tablero.Destino = Convert.ToInt32(dt.Rows[i]["destino"]);
+                tablero.Orden = Convert.ToInt32(dt.Rows[i]["orden"]);
+                if (dt.Rows[i]["precioCompra"] != System.DBNull.Value)
+                    tablero.PrecioCompra = Convert.ToInt32(dt.Rows[i]["precioCompra"]);
+                if (dt.Rows[i]["precioVenta"] != System.DBNull.Value)
+                    tablero.PrecioVenta = Convert.ToInt32(dt.Rows[i]["precioVenta"]);
+                if (dt.Rows[i]["precioVentaEdificacion"] != System.DBNull.Value)
+                    tablero.PrecioVentaEdificacion = Convert.ToInt32(dt.Rows[i]["precioVentaEdificacion"]);
+                tablero.Tipo = Convert.ToInt32(dt.Rows[i]["tipo"]);
+                tablero.Nombre = dt.Rows[i]["nombre"].ToString();
+                lista.Add(tablero);
+            }
+            return lista;
+        }
+
+
+        [HttpGet("{idTablero}")]
         public List<Modelos.Casilla> getTablero(int idTablero)
         {
-            string consulta = $"getCasillas {idTablero}";
+            string consulta = $"getCasillas {idTablero}, NULL";
             System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
             List<Modelos.Casilla> lista = new List<Modelos.Casilla>();
 
