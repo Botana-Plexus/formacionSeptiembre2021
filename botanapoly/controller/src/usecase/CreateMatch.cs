@@ -4,15 +4,15 @@ using database;
 using model;
 
 namespace controller{
-    public class CreateMatch : IUseCaseFunctionality<MatchInfo>{
+    public class CreateMatch : IUseCaseFunctionality<int>{
 
-        private IMatchRepository _matchRepository;
-        private PlayerInfo _playerInfo;
-        private string _name;
-        private int? _maxPlayers;
-        private int? _maxDuration;
-        private string _password;
-        private BoardInfo _boardInfo;
+        private readonly IMatchRepository _matchRepository;
+        private readonly PlayerInfo _playerInfo;
+        private readonly string _name;
+        private readonly int? _maxPlayers;
+        private readonly int? _maxDuration;
+        private readonly string _password;
+        private readonly BoardInfo _boardInfo;
 
         public CreateMatch(IMatchRepository matchRepository, PlayerInfo playerInfo, string name, int? maxPlayers, int? maxDuration, string password, BoardInfo boardInfo)
         {
@@ -25,9 +25,10 @@ namespace controller{
             _boardInfo = boardInfo;
         }
 
-        public MatchInfo execute()
+        public int execute()
         {
-            return this._matchRepository.createMatch(_playerInfo, _maxPlayers, _maxDuration, _password, _boardInfo);
+            _matchRepository.createMatch(_name, _playerInfo, _maxPlayers, _maxDuration, _password, _boardInfo);
+            return 0;
         }
     }
 }

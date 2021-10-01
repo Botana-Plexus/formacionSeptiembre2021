@@ -12,7 +12,7 @@ namespace controller{
         public ListMatches(IMatchRepository matchRepository, Func<MatchInfo, bool> filter)
         {
             _matchRepository = matchRepository;
-            _filter = _filter;
+            _filter = filter;
         }
 
         public List<MatchInfo> execute()

@@ -4,7 +4,7 @@ using model;
 using util;
 
 namespace controller{
-    public class StartMatch : IUseCaseFunctionality<MatchInfo>{
+    public class StartMatch : IUseCaseFunctionality<int>{
         
         private readonly IMatchRepository matchRepository;
         private readonly MatchInfo matchInfo;
@@ -15,9 +15,10 @@ namespace controller{
             this.matchInfo = matchInfo;
         }
 
-        public MatchInfo execute()
+        public int execute()
         {
-            return matchRepository.startMatch(matchInfo);
+            matchRepository.startMatch(matchInfo);
+            return 0;
         }
     }
 }

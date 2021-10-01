@@ -6,7 +6,7 @@ using model;
 using util;
 
 namespace controller {
-    public class JoinMatch : IUseCaseFunctionality<MatchInfo>{
+    public class JoinMatch : IUseCaseFunctionality<int>{
 
         private readonly IMatchRepository _matchRepository;
         private readonly MatchInfo _matchInfo;
@@ -21,7 +21,7 @@ namespace controller {
             _password = password;
         }
 
-        public MatchInfo execute()
+        public int execute()
         {
             return _matchRepository.joinMatch(_matchInfo, _userInfo, _password);
         }

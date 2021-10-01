@@ -2,7 +2,7 @@ using database;
 using model;
 
 namespace controller {
-    public class EndTurn : IUseCaseFunctionality<MatchInfo>{
+    public class EndTurn : IUseCaseFunctionality<int>{
         
         private readonly IMatchRepository _matchRepository;
         private readonly PlayerInfo _playerInfo;
@@ -13,9 +13,10 @@ namespace controller {
             _playerInfo = playerInfo;
         }
 
-        public MatchInfo execute()
+        public int execute()
         {
-            return this._matchRepository.endTurn(this._playerInfo);
+            this._matchRepository.endTurn(this._playerInfo);
+            return 0;
         }
     }
 }
