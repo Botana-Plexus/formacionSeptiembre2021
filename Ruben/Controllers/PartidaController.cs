@@ -202,7 +202,7 @@ namespace API_Botanapoly.Controllers
 
                     //GetTurno *
                     [HttpPost("getTurno")]
-                    public int getTurno(int idJugador, int idPartida)
+                    public string getTurno(int idJugador, int idPartida)
                     {
                         string query = $"getTurno '{idPartida}','{idJugador}'";
 
