@@ -194,6 +194,8 @@ namespace API_Botanapoly.Controllers
                 casilla.Coste3 = dt.Rows[i]["Coste3"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["Coste3"]) : null;
                 casilla.Coste4 = dt.Rows[i]["Coste4"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["Coste4"]) : null;
                 casilla.Coste5 = dt.Rows[i]["Coste5"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["Coste5"]) : null;
+                casilla.Coste6 = dt.Rows[i]["Coste6"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["Coste6"]) : null;
+                casilla.jugador = dt.Rows[i]["jugador"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["jugador"]) : null;
                 casilla.conjunto = dt.Rows[i]["conjunto"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["conjunto"]) : null;
                 casilla.destino = dt.Rows[i]["destino"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["destino"]) : null;
 

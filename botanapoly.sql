@@ -1,11 +1,11 @@
 /*
 
 use master
-drop database botanapoly_Botana
-create database botanapoly_Botana
-use botanapoly_Botana
+drop database botanapoly_master
+create database botanapoly_master
+use botanapoly_master
 drop login pruebas
-create login pruebas with password = 'pruebas', default_database = botanapoly_Botana, check_policy = off
+create login pruebas with password = 'pruebas', default_database = botanapoly_master, check_policy = off
 */
 
 

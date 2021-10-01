@@ -22,6 +22,8 @@ namespace API_Botanapoly
         public int? Coste3 { set; get; }
         public int? Coste4 { set; get; }
         public int? Coste5 { set; get; }
+        public int? Coste6 { set; get; }
+        public int? jugador { set; get; }
         public int? conjunto { set; get; }
         public int? destino { set; get; } //casilla destino para castigo, por ejemplo
 
