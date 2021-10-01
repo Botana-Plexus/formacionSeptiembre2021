@@ -117,7 +117,53 @@ namespace BotanaPolyAPI.Controllers
         public string mover(int idJugador, int tirada)
         {
             string consulta = $"mover {idJugador}, {tirada};";
-            return BD.ejecutarConsultaMod(consulta);
+            StringBuilder toret = new StringBuilder();
+            System.Data.DataTable mover = BD.ejecutarConsulta(consulta);
+            int casilla = Convert.ToInt32(mover.Rows[0]["Column1"]);
+            toret.Append(mover.Rows[0]["Column2"].ToString());
+            consulta = $"getCasillas NULL, {casilla};";
+            System.Data.DataTable infoCasilla = BD.ejecutarConsulta(consulta);
+            int tipoCasilla = Convert.ToInt32(infoCasilla.Rows[0]["tipo"]);
+            switch (tipoCasilla)
+            {
+                case 2: case 3: case 4: case 8:
+                    consulta = $"actualizarDeudaCompleta {idJugador}, NULL;";
+                    toret.Append(BD.ejecutarConsultaMod(consulta));
+                    //actualizar deuda
+                    break;
+                case 5:
+                    consulta = $"getCartaAleatoria {idJugador};";
+                    System.Data.DataTable carta = BD.ejecutarConsulta(consulta);
+                    int idCarta = Convert.ToInt32(carta.Rows[0]["id"]);
+                    consulta = $"getInfoCarta {idCarta}";
+                    System.Data.DataTable tipoCarta = BD.ejecutarConsulta(consulta);
+                    int tipo = Convert.ToInt32(tipoCarta.Rows[0]["tipo"]);
+                    
+                    switch (tipo)
+                    {
+                        case 2:
+                            consulta = $"actualizarDeudaCompleta {idJugador}, {idCarta};";
+                            toret.Append(BD.ejecutarConsultaMod(consulta));
+                            break;
+                        case 3:
+                            int valor = Convert.ToInt32(tipoCarta.Rows[0]["valor"]);
+                            consulta = $"mover {idJugador}, {valor};";
+                            System.Data.DataTable mover2 = BD.ejecutarConsulta(consulta);
+                            toret.Append(mover2.Rows[0]["Column2"].ToString());
+                            break;
+                    }
+                    //carta
+                    break;
+                case 7:
+                    consulta = $"castigar {idJugador}";
+                    toret.Append(BD.ejecutarConsultaMod(consulta));
+                    //castigo
+                    break;
+            }
+                
+
+
+            return toret.ToString();
         }
 
         [HttpPost("{idJugador}, {idCasilla}")]
@@ -215,7 +261,7 @@ namespace BotanaPolyAPI.Controllers
                     casilla.Conjunto = Convert.ToInt32(dt.Rows[0]["conjunto"]);
                 if (dt.Rows[0]["coste1"] != System.DBNull.Value)
                     casilla.Coste1 = Convert.ToInt32(dt.Rows[0]["coste1"]);
-                if (dt.Rows[00]["coste2"] != System.DBNull.Value)
+                if (dt.Rows[0]["coste2"] != System.DBNull.Value)
                     casilla.Coste2 = Convert.ToInt32(dt.Rows[0]["coste2"]);
                 if (dt.Rows[0]["coste3"] != System.DBNull.Value)
                     casilla.Coste3 = Convert.ToInt32(dt.Rows[0]["coste3"]);
@@ -227,9 +273,9 @@ namespace BotanaPolyAPI.Controllers
                     casilla.Coste6 = Convert.ToInt32(dt.Rows[0]["coste6"]);
                 if (dt.Rows[0]["costeEdificacion"] != System.DBNull.Value)
                     casilla.CosteEdificacion = Convert.ToInt32(dt.Rows[0]["costeEdificacion"]);
-                if (dt.Rows[00]["destino"] != System.DBNull.Value)
+                if (dt.Rows[0]["destino"] != System.DBNull.Value)
                     casilla.Destino = Convert.ToInt32(dt.Rows[0]["destino"]);
-                casilla.Orden = Convert.ToInt32(dt.Rows[00]["orden"]);
+                casilla.Orden = Convert.ToInt32(dt.Rows[0]["orden"]);
                 if (dt.Rows[0]["precioCompra"] != System.DBNull.Value)
                     casilla.PrecioCompra = Convert.ToInt32(dt.Rows[0]["precioCompra"]);
                 if (dt.Rows[0]["precioVenta"] != System.DBNull.Value)
