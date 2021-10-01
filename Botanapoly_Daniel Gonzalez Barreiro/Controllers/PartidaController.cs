@@ -318,14 +318,58 @@ namespace API_Botanapoly.Controllers
             return lista;
         }
 
+
         //Mover
         [HttpPost("mover")]
         public string mover(int idJugador, int tirada)
         {
-            string query = $"mover '{idJugador}','{tirada}'";
-
+            string query;
+            query = $"mover '{idJugador}','{tirada}'";
             System.Data.DataTable dt = database.selectQuery(query);
-            return dt.Rows[0]["Column2"].ToString();
+            int casillaNova = Convert.ToInt32(dt.Rows[0][0]);
+
+            query = $"getCasillas null,'{casillaNova}'";
+            System.Data.DataTable dt2 = database.selectQuery(query);
+            int tipoCasilla = Convert.ToInt32(dt2.Rows[0]["tipo"]);
+
+            switch (tipoCasilla)
+            {
+                case 2: case 3:
+                case 4: case 8:
+                    query = $"actualizarDeuda '{idJugador}','{casillaNova}'";
+                    
+                    return database.insertQuery(query);
+                case 1: case 6:
+
+                    return "casilla neutra";
+                case 7:
+                    query = $"castigar '{idJugador}'";
+
+                    return database.insertQuery(query);
+                case 5:
+                    query = $"getCartaAleatoria '{idJugador}'";
+                    System.Data.DataTable dt3 = database.selectQuery(query);
+                    int idCarta = Convert.ToInt32(dt3.Rows[0][0]);
+
+                    query = $"getInfoCarta '{idCarta}'";
+                    System.Data.DataTable dt4 = database.selectQuery(query);
+                    int tipoCarta = Convert.ToInt32(dt4.Rows[0]["tipo"]);
+                    int valorCarta = Convert.ToInt32(dt4.Rows[0]["valor"]);
+
+                    if(tipoCarta == 2)
+                    {
+                        query = $"actualizarDeuda '{idCarta}','{idCarta}'";
+                        return database.insertQuery(query);
+                    }
+                    else
+                    {
+
+                        return mover(idJugador, valorCarta);
+                    }
+              
+            }
+            return "";
+
         }
 
         //GetTurno
