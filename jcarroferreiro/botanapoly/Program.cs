@@ -6,9 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ProofOfConcept_SQL_CSharp;
 
-namespace monopoly
+namespace botanapoly
 {
     public class Program
     {

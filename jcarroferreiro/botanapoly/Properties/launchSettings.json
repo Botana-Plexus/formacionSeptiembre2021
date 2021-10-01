@@ -4,8 +4,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:41797",
-      "sslPort": 44362
+      "applicationUrl": "http://localhost:19837",
+      "sslPort": 44328
     }
   },
   "profiles": {
@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "monopoly": {
+    "botanapoly": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,

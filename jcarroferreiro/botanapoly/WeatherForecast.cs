@@ -1,6 +1,6 @@
 using System;
 
-namespace monopoly
+namespace botanapoly
 {
     public class WeatherForecast
     {

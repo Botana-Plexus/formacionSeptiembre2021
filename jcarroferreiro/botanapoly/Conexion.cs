@@ -15,7 +15,7 @@ namespace ProofOfConcept_SQL_CSharp
 
         QC.SqlConnection connection;
         public Conexion()
-        { 
+        {
             /*
                 Inicializa automaticamente la conexion, sería ideal establecer la conexion con variables 
             para que así el archivo sea exportable, es decir, los valores que sean recojidos.
@@ -43,11 +43,6 @@ namespace ProofOfConcept_SQL_CSharp
             }
             return dt;
         }
-        
+
     }
 }
-
-/**** Actual output:  
-Connected successfully.  
-Press any key to finish...
-****/

@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace monopoly
+namespace botanapoly
 {
     public class Startup
     {
@@ -30,7 +30,7 @@ namespace monopoly
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "monopoly", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "botanapoly", Version = "v1" });
             });
         }
 
@@ -41,7 +41,7 @@ namespace monopoly
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "monopoly v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "botanapoly v1"));
             }
 
             app.UseHttpsRedirection();
