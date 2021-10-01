@@ -346,18 +346,18 @@ as
     case when pass is not null then 1 else 0 end as tienePass, numJugadores,turno,estado,tablero from partidas
   where @id is null or @id = id 
 
-go
+
 
 /*
 Autor: Alberto Botana
 fecha: 20210929
 descripción: devuelve un listado de los tableros disponibles
 */
+go
 create procedure getTableros
 as
   select id, descripcion, importe, numCasillas from tableros
 
-go
 /*
  Autor: Pablo Costa
  fecha: 20210929
@@ -365,13 +365,24 @@ go
 */
 go
 create procedure getCasillas
-  @idTablero int
+  @idTablero int = null,
+  @idCasilla int = null
 as
-  select id, tipo, nombre, orden, precioCompra, precioVenta, costeEdificacion, precioVentaEdificacion, Coste1,
-    Coste2, Coste3, Coste4, Coste5, Coste6, conjunto, destino 
-  from casillas 
-  where tablero = @idTablero
-go 
+
+	if ISNULL(@idCasilla,0)!=0
+		begin
+			select c.id, c.tipo, c.nombre, c.orden, c.precioCompra, c.precioVenta, c.costeEdificacion, c.precioVentaEdificacion, c.Coste1,
+				c.Coste2, c.Coste3, c.Coste4, c.Coste5,c.Coste6, c.conjunto, c.destino,p.jugador 
+			from casillas c left join propiedades p on c.id = p.casilla
+			where c.id= @idCasilla
+		end
+	else if ISNULL(@idTablero,0)!=0
+		begin 
+			select c.id, c.tipo, c.nombre, c.orden, c.precioCompra, c.precioVenta, c.costeEdificacion, c.precioVentaEdificacion, c.Coste1,
+				c.Coste2, c.Coste3, c.Coste4, c.Coste5,c.Coste6, c.conjunto, c.destino,p.jugador 
+			from casillas c left join propiedades p on c.id = p.casilla
+			where c.tablero = @idTablero
+		end
 
 
  /*
@@ -379,19 +390,21 @@ go
  fecha: 20210929
  descripcion: Devuelve la información de los jugadores de una partida
 */
+go
 create procedure getJugadoresInfo
 	@idPartida int
 as
-  select id, idUsuario,idPartida,saldo,orden,posicion, dobles, turnosDeCastigo
+  select id, idUsuario,idPartida,saldo,orden,posicion, dobles, turnosDeCastigo,deuda,acreedor
   from jugadores where idPartida = @idPartida
 
-go
+
 
 /*
  Autor: Pablo Costa
  fecha: 20210929
  descripcion: Retira de la partida a un jugador
 */
+go
 create procedure retirarJugador
 	@idJugador int
 as
@@ -413,9 +426,6 @@ as
 
 
 go
-
-
-
 /*
  Autor: Pablo Costa
  fecha: 20210929
@@ -435,7 +445,7 @@ as
 
 	--select @idPartida =idPartida from jugadores where id=@idJugador
 
-	go
+	
 
 
 
@@ -446,6 +456,7 @@ descripción: realiza el movimiento de un jugador, calcula a que posición debe ir
 se considera movimiento negativo, pero nunca de forma que pueda provocar retroceder antes de la salida
 no s erealizan acciones relativas a la casilla en la que se ha caido
 */
+go
 create procedure mover
   @idJugador int,
   @tirada int
@@ -476,7 +487,7 @@ as
 
   select @idCasilla, 'movido a la casilla '+cast (@nuevaCasilla as varchar(255))+ ' con orden ' + cast(@nuevaPosicion as varchar(255))
 
-go
+
 
 
 /*
@@ -485,6 +496,7 @@ fecha: 20210929
 descripcion: realiza la edificación de una casa. Se valida que el usuario tenga todo el conjunto de casillas en propiedad, y entonces permite subir 
 un nivel de edificacion bajando el coste correspondiente
 */
+go
 create procedure edificar
   @idJugador int,
   @idCasilla int
@@ -516,13 +528,14 @@ as
 
   select 0,'ok'
 
-  go
+
 
  /*
 Autor: Alberto Botana
 fecha: 20210929
 descripcion: vend un nivel de edificacion recuperando el importe correspondiente
 */
+go
 create procedure venderEdificacion
   @idJugador int,
   @idCasilla int
@@ -540,8 +553,6 @@ as
   select 0,'ok'
 
 go
-
-
 /*
 autor: Alberto Botana
 fecha: 20210930
@@ -555,14 +566,14 @@ as
   update jugadores set dobles = case when @reset = 1 then 0 else dobles + 1 end
   where id = @idJugador
 
-go
 
 
 /*
 Autor: alberto Botana
 fecha: 20210930
-descripción: devuelve el listado d elas propiedades de un jugador
+descripción: devuelve el listado de las propiedades de un jugador
 */
+go
 create procedure getPropiedades
   @idJugador int
 as
@@ -581,11 +592,13 @@ create procedure actualizarDeuda
 	@idJugador int,
 	@idCarta int = null
 as
-	declare @saldo int
 	declare @idCasilla int
 	declare @tipoCasilla int
 	declare @nivelEdificacion int 
 	declare @propietario int		
+
+	select @idCasilla = posicion from jugadores where id = @idJugador
+	select @tipoCasilla = tipo,@nivelEdificacion  =(p.nivelEdificacion+1),@propietario=p.jugador from casillas c left join propiedades p on p.casilla=c.id where c.id=@idCasilla
 
 	if @idJugador != @propietario
 		begin
@@ -594,11 +607,7 @@ as
 			else
 				begin
 					begin tran
-						select @saldo = saldo, @idCasilla = posicion from jugadores where id = @idJugador
 
-						select @tipoCasilla = tipo,@nivelEdificacion  =(p.nivelEdificacion+1),@propietario=p.jugador from casillas c left join propiedades p on p.casilla=c.id where c.id=@idCasilla
-
-				
 						if @tipoCasilla = 2 or @tipoCasilla = 3 or @tipoCasilla = 4
 							begin 
 								exec('update jugadores set acreedor ='+@propietario+',deuda = (select coste'+@nivelEdificacion+' from casillas where id = '+@idCasilla+') where id = ' +@idJugador)
@@ -682,13 +691,6 @@ as
 	if @turnosCastigo !=0
 		update jugadores set turnosDeCastigo = (turnosDeCastigo-1) where id = @idJugador
 
-/*select min(j.orden), j.turnosDeCastigo from jugadores j left join partidas p on j.idPartida = p.id where orden > p.turno and idPartida = 1
-group by orden,turnosDeCastigo
-
-drop procedure finalizarTurno
-*/
-
-
 
 /*
 Autores: Pablo Costa y Adrián García
@@ -723,7 +725,7 @@ create procedure getInfoCarta
 as
 	select id,texto,valor,tipo from cartas where id = @idCarta
 
-
+	select * from casillas where nombre ='Galeras'
 /*
 Autores: Pablo Costa y Adrián García
 fecha: 20210930
@@ -755,7 +757,73 @@ as
 	else 
 	select 0, 'No es tu turno'
 
+/*
+Autores: Pablo Costa y Adrián García
+fecha: 20210930
+descripción: Realiza un castigo a un jugador
+*/
 
+go 
+create procedure castigar
+	@idJugador int
+as
+	declare @idCasilla int
+	declare @idPartida int
+	declare @idTablero int
+
+	select @idCasilla = posicion,@idPartida = idPartida from jugadores where id = @idJugador
+	select @idTablero = p.tablero from partidas p left join (tableros t left join casillas c on t.id = c.tablero) on p.tablero = t.id where p.id = @idPartida
+
+	update jugadores set turnosDeCastigo = 4, posicion = 
+	(select id from casillas where orden = (select destino from casillas where id = @idCasilla and tablero =  @idTablero)) where id = @idJugador
+
+/*
+Segunda forma de actualizar deuda comprueba si una casilla tiene un propietario o no
+*/
+go 
+create procedure actualizarDeudaCompleta
+	@idJugador int,
+	@idCarta int = null
+as
+	declare @saldo int
+	declare @idCasilla int
+	declare @tipoCasilla int
+	declare @nivelEdificacion int 
+	declare @propietario int
+
+	select @idCasilla = posicion from jugadores where id = @idJugador
+	select @tipoCasilla = tipo, @nivelEdificacion = (p.nivelEdificacion+1), @propietario = p.jugador from casillas c left join propiedades p on p.casilla=c.id where c.id = @idCasilla
+
+	if ISNULL(@idCarta,0) != 0
+		begin
+			update jugadores set deuda = (select valor from cartas where id = @idCarta) where id = @idJugador
+			select 2, 'Deuda actualizada'
+		end
+	else
+		begin
+			begin tran
+				if @tipoCasilla = 8
+					begin 
+						exec('update jugadores set acreedor ='+@propietario+',deuda = (select coste'+@nivelEdificacion+' from casillas where id = '+@idCasilla+') where id = ' +@idJugador)
+						select 2, 'Deuda actualizada'
+					end
+				else if @tipoCasilla = 2 or @tipoCasilla = 3 or @tipoCasilla = 4
+					begin
+						if ISNULL(@propietario,0) != 0
+							begin
+								if @propietario != @idJugador
+									begin
+										update jugadores set acreedor = @propietario, deuda = (select precioCompra from casillas where id = @idCasilla) where id = @idJugador
+										select 2, 'Deuda actualizada'
+									end
+								else
+								select 1, 'Eres el propietario'
+							end
+						else
+							select 0, 'La casilla se puede comprar'
+					end
+			commit
+		end
 
 /* datos para pruebas
 insert into tableros values (1,'clasico',100000,3)
@@ -768,7 +836,6 @@ exec crearPartida 'partida1',1,4,null,'1234',2
 exec anadirJugador 2,2,'1234'
 exec anadirJugador null,2,'1234'
 exec comenzarPartida 2
-
 */
 
 /* prueba de registro
@@ -843,7 +910,8 @@ select * from tableros
 /*
 exec getPartidas
 exec getTableros
-exec getCasillas 1
+exec getCasillas 2
+exec getCasillas null,2
 exec getJugadoresInfo 1
 */
 
@@ -909,4 +977,10 @@ select * from partidas
 	select * from jugadores
 
 	update partidas set turno = 2
+*/
+
+/* prueba de castigar
+	update jugadores set orden = 38 where id = 1
+	castigar 1
+	select * from jugadores
 */
