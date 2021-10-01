@@ -15,8 +15,8 @@ ALTER ROLE db_owner ADD MEMBER pruebas
 create table usuarios
 (
   id int identity (1,1) primary key,
-  email varchar(255) not null,
-  nick varchar(255) not null,
+  email varchar(255) not null unique,
+  nick varchar(255) not null unique,
   pass varchar(255) not null,
   fechaNacimiento datetime not null
 )
@@ -217,7 +217,7 @@ as
 		  select 0,'ok'
 	  end
 	else
-		select 0,'Partida completa'
+		select 1,'Partida completa'
   commit
 
 
@@ -484,9 +484,7 @@ as
   select @nuevaCasilla = id from casillas where orden = @nuevaPosicion and tablero = @tablero
   update jugadores set posicion = @nuevaCasilla where id = @idJugador
 
-  select @idCasilla, 'movido a la casilla '+cast (@nuevaCasilla as varchar(255))+ ' con orden ' + cast(@nuevaPosicion as varchar(255))
-
-
+  select @nuevaCasilla, 'movido a la casilla '+cast (@nuevaCasilla as varchar(255))+ ' con orden ' + cast(@nuevaPosicion as varchar(255))
 
 
 /*
@@ -724,24 +722,23 @@ create procedure getInfoCarta
 as
 	select id,texto,valor,tipo from cartas where id = @idCarta
 
-	select * from casillas where nombre ='Galeras'
 /*
 Autores: Pablo Costa y Adrián García
 fecha: 20210930
 descripción: Devuelve el turno
 */
-
 go
 create procedure getTurno
-	@idPartida int,
 	@idJugador int
 as
 	declare @turnoActual int
 	declare @orden int
 	declare @turnosCastigo int
+	declare @idPartida int
 
+
+	select @orden = orden,@turnosCastigo = turnosDeCastigo,@idPartida = idPartida from jugadores where id = @idJugador
 	select @turnoActual = turno from partidas where id = @idPartida
-	select @orden = orden,@turnosCastigo = turnosDeCastigo from jugadores where id = @idJugador
 
 	if @orden = @turnoActual
 		begin
@@ -779,7 +776,7 @@ as
 /*
 Segunda forma de actualizar deuda comprueba si una casilla tiene un propietario o no
 */
-go 
+go
 create procedure actualizarDeudaCompleta
 	@idJugador int,
 	@idCarta int = null
@@ -802,8 +799,8 @@ as
 		begin
 			begin tran
 				if @tipoCasilla = 8
-					begin 
-						exec('update jugadores set acreedor ='+@propietario+',deuda = (select coste'+@nivelEdificacion+' from casillas where id = '+@idCasilla+') where id = ' +@idJugador)
+					begin
+						update jugadores set acreedor = @propietario, deuda = (select precioCompra from casillas where id = @idCasilla) where id = @idJugador				
 						select 2, 'Deuda actualizada'
 					end
 				else if @tipoCasilla = 2 or @tipoCasilla = 3 or @tipoCasilla = 4
@@ -811,8 +808,8 @@ as
 						if ISNULL(@propietario,0) != 0
 							begin
 								if @propietario != @idJugador
-									begin
-										update jugadores set acreedor = @propietario, deuda = (select precioCompra from casillas where id = @idCasilla) where id = @idJugador
+									begin 
+										exec('update jugadores set acreedor ='+@propietario+',deuda = (select coste'+@nivelEdificacion+' from casillas where id = '+@idCasilla+') where id = ' +@idJugador)
 										select 2, 'Deuda actualizada'
 									end
 								else
@@ -968,7 +965,7 @@ select * from partidas
 
 /* prueba de getTurno
 
-	getTurno 1,2
+	getTurno 2
 	select * from partidas
 	select * from jugadores
 
@@ -976,7 +973,7 @@ select * from partidas
 */
 
 /* prueba de castigar
-	update jugadores set orden = 38 where id = 1
+	update jugadores set posicion = 38 where id = 1
 	castigar 1
 	select * from jugadores
 */
