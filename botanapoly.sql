@@ -346,18 +346,18 @@ as
     case when pass is not null then 1 else 0 end as tienePass, numJugadores,turno,estado,tablero from partidas
   where @id is null or @id = id 
 
-go
+
 
 /*
 Autor: Alberto Botana
 fecha: 20210929
 descripción: devuelve un listado de los tableros disponibles
 */
+go
 create procedure getTableros
 as
   select id, descripcion, importe, numCasillas from tableros
 
-go
 /*
  Autor: Pablo Costa
  fecha: 20210929
@@ -374,7 +374,7 @@ as
 			select c.id, c.tipo, c.nombre, c.orden, c.precioCompra, c.precioVenta, c.costeEdificacion, c.precioVentaEdificacion, c.Coste1,
 				c.Coste2, c.Coste3, c.Coste4, c.Coste5,c.Coste6, c.conjunto, c.destino,p.jugador 
 			from casillas c left join propiedades p on c.id = p.casilla
-			where p.casilla= @idCasilla
+			where c.id= @idCasilla
 		end
 	else if ISNULL(@idTablero,0)!=0
 		begin 
@@ -383,9 +383,6 @@ as
 			from casillas c left join propiedades p on c.id = p.casilla
 			where c.tablero = @idTablero
 		end
-		drop procedure getCasillas
---getCasillas 1
---select * from casillas
 
 
  /*
@@ -400,13 +397,14 @@ as
   select id, idUsuario,idPartida,saldo,orden,posicion, dobles, turnosDeCastigo,deuda,acreedor
   from jugadores where idPartida = @idPartida
 
-go
+
 
 /*
  Autor: Pablo Costa
  fecha: 20210929
  descripcion: Retira de la partida a un jugador
 */
+go
 create procedure retirarJugador
 	@idJugador int
 as
@@ -428,9 +426,6 @@ as
 
 
 go
-
-
-
 /*
  Autor: Pablo Costa
  fecha: 20210929
@@ -450,7 +445,7 @@ as
 
 	--select @idPartida =idPartida from jugadores where id=@idJugador
 
-	go
+	
 
 
 
@@ -461,6 +456,7 @@ descripción: realiza el movimiento de un jugador, calcula a que posición debe ir
 se considera movimiento negativo, pero nunca de forma que pueda provocar retroceder antes de la salida
 no s erealizan acciones relativas a la casilla en la que se ha caido
 */
+go
 create procedure mover
   @idJugador int,
   @tirada int
@@ -491,7 +487,7 @@ as
 
   select @idCasilla, 'movido a la casilla '+cast (@nuevaCasilla as varchar(255))+ ' con orden ' + cast(@nuevaPosicion as varchar(255))
 
-go
+
 
 
 /*
@@ -500,6 +496,7 @@ fecha: 20210929
 descripcion: realiza la edificación de una casa. Se valida que el usuario tenga todo el conjunto de casillas en propiedad, y entonces permite subir 
 un nivel de edificacion bajando el coste correspondiente
 */
+go
 create procedure edificar
   @idJugador int,
   @idCasilla int
@@ -531,13 +528,14 @@ as
 
   select 0,'ok'
 
-  go
+
 
  /*
 Autor: Alberto Botana
 fecha: 20210929
 descripcion: vend un nivel de edificacion recuperando el importe correspondiente
 */
+go
 create procedure venderEdificacion
   @idJugador int,
   @idCasilla int
@@ -555,8 +553,6 @@ as
   select 0,'ok'
 
 go
-
-
 /*
 autor: Alberto Botana
 fecha: 20210930
@@ -570,7 +566,6 @@ as
   update jugadores set dobles = case when @reset = 1 then 0 else dobles + 1 end
   where id = @idJugador
 
-go
 
 
 /*
@@ -578,6 +573,7 @@ Autor: alberto Botana
 fecha: 20210930
 descripción: devuelve el listado de las propiedades de un jugador
 */
+go
 create procedure getPropiedades
   @idJugador int
 as
@@ -914,7 +910,8 @@ select * from tableros
 /*
 exec getPartidas
 exec getTableros
-exec getCasillas 1
+exec getCasillas 2
+exec getCasillas null,2
 exec getJugadoresInfo 1
 */
 
