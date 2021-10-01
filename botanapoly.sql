@@ -485,9 +485,7 @@ as
   select @nuevaCasilla = id from casillas where orden = @nuevaPosicion and tablero = @tablero
   update jugadores set posicion = @nuevaCasilla where id = @idJugador
 
-  select @idCasilla, 'movido a la casilla '+cast (@nuevaCasilla as varchar(255))+ ' con orden ' + cast(@nuevaPosicion as varchar(255))
-
-
+  select @nuevaCasilla, 'movido a la casilla '+cast (@nuevaCasilla as varchar(255))+ ' con orden ' + cast(@nuevaPosicion as varchar(255))
 
 
 /*
@@ -725,24 +723,23 @@ create procedure getInfoCarta
 as
 	select id,texto,valor,tipo from cartas where id = @idCarta
 
-	select * from casillas where nombre ='Galeras'
 /*
 Autores: Pablo Costa y Adrián García
 fecha: 20210930
 descripción: Devuelve el turno
 */
-
 go
 create procedure getTurno
-	@idPartida int,
 	@idJugador int
 as
 	declare @turnoActual int
 	declare @orden int
 	declare @turnosCastigo int
+	declare @idPartida int
 
+
+	select @orden = orden,@turnosCastigo = turnosDeCastigo,@idPartida = idPartida from jugadores where id = @idJugador
 	select @turnoActual = turno from partidas where id = @idPartida
-	select @orden = orden,@turnosCastigo = turnosDeCastigo from jugadores where id = @idJugador
 
 	if @orden = @turnoActual
 		begin
@@ -972,7 +969,7 @@ select * from partidas
 
 /* prueba de getTurno
 
-	getTurno 1,2
+	getTurno 2
 	select * from partidas
 	select * from jugadores
 
@@ -980,7 +977,7 @@ select * from partidas
 */
 
 /* prueba de castigar
-	update jugadores set orden = 38 where id = 1
+	update jugadores set posicion = 38 where id = 1
 	castigar 1
 	select * from jugadores
 */
