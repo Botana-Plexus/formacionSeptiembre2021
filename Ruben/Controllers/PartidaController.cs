@@ -76,7 +76,7 @@ namespace API_Botanapoly.Controllers
                             }
                             else {
 
-                                  consulta = $"getCasillas '{idTablero}',null'";
+                                  consulta = $"getCasillas '{idTablero}',null";
                             }
                             
                             System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
@@ -114,7 +114,7 @@ namespace API_Botanapoly.Controllers
                                 casilla.destino =
                                     dt.Rows[i]["destino"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["destino"]) : null;
                                 casilla.propietario =
-                                       dt.Rows[i]["propietario"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["propietario"]) : null;
+                                    dt.Rows[i]["jugador"] != System.DBNull.Value ? Convert.ToInt32(dt.Rows[i]["jugador"]) : null;
 
                                 lista.Add(casilla);
                             }
