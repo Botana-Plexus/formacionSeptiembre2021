@@ -14,7 +14,7 @@ namespace API_Botanapoly.Controllers
     public class PartidaController : ControllerBase
     {
         Database database = new Database();
-        // POST api/<PartidaController>
+
         [HttpPost("crearPartida")]
         public string addPartida([FromBody] Partida partida)
         {
@@ -25,6 +25,7 @@ namespace API_Botanapoly.Controllers
             }
 
             if (string.IsNullOrEmpty(partida.pass)){ 
+
                 query = $"crearPartida'{partida.nombre}','{partida.administrador}','{partida.maxJugadores}','{partida.maxTiempo}',null,'{partida.tablero}'";
             } else { 
                 query = $"crearPartida'{partida.nombre}','{partida.administrador}','{partida.maxJugadores}','{partida.maxTiempo}','{partida.pass}','{partida.tablero}'";
@@ -100,9 +101,9 @@ namespace API_Botanapoly.Controllers
         }
 
         [HttpPost("vender")]
-        public string vender(int idJugador, int casilla)
+        public string vender(int idJugador, int idCasilla)
         {
-            string query = $"vender '{idJugador}','{casilla}'";
+            string query = $"vender '{idJugador}','{idCasilla}'";
             System.Data.DataTable dt = database.selectQuery(query);
             return dt.Rows[0]["Column2"].ToString();
         }
@@ -236,55 +237,6 @@ namespace API_Botanapoly.Controllers
             }
             return lista;
         }
-        
-        //Retirar Jugador (deja de jugar pero sigue en partida)
-        [HttpPost("retirarJugador")]
-        public string retirarJugador(int idJugador)
-        {
-            string consulta = $"retirarJugador '{idJugador}'";
-
-            return database.insertQuery(consulta);
-        }
-
-        //Abandonar Partida 
-        [HttpPost("abandonarPartida")]
-        public string abandonarPartida(int idJugador)
-        {
-            string consulta = $"abandonarPartida '{idJugador}'";
-
-            return database.insertQuery(consulta);
-        }
-
-        //Edificar
-        [HttpPost("edificar")]
-        public string edificar(int idJugador, int idCasilla)
-        {
-            string query = $"edificar '{idJugador}','{idCasilla}'";
-
-            System.Data.DataTable dt = database.selectQuery(query);
-            return dt.Rows[0]["Column2"].ToString();
-        }
-
-        //VenderEdificacion
-        [HttpPost("venderEdificacion")]
-        public string venderEdificacion(int idJugador, int idCasilla)
-        {
-            string query = $"venderEdificacion '{idJugador}','{idCasilla}'";
-
-            System.Data.DataTable dt = database.selectQuery(query);
-            return dt.Rows[0]["Column2"].ToString();
-        }
-        
-        //Setdobles
-        [HttpPost("setDobles")]
-        public string setDobles(int idJugador, int reset)
-        {
-            string query = $"setDobles '{idJugador}','{reset}'";
-
-            return database.insertQuery(query);
-        }
-
-        //GetPropiedades
         [HttpGet("getPropiedades")]
         public List<Casilla> getPropiedades(int idJugador)
         {
@@ -317,8 +269,50 @@ namespace API_Botanapoly.Controllers
             }
             return lista;
         }
+        
+        [HttpPost("retirarJugador")]
+        public string retirarJugador(int idJugador)
+        {
+            string consulta = $"retirarJugador '{idJugador}'";
 
-        //Mover
+            return database.insertQuery(consulta);
+        }
+
+        [HttpPost("abandonarPartida")]
+        public string abandonarPartida(int idJugador)
+        {
+            string consulta = $"abandonarPartida '{idJugador}'";
+
+            return database.insertQuery(consulta);
+        }
+
+        [HttpPost("edificar")]
+        public string edificar(int idJugador, int idCasilla)
+        {
+            string query = $"edificar '{idJugador}','{idCasilla}'";
+
+            System.Data.DataTable dt = database.selectQuery(query);
+            return dt.Rows[0]["Column2"].ToString();
+        }
+
+        [HttpPost("venderEdificacion")]
+        public string venderEdificacion(int idJugador, int idCasilla)
+        {
+            string query = $"venderEdificacion '{idJugador}','{idCasilla}'";
+
+            System.Data.DataTable dt = database.selectQuery(query);
+            return dt.Rows[0]["Column2"].ToString();
+        }
+
+        [HttpPost("setDobles")]
+        public string setDobles(int idJugador, int reset)
+        {
+            string query = $"setDobles '{idJugador}','{reset}'";
+
+            return database.insertQuery(query);
+        }
+
+
         [HttpPost("mover")]
         public string mover(int idJugador, int tirada)
         {
@@ -371,7 +365,6 @@ namespace API_Botanapoly.Controllers
         }
               
 
-        //GetTurno
         [HttpPost("getTurno")]
         public string getTurno(int idJugador, int idPartida)
         {
@@ -381,7 +374,6 @@ namespace API_Botanapoly.Controllers
             return dt.Rows[0]["Column2"].ToString();
         }
 
-        //GetCartaAleatoria 
         [HttpPost("cartaAleatoria")]
         public int getCartaAleatoria(int idJugador)
         {
@@ -392,7 +384,6 @@ namespace API_Botanapoly.Controllers
             return Convert.ToInt32(dt.Rows[0]["id"]);
         }
 
-        //GetInfoCarta
         [HttpPost("getInfoCarta")]
         public Cartas getInfoCarta(int idCarta)
         {
@@ -408,7 +399,6 @@ namespace API_Botanapoly.Controllers
             return carta;
         }
 
-        //Finalizar partida     
         [HttpPost("finalizarPartida")]
         public string finalizarPartida(int idPartida)
         {
@@ -417,7 +407,6 @@ namespace API_Botanapoly.Controllers
             return database.insertQuery(query);
         }
         
-        //Actualizar deuda
         [HttpPost("actualizarDeuda")]
         public string actualizarDeuda(int idJugador, int idCarta)
         {
@@ -426,7 +415,6 @@ namespace API_Botanapoly.Controllers
 
         }
 
-        //Pagar deuda
         [HttpPost("pagarDeuda")]
         public string pagarDeuda(int idJugador)
         {
@@ -438,7 +426,6 @@ namespace API_Botanapoly.Controllers
 
         }
         
-        //Finalizar turno
         [HttpPost("finalizarTurno")]
         public string finalizarTurno(int idJugador)
         {

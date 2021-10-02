@@ -11,7 +11,7 @@ namespace API_Botanapoly
         public int tipo { set; get; }
         public int tablero { set; get; }
         public string nombre { set; get; }
-        public int orden { set; get; } //orden dentro del tablero.debe comenzar en 1 y solo puede haber una 1, aunque se podria repetir algun orden
+        public int orden { set; get; } 
         public int? precioCompra { set; get; }
         public int? precioVenta { set; get; }
         public int? nivelEdificacion { set; get; }
@@ -25,7 +25,7 @@ namespace API_Botanapoly
         public int? Coste6 { set; get; }
         public int? jugador { set; get; }
         public int? conjunto { set; get; }
-        public int? destino { set; get; } //casilla destino para castigo, por ejemplo
+        public int? destino { set; get; } 
 
         //public Casilla(
         //int id, int tipo, int tablero, string nombre, int orden,
