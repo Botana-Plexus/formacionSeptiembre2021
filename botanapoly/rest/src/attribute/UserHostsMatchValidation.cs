@@ -21,11 +21,14 @@ namespace rest{
                 if (request.Headers.TryGetValue("ApiKey", out var extractedApiKey))
                 {
                     int matchId = int.Parse((string) extractedMatchID);
-                    UserInfo user = apiKeyStore.find(extractedApiKey);
-                    IEnumerable<MatchInfo> matches = repository.getMatches(match => match.Id.Equals(matchId) && match.HostId.Equals(user.Id));
-                    if (matches.Any())
+                    int? userId = apiKeyStore.find(extractedApiKey);
+                    if (userId.HasValue)
                     {
-                        await next();
+                        IEnumerable<MatchInfo> matches = repository.getMatches(match => match.Id.Equals(matchId) && match.HostId.Equals(userId));
+                        if (matches.Any())
+                        {
+                            await next();
+                        }
                     }
                 }
             }

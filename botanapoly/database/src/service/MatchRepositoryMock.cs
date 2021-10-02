@@ -26,8 +26,8 @@ namespace database{
             };
             _matches = new List<MatchInfo>()
             {
-                new MatchInfo(1, "", _players[0].Id, 6, 0, 0l, "asdf", 0, 1, MatchState.CREATED, -1, null),
-                new MatchInfo(2, "", _players[1].Id, 6, 0, 0l, "asdf", 0, 1, MatchState.CREATED, -1, null)
+                new MatchInfo(1, "", _players[0].Id, 6, 0, 0l, "asdf", 0, 1, MatchState.CREATED, 1, new List<int>()),
+                new MatchInfo(2, "", _players[1].Id, 6, 0, 0l, "asdf", 0, 1, MatchState.CREATED, 1, new List<int>())
             };
             _boards = new List<BoardInfo>
             {

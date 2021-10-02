@@ -81,6 +81,10 @@ namespace rest{
             _states = new GameStateControlFlow<TurnState, TurnAction>(actions.ToList(), states);
             _matchRepository = new MatchRepositoryMock();
             _apiKeyStore = new ApiKeyStoreMock(_matchRepository);
+            foreach (UserInfo user in _matchRepository.getUsers(u => true))
+            {
+                _apiKeyStore.register(string.Format("asda1sda{0}sd", user.Id), user.Id);
+            }
         }
 
         public static Configuration Instance

@@ -8,33 +8,34 @@ using rest.service;
 namespace rest {
     public class ApiKeyStoreMock : IApiKeyStore{
 
-        private readonly Dictionary<string, UserInfo> store;
+        private readonly Dictionary<string, int> store;
         private readonly IMatchRepository _matchRepository;
 
         public ApiKeyStoreMock(IMatchRepository matchRepository)
         {
             _matchRepository = matchRepository;
-            this.store = new Dictionary<string, UserInfo>()
-            {
-                {"asda1sda1sd", _matchRepository.getUsers(user => user.Id.Equals(1)).First()},
-                {"asda1sda2sd", _matchRepository.getUsers(user => user.Id.Equals(2)).First()}
-            };
+            this.store = new Dictionary<string, int>();
         }
 
-        public Dictionary<string, UserInfo> findAll(Func<string, bool> filter)
+        public Dictionary<string, int> findAll(Func<string, bool> filter)
         {
             return store.Where(pair => filter(pair.Key)).ToDictionary(i => i.Key, i => i.Value);
         }
 
-        public UserInfo find(string apiKey)
+        public int? find(string apiKey)
         {
             return store.ContainsKey(apiKey) ? store[apiKey] : null;
         }
 
-        public UserInfo register(string apiKey, UserInfo userInfo)
+        public int? register(string apiKey, int userId)
         {
-            store[apiKey] = userInfo;
-            return store[apiKey];
+            int? result = null;
+            if (!store.ContainsKey(apiKey))
+            {
+                store[apiKey] = userId;
+                result = userId;
+            }
+            return result;
         }
     }
 }

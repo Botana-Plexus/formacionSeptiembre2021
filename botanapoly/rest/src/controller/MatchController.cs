@@ -33,15 +33,15 @@ namespace rest{
         {
             IEnumerable<BoardInfo> boards;
             IEnumerable<MatchInfo> matches;
-            UserInfo user;
+            int? userId;
             IApiKeyStore apiKeyStore = Configuration.Instance.ApiKeyStore;
             IMatchRepository repository = Configuration.Instance.MatchRepository;
-            user = apiKeyStore.find(apiKey);
+            userId = apiKeyStore.find(apiKey);
             boards = repository.getBoards(e => e.Id.Equals(config.BoardId));
             if (boards.Any())
             {
-                repository.createMatch(config.Name, user.Id, config.MaxPlayers, config.MaxDuration, config.Password, boards.First().Id);
-                matches = repository.getMatches(match => match.HostId.Equals(user.Id));
+                repository.createMatch(config.Name, userId.Value, config.MaxPlayers, config.MaxDuration, config.Password, boards.First().Id);
+                matches = repository.getMatches(match => match.HostId.Equals(userId));
                 if (matches.Any())
                 {
                     return Ok(matches.OrderByDescending(match => match.Id).First());
