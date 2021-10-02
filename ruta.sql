@@ -1,5 +1,7 @@
 
-use botanapoly_master
+
+use botanapoly_Botana
+
 
 --select * from tableros
 insert into tableros values (2,'Ruta del Tesoro',135000,40)
@@ -75,8 +77,6 @@ insert into cartas values (2,11,1,'Renta', 10000);
 
 insert into cartas values (2,11,2,'Impuestos', 5000);
 insert into cartas values (2,11,2,'Póliza de seguros', 5000);
-
-insert into cartas values (2,11,4,'Vaya a galeras', 0);
 
 
 insert into cartas values (2,12,1,'Compañía de seguros', 5000);
