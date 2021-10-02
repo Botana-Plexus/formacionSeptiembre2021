@@ -518,7 +518,7 @@ namespace API_Botanapoly.Controllers
                 case 5:
                     consulta = $"getCartaAleatoria '{idJugador}'";
                     System.Data.DataTable dt2 = BD.ejecutarConsulta(consulta);
-                    int idCarta = Convert.ToInt32(dt2.Rows[0]["Column2"]);
+                    int idCarta = Convert.ToInt32(dt2.Rows[0]["id"]);
                     consulta = $"getInfoCarta '{idCarta}'";
                     System.Data.DataTable dt3 = BD.ejecutarConsulta(consulta);
                     int valor = Convert.ToInt32(dt3.Rows[0]["valor"]);
