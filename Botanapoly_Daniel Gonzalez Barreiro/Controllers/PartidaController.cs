@@ -318,7 +318,6 @@ namespace API_Botanapoly.Controllers
             return lista;
         }
 
-
         //Mover
         [HttpPost("mover")]
         public string mover(int idJugador, int tirada)
@@ -448,6 +447,64 @@ namespace API_Botanapoly.Controllers
 
             return database.insertQuery(query);
 
+        }
+
+        //Metodo que vende todas las propiedades junto con los edificios de estas y se obtiene el jugador con más saldo(getMasRico)
+        private Jugador determinarGanador(int idPartida)
+        {
+            string query;
+
+            query = $"getJugadoresInfo {idPartida};";
+            System.Data.DataTable jugadores = database.selectQuery(query);
+            for (int i = 0; i < jugadores.Rows.Count; i++)
+            {
+                int idJugador = Convert.ToInt32(jugadores.Rows[i]["id"]);
+                query = $"getPropiedades {idJugador}";
+                System.Data.DataTable propiedades = database.selectQuery(query);
+                for (int j = 0; j < propiedades.Rows.Count; j++)
+                {
+                    int propiedad = Convert.ToInt32(propiedades.Rows[j]["id"]);
+                    int nivelEdificacion = Convert.ToInt32(propiedades.Rows[j]["nivelEdificacion"]);
+                    for (int k = 0; k < nivelEdificacion; k++)
+                    {
+                        query = $"venderEdificacion {idJugador},{propiedad}";
+                        database.selectQuery(query);
+                    }
+                    vender(idJugador, propiedad);
+                }
+            }
+
+            string ganador = $"getMasRico {idPartida}";
+            System.Data.DataTable dt = database.selectQuery(ganador);
+
+            Jugador jugador = new Jugador();
+            jugador.id = Convert.ToInt32(dt.Rows[0]["id"]);
+            if (dt.Rows[0]["idUsuario"] != System.DBNull.Value)
+                jugador.idUsuario = Convert.ToInt32(dt.Rows[0]["idUsuario"]);
+            jugador.idPartida = Convert.ToInt32(dt.Rows[0]["idPartida"]);
+            jugador.saldo = Convert.ToInt32(dt.Rows[0]["saldo"]);
+            jugador.orden = Convert.ToInt32(dt.Rows[0]["orden"]);
+            if (dt.Rows[0]["posicion"] != System.DBNull.Value)
+                jugador.posicion = Convert.ToInt32(dt.Rows[0]["posicion"]);
+            jugador.dobles = Convert.ToInt32(dt.Rows[0]["dobles"]);
+            jugador.turnosDeCastigo = Convert.ToInt32(dt.Rows[0]["turnosDeCastigo"]);
+
+            return jugador;
+        }
+
+        [HttpPost("comprobarTiempoPartida")]
+        public string comprobarTiempo(int idPartida)
+        {
+            string query = $"getTiempo {idPartida};";
+            System.Data.DataTable dt = database.selectQuery(query);
+            int tiempoRestante = Convert.ToInt32(dt.Rows[0]["Column1"]);
+            if (tiempoRestante == 0)
+            {
+                Jugador ganador = determinarGanador(idPartida);
+                return $"Ha ganado el jugador con id = {ganador.id}";
+            }
+            else
+                return "Todavía no se ha acabado el tiempo";
         }
 
     }
