@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using database;
 using model;
 
@@ -17,7 +18,7 @@ namespace controller{
 
         public List<BoardInfo> execute()
         {
-            return _matchRepository.getBoards(_filter);
+            return _matchRepository.getBoards(_filter).ToList();
         }
     }
 }

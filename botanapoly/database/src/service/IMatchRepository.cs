@@ -5,13 +5,13 @@ using model;
 
 namespace database{
     public interface IMatchRepository{
-        void createMatch(string name, PlayerInfo host, int? maxPlayers, int? maxDuration, string password, BoardInfo board);
-        List<BoardInfo> getBoards(Func<BoardInfo, bool> filter);
-        List<MatchInfo> getMatches(Func<MatchInfo, bool> filter);
+        void createMatch(string name, int hostId, int maxPlayers, int? maxDuration, string password, int boardId);
+        IEnumerable<BoardInfo> getBoards(Func<BoardInfo, bool> filter);
+        IEnumerable<MatchInfo> getMatches(Func<MatchInfo, bool> filter);
         List<PlayerInfo> getMatchPlayers(MatchInfo matchInfo, Func<PlayerInfo, bool> filter);
         List<SquareInfo> getMatchSquares(BoardInfo matchInfo, Func<SquareInfo, bool> filter);
-        void startMatch(MatchInfo matchInfo);
-        void endMatch(MatchInfo matchInfo);
+        void startMatch(int matchId);
+        void endMatch(int matchId);
         void switchToObserver(PlayerInfo playerInfo);
         void leaveMatch(PlayerInfo playerInfo);
         int joinMatch(MatchInfo matchInfo, UserInfo userInfo, string password);
@@ -32,5 +32,7 @@ namespace database{
 
         void registerUser(UserInfo userInfo);
         int authenticate(UserInfo userInfo);
+
+        IEnumerable<UserInfo> getUsers(Func<UserInfo, bool> filter);
     }
 }

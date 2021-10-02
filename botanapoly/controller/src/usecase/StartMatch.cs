@@ -7,17 +7,17 @@ namespace controller{
     public class StartMatch : IUseCaseFunctionality<int>{
         
         private readonly IMatchRepository matchRepository;
-        private readonly MatchInfo matchInfo;
+        private readonly int matchId;
 
-        public StartMatch(IMatchRepository matchRepository, MatchInfo matchInfo)
+        public StartMatch(IMatchRepository matchRepository, int matchId)
         {
             this.matchRepository = matchRepository;
-            this.matchInfo = matchInfo;
+            this.matchId = matchId;
         }
 
         public int execute()
         {
-            matchRepository.startMatch(matchInfo);
+            matchRepository.startMatch(matchId);
             return 0;
         }
     }

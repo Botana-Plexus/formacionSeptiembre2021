@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using database;
 using model;
 
@@ -17,7 +18,7 @@ namespace controller{
 
         public List<MatchInfo> execute()
         {
-            return this._matchRepository.getMatches(_filter);
+            return this._matchRepository.getMatches(_filter).ToList();
         }
     }
 }
