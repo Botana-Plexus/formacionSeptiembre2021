@@ -380,9 +380,9 @@ namespace API_Botanapoly.Controllers
 
                             //Edificar
                             [HttpPost("edificar")]
-                            public string edificar(int idJugador, int idPartida)
+                            public string edificar(int idJugador, int idCasilla)
                             {
-                                string query = $"edificar '{idJugador}','{idPartida}'";
+                                string query = $"edificar '{idJugador}','{idCasilla}'";
 
                                 System.Data.DataTable dt = BD.ejecutarConsulta(query);
                                 return dt.Rows[0]["Column2"].ToString();
