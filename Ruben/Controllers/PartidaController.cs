@@ -536,11 +536,69 @@ namespace API_Botanapoly.Controllers
                     }
 
             }
-            return "No hay ningun tipo de carta con ese valor";
+            return "No hay ningun tipo de casilla con ese valor";
 
 
 
         }
+
+
+        //Se comprueba si se ha terminado el tiempo de la partida (en este caso se determina el ganador)
+        [HttpPost("comprobarTiempoPartida")]
+        public string comprobarTiempo(int idPartida)
+        {
+            string consulta = $"getTiempo {idPartida};";
+            System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
+            int tiempoRestante = Convert.ToInt32(dt.Rows[0]["Column1"]);
+            if (tiempoRestante == 0)
+            {
+                Jugadores ganador = determinarGanador(idPartida);
+                return $"Ha ganado el jugador con id = {ganador.id}";
+            }
+            else
+                return "Todavía no se ha acabado el tiempo";
+        }
+        //Metodo que vende todas las propiedades junto con los edificios de estas y se obtiene el jugador con más saldo(getMasRico)
+        private Jugadores determinarGanador(int idPartida)
+        {
+            string consulta = $"getJugadoresInfo {idPartida};";
+            System.Data.DataTable jugadores = BD.ejecutarConsulta(consulta);
+            for (int i = 0; i < jugadores.Rows.Count; i++)
+            {
+                int idJugador = Convert.ToInt32(jugadores.Rows[i]["id"]);
+                string consulta2 = $"getPropiedades {idJugador}";
+                System.Data.DataTable propiedades = BD.ejecutarConsulta(consulta2);
+                for (int j = 0; j < propiedades.Rows.Count; j++)
+                {
+                    int propiedad = Convert.ToInt32(propiedades.Rows[j]["id"]);
+                    int nivelEdificacion = Convert.ToInt32(propiedades.Rows[j]["nivelEdificacion"]);
+                    for (int k = 0; k < nivelEdificacion; k++)
+                    {
+                        string consulta3 = $"venderEdificacion {idJugador},{propiedad}";
+                        BD.ejecutarConsulta(consulta3);
+                    }
+                    vender(idJugador, propiedad);
+                }
+            }
+
+            string ganador = $"getMasRico {idPartida}";
+            System.Data.DataTable dt = BD.ejecutarConsulta(ganador);
+
+            Jugadores jugador = new Jugadores();
+            jugador.id = Convert.ToInt32(dt.Rows[0]["id"]);
+            if (dt.Rows[0]["idUsuario"] != System.DBNull.Value)
+                jugador.idUsuario = Convert.ToInt32(dt.Rows[0]["idUsuario"]);
+            jugador.idPartida = Convert.ToInt32(dt.Rows[0]["idPartida"]);
+            jugador.saldo = Convert.ToInt32(dt.Rows[0]["saldo"]);
+            jugador.orden = Convert.ToInt32(dt.Rows[0]["orden"]);
+            if (dt.Rows[0]["posicion"] != System.DBNull.Value)
+                jugador.posicion = Convert.ToInt32(dt.Rows[0]["posicion"]);
+            jugador.dobles = Convert.ToInt32(dt.Rows[0]["dobles"]);
+            jugador.turnosCastigo = Convert.ToInt32(dt.Rows[0]["turnosDeCastigo"]);
+
+            return jugador;
+        }
+
     }
 }
 
