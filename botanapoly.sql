@@ -257,7 +257,7 @@ as
   select @cantidad = count(*) from propiedades a left join casillas b on a.casilla = b.id
   where b.tipo = @tipo and a.jugador = @idJugador
   
-  update propiedades set nivelEdificacion = @cantidad where casilla in ( select id from casillas where tipo = @tipo)
+  update propiedades set nivelEdificacion = @cantidad - 1 where casilla in ( select id from casillas where tipo = @tipo)
   and jugador = @idJugador
 
 
@@ -789,10 +789,12 @@ as
 /*
 Segunda forma de actualizar deuda comprueba si una casilla tiene un propietario o no
 */
+
 go
 create procedure actualizarDeudaCompleta
 	@idJugador int,
-	@idCarta int = null
+	@idCarta int = null,
+	@tiradaMultiplicador int
 as
 	declare @saldo int
 	declare @idCasilla int
@@ -822,7 +824,9 @@ as
 							begin
 								if @propietario != @idJugador
 									begin 
-										exec('update jugadores set acreedor ='+@propietario+',deuda = (select coste'+@nivelEdificacion+' from casillas where id = '+@idCasilla+') where id = ' +@idJugador)
+										if @tipoCasilla = 2 or @tipoCasilla = 4 
+											set @tiradaMultiplicador = 1
+										exec('update jugadores set acreedor ='+@propietario+',deuda = (select coste'+@nivelEdificacion+' from casillas where id = '+@idCasilla+') * '+ @tiradaMultiplicador +' where id = ' +@idJugador)
 										select 2, 'Deuda actualizada'
 									end
 								else
@@ -833,7 +837,6 @@ as
 					end
 			commit
 		end
-
 
 go
 create procedure getTiempo
@@ -934,6 +937,9 @@ delete from propiedades
 select * from propiedades
 insert into propiedades values (1,1,9,0)
 
+insert into propiedades values (3,2,25,2)
+update jugadores set posicion = 24 where id = 4
+exec
 
 */
 
@@ -1054,3 +1060,7 @@ select * from partidas
 /* prueba getMasRico
 	getMasRico 1
 */
+--exec actualizarDeudaCompleta 4,null,1
+--select * from jugadores
+--select * from propiedades
+--update propiedades set nivelEdificacion = 1 
