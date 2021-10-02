@@ -4,26 +4,26 @@ namespace model{
     public class PlayerInfo : ModelEntity{
         
         private  UserInfo _user;
-        private  MatchInfo _match;
+        private  int _matchId;
         private  double _balance;
-        private  SquareInfo _square;
+        private  int _squareId;
         private  int? _turn;
         private int? _remainingPunishmentRounds;
         private int? _doubleRollsCounter;
         private int? _debt;
-        private PlayerInfo _creditor;
+        private int _creditorId;
 
-        public PlayerInfo(int id, UserInfo user, MatchInfo match, double balance, SquareInfo square, int? turn, int? remainingPunishmentRounds, int? doubleRollsCounter, int? debt, PlayerInfo creditor) : base(id)
+        public PlayerInfo(int id, UserInfo user, int matchId, double balance, int squareId, int? turn, int? remainingPunishmentRounds, int? doubleRollsCounter, int? debt, int creditorId) : base(id)
         {
             _user = user;
-            _match = match;
+            _matchId = matchId;
             _balance = balance;
-            _square = square;
+            _squareId = squareId;
             _turn = turn;
             _remainingPunishmentRounds = remainingPunishmentRounds;
             _doubleRollsCounter = doubleRollsCounter;
             _debt = debt;
-            _creditor = creditor;
+            _creditorId = creditorId;
         }
 
         public UserInfo User
@@ -32,10 +32,10 @@ namespace model{
             set => _user = value;
         }
 
-        public MatchInfo Match
+        public int Match
         {
-            get => _match;
-            set => _match = value;
+            get => _matchId;
+            set => _matchId = value;
         }
 
         public double Balance
@@ -44,10 +44,10 @@ namespace model{
             set => _balance = value;
         }
 
-        public SquareInfo Square
+        public int Square
         {
-            get => _square;
-            set => _square = value;
+            get => _squareId;
+            set => _squareId = value;
         }
 
         public int? Turn
@@ -74,10 +74,10 @@ namespace model{
             set => _debt = value;
         }
 
-        public PlayerInfo Creditor
+        public int Creditor
         {
-            get => _creditor;
-            set => _creditor = value;
+            get => _creditorId;
+            set => _creditorId = value;
         }
     }
 }

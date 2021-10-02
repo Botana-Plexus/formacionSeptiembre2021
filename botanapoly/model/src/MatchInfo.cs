@@ -4,21 +4,21 @@ using controller;
 namespace model{
     public class MatchInfo : ModelEntity{
         private string _code;
-        private PlayerInfo _host;
+        private int _hostId;
         private int _maxPlayerAmount;
-        private int _maxDurationMinutes;
+        private int? _maxDurationMinutes;
         private long _startedDate;
         private string _password;
         private int _currentPlayerAmount;
         private int _turn;
         private MatchState _matchState;
-        private BoardInfo _boardInfo;
-        private List<PlayerInfo> _players;
+        private int _boardId;
+        private List<int> _playerIds;
 
-        public MatchInfo(int id, string code, PlayerInfo host, int maxPlayerAmount, int maxDurationMinutes, long startedDate, string password, int currentPlayerAmount, int turn, MatchState matchState, BoardInfo boardInfo, List<PlayerInfo> players) : base(id)
+        public MatchInfo(int id, string code, int hostId, int maxPlayerAmount, int? maxDurationMinutes, long startedDate, string password, int currentPlayerAmount, int turn, MatchState matchState, int boardId, List<int> playerIds) : base(id)
         {
             _code = code;
-            _host = host;
+            _hostId = hostId;
             _maxPlayerAmount = maxPlayerAmount;
             _maxDurationMinutes = maxDurationMinutes;
             _startedDate = startedDate;
@@ -26,8 +26,8 @@ namespace model{
             _currentPlayerAmount = currentPlayerAmount;
             _turn = turn;
             _matchState = matchState;
-            _boardInfo = boardInfo;
-            _players = players;
+            _boardId = boardId;
+            _playerIds = playerIds;
         }
 
         public string Code
@@ -36,10 +36,10 @@ namespace model{
             set => _code = value;
         }
 
-        public PlayerInfo Host
+        public int HostId
         {
-            get => _host;
-            set => _host = value;
+            get => _hostId;
+            set => _hostId = value;
         }
 
         public int MaxPlayerAmount
@@ -48,7 +48,7 @@ namespace model{
             set => _maxPlayerAmount = value;
         }
 
-        public int MaxDurationMinutes
+        public int? MaxDurationMinutes
         {
             get => _maxDurationMinutes;
             set => _maxDurationMinutes = value;
@@ -84,16 +84,16 @@ namespace model{
             set => _matchState = value;
         }
 
-        public BoardInfo BoardInfo
+        public int BoardInfo
         {
-            get => _boardInfo;
-            set => _boardInfo = value;
+            get => _boardId;
+            set => _boardId = value;
         }
 
-        public List<PlayerInfo> Players
+        public List<int> PlayerIds
         {
-            get => _players;
-            set => _players = value;
+            get => _playerIds;
+            set => _playerIds = value;
         }
     }
 }

@@ -7,17 +7,17 @@ namespace controller{
     public class CreateMatch : IUseCaseFunctionality<int>{
 
         private readonly IMatchRepository _matchRepository;
-        private readonly PlayerInfo _playerInfo;
+        private readonly UserInfo _userInfo;
         private readonly string _name;
-        private readonly int? _maxPlayers;
+        private readonly int _maxPlayers;
         private readonly int? _maxDuration;
         private readonly string _password;
         private readonly BoardInfo _boardInfo;
 
-        public CreateMatch(IMatchRepository matchRepository, PlayerInfo playerInfo, string name, int? maxPlayers, int? maxDuration, string password, BoardInfo boardInfo)
+        public CreateMatch(IMatchRepository matchRepository, UserInfo userInfo, string name, int maxPlayers, int? maxDuration, string password, BoardInfo boardInfo)
         {
             _matchRepository = matchRepository;
-            _playerInfo = playerInfo;
+            _userInfo = userInfo;
             _name = name;
             _maxPlayers = maxPlayers;
             _maxDuration = maxDuration;
@@ -27,7 +27,7 @@ namespace controller{
 
         public int execute()
         {
-            _matchRepository.createMatch(_name, _playerInfo, _maxPlayers, _maxDuration, _password, _boardInfo);
+            _matchRepository.createMatch(_name, _userInfo, _maxPlayers, _maxDuration, _password, _boardInfo);
             return 0;
         }
     }

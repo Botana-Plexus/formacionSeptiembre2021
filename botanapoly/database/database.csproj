@@ -8,4 +8,8 @@
       <ProjectReference Include="..\model\model.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="src\model\codes" />
+    </ItemGroup>
+
 </Project>

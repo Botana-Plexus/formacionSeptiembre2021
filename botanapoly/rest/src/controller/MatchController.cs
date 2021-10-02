@@ -1,8 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using database;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using model;
+using rest.service;
 
 namespace rest{
     [ApiController]
@@ -10,7 +15,7 @@ namespace rest{
     public class MatchController : ControllerBase {
         
         [HttpGet]
-        public List<MatchInfo> getMatches([FromHeader] string apiKey)
+        public IEnumerable<MatchInfo> getMatches()
         {
             return Configuration.Instance.MatchRepository.getMatches(match => true);
         }
@@ -18,31 +23,53 @@ namespace rest{
         [HttpGet]
         [Route("{matchId}/")]
         [MatchValidation]
-        public MatchInfo getMatch([FromHeader] string apiKey, [FromRoute] int matchId)
+        public MatchInfo getMatch([FromRoute] int matchId)
         {
-            return Configuration._instance.MatchRepository.getMatches(match => match.Id.Equals(matchId)).First();
+            return Configuration.Instance.MatchRepository.getMatches(match => match.Id.Equals(matchId)).First();
         }
 
         [HttpPost]
-        public MatchInfo createMatch([FromHeader] string apiKey, [FromBody] MatchInfoDto configuration)
+        public ObjectResult createMatch([FromHeader] string apiKey, [FromBody] MatchInfoDto config)
         {
-            return null;
+            IEnumerable<BoardInfo> boards;
+            IEnumerable<MatchInfo> matches;
+            UserInfo user;
+            IApiKeyStore apiKeyStore = Configuration.Instance.ApiKeyStore;
+            IMatchRepository repository = Configuration.Instance.MatchRepository;
+            user = apiKeyStore.find(apiKey);
+            boards = repository.getBoards(e => e.Id.Equals(config.BoardId));
+            if (boards.Any())
+            {
+                repository.createMatch(config.Name, user.Id, config.MaxPlayers, config.MaxDuration, config.Password, boards.First().Id);
+                matches = repository.getMatches(match => match.HostId.Equals(user.Id));
+                if (matches.Any())
+                {
+                    return Ok(matches.OrderByDescending(match => match.Id).First());
+                }
+            }
+            return Problem("error creating match", "", 404);
         }
         
         [HttpGet]
         [Route("{matchId}/start/")]
         [MatchValidation]
-        public MatchInfo startMatch([FromHeader] string apiKey, [FromRoute] int matchId)
+        [UserHostsMatchValidation]
+        public ObjectResult startMatch([FromRoute] int matchId)
         {
-            return null;
+            IMatchRepository repository = Configuration.Instance.MatchRepository;
+            repository.startMatch(matchId);
+            return Ok(repository.getMatches(match => match.Id.Equals(matchId)).First());
         }
         
         [HttpGet]
         [Route("{matchId}/stop/")]
         [MatchValidation]
-        public MatchInfo stopMatch([FromHeader] string apiKey, [FromRoute] int matchId)
+        [UserHostsMatchValidation]
+        public ObjectResult stopMatch([FromRoute] int matchId)
         {
-            return null;
+            IMatchRepository repository = Configuration.Instance.MatchRepository;
+            repository.endMatch(matchId);
+            return Ok(repository.getMatches(match => match.Id.Equals(matchId)).First());
         }
         
         [HttpPost]

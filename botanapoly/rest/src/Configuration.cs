@@ -4,15 +4,17 @@ using System.Linq;
 using controller;
 using database;
 using model;
+using rest.service;
 
 namespace rest{
     public class Configuration {
         
-        public static Configuration _instance;
+        private static Configuration _instance;
         private static object _lock = new Object();
         
         private readonly GameStateControlFlow<TurnState, TurnAction> _states;
         private readonly IMatchRepository _matchRepository;
+        private readonly IApiKeyStore _apiKeyStore;
 
         private protected Configuration()
         {
@@ -78,6 +80,7 @@ namespace rest{
             };
             _states = new GameStateControlFlow<TurnState, TurnAction>(actions.ToList(), states);
             _matchRepository = new MatchRepositoryMock();
+            _apiKeyStore = new ApiKeyStoreMock(_matchRepository);
         }
 
         public static Configuration Instance
@@ -101,5 +104,7 @@ namespace rest{
         public GameStateControlFlow<TurnState, TurnAction> States => _states;
 
         public IMatchRepository MatchRepository => _matchRepository;
+
+        public IApiKeyStore ApiKeyStore => _apiKeyStore;
     }
 }
