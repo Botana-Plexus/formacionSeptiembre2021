@@ -477,7 +477,7 @@ namespace API_Botanapoly.Controllers
                                 string consulta;
                                 consulta = $"mover '{idJugador},'{tirada}'";
                                 System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
-                                int idCasillaNueva = Convert.ToInt32(dt.Rows[0]["Column2"]);
+                                int idCasillaNueva = Convert.ToInt32(dt.Rows[0][0]);
 
 
                                 consulta = $"getCasillas 'null','{idCasillaNueva}'";
@@ -508,7 +508,7 @@ namespace API_Botanapoly.Controllers
                                     case 5:
                                         consulta = $"getCartaAleatoria '{idJugador}'";
                                         System.Data.DataTable dt2 = BD.ejecutarConsulta(consulta);
-                                        int idCarta = Convert.ToInt32(dt2.Rows[0]["id"]);
+                                        int idCarta = Convert.ToInt32(dt2.Rows[0][0]);
                                         consulta = $"getInfoCarta '{idCarta}'";
                                         System.Data.DataTable dt3 = BD.ejecutarConsulta(consulta);
                                         int valor = Convert.ToInt32(dt3.Rows[0]["valor"]);
