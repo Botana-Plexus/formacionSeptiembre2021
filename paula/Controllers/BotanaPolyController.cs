@@ -39,7 +39,7 @@ namespace BotanaPolyAPI.Controllers
             } 
         }
 
-        [HttpPost("idPartida")]
+        [HttpPost]
         public string ComenzarPartida(int idPartida)
         {
             string consulta = $"ComenzarPartida {idPartida};";
@@ -47,7 +47,7 @@ namespace BotanaPolyAPI.Controllers
         }
 
 
-        [HttpPost("idUsuario, idPartida, pass")]
+        [HttpPost]
         public string UnirsePartida(int idUsuario, int idPartida, string pass)
         {
             if (String.IsNullOrEmpty(pass))
@@ -63,18 +63,16 @@ namespace BotanaPolyAPI.Controllers
         }
         
 
-        [HttpGet("email,pass")]
+        [HttpGet]
         public string autenticar(string email, string pass)
         {
-            
             string consulta = $"autenticar '{email}', '{pass}'";
             System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
 
-            return dt.Rows[0]["Column2"].ToString();
-            
+            return dt.Rows[0]["Column2"].ToString();  
         }
 
-        [HttpPost("idJugador")]
+        [HttpPost]
         public string comprar(int idJugador)
         {
             string consulta = $"comprar {idJugador};";
@@ -97,7 +95,7 @@ namespace BotanaPolyAPI.Controllers
         }
 
 
-        [HttpPost("{idJugador}")]
+        [HttpPost]
         public string retirarse(int idJugador)
         {
             string consulta = $"retirarJugador {idJugador};";
@@ -108,7 +106,7 @@ namespace BotanaPolyAPI.Controllers
         }
 
 
-        [HttpPost("{idJugador}")]
+        [HttpPost]
         public string abandonar(int idJugador)
         {
             string consulta = $"abandonarPartida {idJugador};";
@@ -116,7 +114,7 @@ namespace BotanaPolyAPI.Controllers
         }
 
 
-        [HttpPost("{idJugador}, {tirada}")]
+        [HttpPost]
         public string moverse(int idJugador, int tirada)
         {
             string consulta = $"mover {idJugador}, {tirada};";
@@ -162,7 +160,7 @@ namespace BotanaPolyAPI.Controllers
             return toret.ToString();
         }
 
-        [HttpPost("{idJugador}, {idCasilla}")]
+        [HttpPost]
         public string edificar(int idJugador, int idCasilla)
         {
             string consulta = $"edificar {idJugador}, {idCasilla};";
@@ -170,7 +168,7 @@ namespace BotanaPolyAPI.Controllers
         }
 
 
-        [HttpPost("{idJugador}, {idCasilla}")]
+        [HttpPost]
         public string venderEdificacion(int idJugador, int idCasilla)
         {
             string consulta = $"venderEdificacion {idJugador}, {idCasilla};";
@@ -223,7 +221,7 @@ namespace BotanaPolyAPI.Controllers
             return lista;
         }
 
-        [HttpGet("{idPartida}")]
+        [HttpGet]
         public Modelos.Partida getPartida(int idPartida)
         {
             string consulta = $"getPartidas {idPartida}";
@@ -245,7 +243,7 @@ namespace BotanaPolyAPI.Controllers
         }
 
 
-        [HttpGet("{idCasilla}")]
+        [HttpGet]
         public Modelos.Casilla getCasilla(int idCasilla)
         {
             string consulta = $"getCasillas NULL, {idCasilla}";
@@ -287,7 +285,7 @@ namespace BotanaPolyAPI.Controllers
         }
 
 
-        [HttpGet("{idTablero}")]
+        [HttpGet]
         public List<Modelos.Casilla> getTablero(int idTablero)
         {
             string consulta = $"getCasillas {idTablero}, NULL";
@@ -332,7 +330,7 @@ namespace BotanaPolyAPI.Controllers
             return lista;
         }
 
-        [HttpGet("{idPartida}")]
+        [HttpGet]
         public List<Modelos.Jugador> getJugadoresPartida(int idPartida)
         {
             string consulta = $"getJugadoresInfo {idPartida}";
@@ -357,7 +355,7 @@ namespace BotanaPolyAPI.Controllers
             return lista;
         }
 
-        [HttpGet("{idJugador}")]
+        [HttpGet]
         public List<Modelos.PropiedadesJugador> getPropiedades(int idJugador)
         {
             string consulta = $"getPropiedades {idJugador}";
@@ -402,7 +400,7 @@ namespace BotanaPolyAPI.Controllers
             return lista;
         }
 
-        [HttpGet("{idPartida}, {idJugador}")]
+        [HttpGet]
         public string getTurno(int idPartida, int idJugador)
         {
             string consulta = $"getTurno {idPartida}, {idJugador}";
@@ -412,7 +410,7 @@ namespace BotanaPolyAPI.Controllers
         }
 
 
-        [HttpPost("{idJugador}, {dobles}")]
+        [HttpPost]
         public string setDobles(int idJugador, int dobles)
         {
             string consulta = $"setDobles {idJugador}, {dobles};";
@@ -420,7 +418,7 @@ namespace BotanaPolyAPI.Controllers
         }
 
 
-        [HttpPost("{idJugador}")]
+        [HttpPost]
         public string pagar(int idJugador)
         {
             string consulta = $"pagarDeuda {idJugador};";
@@ -428,7 +426,7 @@ namespace BotanaPolyAPI.Controllers
         }
 
 
-        [HttpPost("{idPartida}")]
+        [HttpPost]
         public string finalizarPartida(int idPartida)
         {
             string consulta = $"finalizarPartida {idPartida};";
@@ -436,7 +434,7 @@ namespace BotanaPolyAPI.Controllers
         }
 
 
-        [HttpPost("{idPartida}, {idJugador}")]
+        [HttpPost]
         public string finalizarTurno(int idJugador)
         {
             string consulta = $"finalizarTurno {idJugador};";
@@ -444,7 +442,7 @@ namespace BotanaPolyAPI.Controllers
         }
 
 
-        [HttpPost("{idPartida}")]
+        [HttpPost]
         public string comprobarTiempo(int idPartida)
         {
             string consulta = $"getTiempo {idPartida};";
@@ -472,7 +470,6 @@ namespace BotanaPolyAPI.Controllers
                 {
                     int propiedad = Convert.ToInt32(propiedades.Rows[j]["id"]);
                     int nivelEdificacion = Convert.ToInt32(propiedades.Rows[j]["nivelEdificacion"]);
-                    System.Data.DataTable edificaciones = BD.ejecutarConsulta(consulta2);
                     for (int k = 0; k < nivelEdificacion; k++){
                         string consulta3 = $"venderEdificacion {idJugador},{propiedad}";
                         BD.ejecutarConsulta(consulta3);
@@ -498,7 +495,5 @@ namespace BotanaPolyAPI.Controllers
 
             return jugador;
         }
-
-
     } 
 }
