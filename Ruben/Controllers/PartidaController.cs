@@ -131,7 +131,7 @@ namespace API_Botanapoly.Controllers
                             public List<Partidas> getPartidas(int idPartida)
                             {
 
-                                string consulta = "";
+                                string consulta;
                                 if (idPartida != 0)
                                 {
                                     consulta = $"getPartidas '{idPartida}'";
@@ -422,6 +422,18 @@ namespace API_Botanapoly.Controllers
                             }
 
 
+                            //Acualizar Nivel Edificacion
+                            [HttpPost("actualizarNivelEdificacion")]
+                            public string actualizarNivelEdificacion(int idJugador, int tipo)
+                            {
+                                if (tipo != 2 || tipo != 3)
+                                {
+                                    return "Tipo de casilla no valido";
+                                }
+
+                                string consulta = $"actualizarNivelConstruccion '{idJugador}','{tipo}'";
+                                return BD.ejecutarConsultaInsert(consulta);
+                            }
 
 
                             //SetDobles - Actualiza el campo dobles en jugador y reseteo
@@ -491,7 +503,7 @@ namespace API_Botanapoly.Controllers
                                     case 4:
                                     case 8:
 
-                                        consulta = $"actualizarDeudaCompleta '{idJugador}',null";
+                                        consulta = $"actualizarDeuda '{idJugador}','{idCasillaNueva}'";
                                         return BD.ejecutarConsultaInsert(consulta);
 
 
@@ -521,7 +533,7 @@ namespace API_Botanapoly.Controllers
 
                                         else
                                         {
-                                            consulta = $"actualizarDeudaCompleta '{idJugador}','{idCarta}'";
+                                            consulta = $"actualizarDeuda '{idJugador}','{idCarta}'";
                                             return BD.ejecutarConsultaInsert(consulta);
                                         }
 
@@ -584,7 +596,7 @@ namespace API_Botanapoly.Controllers
                                 if (dt.Rows[0]["posicion"] != System.DBNull.Value)
                                     jugador.posicion = Convert.ToInt32(dt.Rows[0]["posicion"]);
                                 jugador.dobles = Convert.ToInt32(dt.Rows[0]["dobles"]);
-                                jugador.turnosCastigo = Convert.ToInt32(dt.Rows[0]["turnosDeCastigo"]);
+                                jugador.turnosDeCastigo = Convert.ToInt32(dt.Rows[0]["turnosDeCastigo"]);
 
                                 return jugador;
                             }
