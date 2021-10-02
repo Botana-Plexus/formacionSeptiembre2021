@@ -281,7 +281,7 @@ as
 	select @importe = precioCompra, @tipoCasilla = tipo from casillas where id = @idCasilla
 	--validacion del saldo
 	
-	if @tipoCasilla = 2 and @tipoCasilla = 3 and @tipoCasilla = 4
+	if @tipoCasilla = 2 or @tipoCasilla = 3 or @tipoCasilla = 4
 		begin
 			if (@saldo < @importe) begin select 1,'saldo insuficiente' return end --si no tien saldo se sale
 	
@@ -300,6 +300,7 @@ as
 		end
 	
 go
+
 
 
 /*
@@ -511,7 +512,8 @@ as
   if exists (select id from jugadores where id = @idJugador and saldo < @coste) begin select 3,'saldo insuficiente' return end
 
   if exists ( select a.id from casillas a left join propiedades b on a.id = b.casilla
-  where a.tablero = @tablero and conjunto = @conjunto and (b.jugador is null or b.jugador <> @idJugador)) 
+  where a.tablero = @tablero and conjunto = @conjunto and b.jugador <> @idJugador)
+
   begin
     select 1,'no es propitario de todo el conjunto'
 	return
@@ -525,6 +527,7 @@ as
   update jugadores set saldo = saldo - @coste where id = @idJugador
 
   select 0,'ok'
+
 
 
 
@@ -864,7 +867,7 @@ exec anadirJugador 2,2,'1234'
 exec anadirJugador null,2,'1234'
 exec comenzarPartida 3
 
-
+select * from usuarios
 exec registrar 'alberto3o@plexus.es','botana3','1234','19770620'
 exec registrar 'alberto4@plexus.es','botana4','1234','19770620'
 exec crearPartida 'partida2',1,4,null,'1234',2
@@ -882,6 +885,7 @@ insert into propiedades values(1,1,2,0)
 insert into propiedades values(1,1,3,2)
 insert into propiedades values(2,1,4,0)
 vender 1,4
+update jugadores set posicion = 9 where id = 2
 */
 
 /* prueba de registro
@@ -918,6 +922,7 @@ select * from partidas
 exec comenzarPartida 1
 select * from partidas
 select * from jugadores where idpartida = 1
+select * from casillas
 */
 
 /* prueba actualizarNivelConstruccion
@@ -927,6 +932,9 @@ insert into propiedades values (1,1,3,0)
 exec actualizarNivelConstruccion 1,3
 delete from propiedades 
 select * from propiedades
+insert into propiedades values (1,1,9,0)
+
+
 */
 
 /*
@@ -939,6 +947,8 @@ exec comprar 1
 select * from jugadores
 select * from propiedades
 select * from casillas
+select * from casillas where conjunto = 2
+exec edificar 1,10
 */
 
 /*pruebas venta

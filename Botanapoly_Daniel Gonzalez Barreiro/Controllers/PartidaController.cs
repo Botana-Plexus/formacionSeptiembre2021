@@ -257,9 +257,9 @@ namespace API_Botanapoly.Controllers
 
         //Edificar
         [HttpPost("edificar")]
-        public string edificar(int idJugador, int idPartida)
+        public string edificar(int idJugador, int idCasilla)
         {
-            string query = $"edificar '{idJugador}','{idPartida}'";
+            string query = $"edificar '{idJugador}','{idCasilla}'";
 
             System.Data.DataTable dt = database.selectQuery(query);
             return dt.Rows[0]["Column2"].ToString();
@@ -362,14 +362,14 @@ namespace API_Botanapoly.Controllers
                     }
                     else
                     {
-
                         return mover(idJugador, valorCarta);
                     }
-              
+
             }
             return "";
 
         }
+              
 
         //GetTurno
         [HttpPost("getTurno")]
@@ -440,9 +440,9 @@ namespace API_Botanapoly.Controllers
         
         //Finalizar turno
         [HttpPost("finalizarTurno")]
-        public string finalizarTurno(int idPartida, int idJugador)
+        public string finalizarTurno(int idJugador)
         {
-            string query = $"pagarDeuda '{idPartida}, '{idJugador}'";
+            string query = $"pagarDeuda '{idJugador}'";
 
 
             return database.insertQuery(query);
