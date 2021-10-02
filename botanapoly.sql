@@ -6,6 +6,7 @@ create database botanapoly
 use botanapoly
 drop login pruebas
 create login pruebas with password = 'pruebas', default_database = botanapoly, check_policy = off
+
 */
 
 
@@ -257,7 +258,7 @@ as
   select @cantidad = count(*) from propiedades a left join casillas b on a.casilla = b.id
   where b.tipo = @tipo and a.jugador = @idJugador
   
-  update propiedades set nivelEdificacion = @cantidad where casilla in ( select id from casillas where tipo = @tipo)
+  update propiedades set nivelEdificacion = @cantidad - 1 where casilla in ( select id from casillas where tipo = @tipo)
   and jugador = @idJugador
 
 
@@ -281,7 +282,7 @@ as
 	select @importe = precioCompra, @tipoCasilla = tipo from casillas where id = @idCasilla
 	--validacion del saldo
 	
-	if @tipoCasilla = 2 and @tipoCasilla = 3 and @tipoCasilla = 4
+	if @tipoCasilla = 2 or @tipoCasilla = 3 or @tipoCasilla = 4
 		begin
 			if (@saldo < @importe) begin select 1,'saldo insuficiente' return end --si no tien saldo se sale
 	
@@ -300,6 +301,7 @@ as
 		end
 	
 go
+
 
 
 /*
@@ -511,7 +513,8 @@ as
   if exists (select id from jugadores where id = @idJugador and saldo < @coste) begin select 3,'saldo insuficiente' return end
 
   if exists ( select a.id from casillas a left join propiedades b on a.id = b.casilla
-  where a.tablero = @tablero and conjunto = @conjunto and (b.jugador is null or b.jugador <> @idJugador)) 
+  where a.tablero = @tablero and conjunto = @conjunto and b.jugador <> @idJugador)
+
   begin
     select 1,'no es propitario de todo el conjunto'
 	return
@@ -525,6 +528,7 @@ as
   update jugadores set saldo = saldo - @coste where id = @idJugador
 
   select 0,'ok'
+
 
 
 
@@ -786,10 +790,12 @@ as
 /*
 Segunda forma de actualizar deuda comprueba si una casilla tiene un propietario o no
 */
+
 go
 create procedure actualizarDeudaCompleta
 	@idJugador int,
-	@idCarta int = null
+	@idCarta int = null,
+	@tiradaMultiplicador int
 as
 	declare @saldo int
 	declare @idCasilla int
@@ -819,7 +825,9 @@ as
 							begin
 								if @propietario != @idJugador
 									begin 
-										exec('update jugadores set acreedor ='+@propietario+',deuda = (select coste'+@nivelEdificacion+' from casillas where id = '+@idCasilla+') where id = ' +@idJugador)
+										if @tipoCasilla = 2 or @tipoCasilla = 4 
+											set @tiradaMultiplicador = 1
+										exec('update jugadores set acreedor ='+@propietario+',deuda = (select coste'+@nivelEdificacion+' from casillas where id = '+@idCasilla+') * '+ @tiradaMultiplicador +' where id = ' +@idJugador)
 										select 2, 'Deuda actualizada'
 									end
 								else
@@ -830,7 +838,6 @@ as
 					end
 			commit
 		end
-
 
 go
 create procedure getTiempo
@@ -864,7 +871,7 @@ exec anadirJugador 2,2,'1234'
 exec anadirJugador null,2,'1234'
 exec comenzarPartida 3
 
-
+select * from usuarios
 exec registrar 'alberto3o@plexus.es','botana3','1234','19770620'
 exec registrar 'alberto4@plexus.es','botana4','1234','19770620'
 exec crearPartida 'partida2',1,4,null,'1234',2
@@ -882,6 +889,7 @@ insert into propiedades values(1,1,2,0)
 insert into propiedades values(1,1,3,2)
 insert into propiedades values(2,1,4,0)
 vender 1,4
+update jugadores set posicion = 9 where id = 2
 */
 
 /* prueba de registro
@@ -918,6 +926,7 @@ select * from partidas
 exec comenzarPartida 1
 select * from partidas
 select * from jugadores where idpartida = 1
+select * from casillas
 */
 
 /* prueba actualizarNivelConstruccion
@@ -927,6 +936,12 @@ insert into propiedades values (1,1,3,0)
 exec actualizarNivelConstruccion 1,3
 delete from propiedades 
 select * from propiedades
+insert into propiedades values (1,1,9,0)
+
+insert into propiedades values (3,2,25,2)
+update jugadores set posicion = 24 where id = 4
+exec
+
 */
 
 /*
@@ -939,6 +954,8 @@ exec comprar 1
 select * from jugadores
 select * from propiedades
 select * from casillas
+select * from casillas where conjunto = 2
+exec edificar 1,10
 */
 
 /*pruebas venta
@@ -1044,3 +1061,7 @@ select * from partidas
 /* prueba getMasRico
 	getMasRico 1
 */
+--exec actualizarDeudaCompleta 4,null,1
+--select * from jugadores
+--select * from propiedades
+--update propiedades set nivelEdificacion = 1 
