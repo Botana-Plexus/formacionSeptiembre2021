@@ -53,7 +53,7 @@ namespace rest{
         [HttpGet]
         [Route("{matchId}/start/")]
         [MatchValidation]
-        [UserHostsMatchValidation]
+        //[UserHostsMatchValidation]
         public ObjectResult startMatch([FromRoute] int matchId)
         {
             IMatchRepository repository = Configuration.Instance.MatchRepository;
@@ -64,7 +64,7 @@ namespace rest{
         [HttpGet]
         [Route("{matchId}/stop/")]
         [MatchValidation]
-        [UserHostsMatchValidation]
+        //[UserHostsMatchValidation]
         public ObjectResult stopMatch([FromRoute] int matchId)
         {
             IMatchRepository repository = Configuration.Instance.MatchRepository;

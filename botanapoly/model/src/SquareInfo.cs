@@ -4,7 +4,7 @@ using controller;
 namespace model{
     public class SquareInfo : ModelEntity{
         
-        private int _squareType;
+        private SquareType _squareType;
         private int _boardId;
         private string _title;
         private int _order;
@@ -16,9 +16,9 @@ namespace model{
         private int _collectionId;
         private int _destination;
         private int? _ownerId;
-        private int _currentEdificationLevel;
+        private int? _currentEdificationLevel;
 
-        public SquareInfo(int id, int squareType, int boardId, string title, int order, double buyCost, double sellCost, double edificationLevelBuyCost, double edificationLevelSellCost, List<double> rentCost, int collectionId, int destination, int? ownerId, int currentEdificationLevel) : base(id)
+        public SquareInfo(int id, SquareType squareType, int boardId, string title, int order, double buyCost, double sellCost, double edificationLevelBuyCost, double edificationLevelSellCost, List<double> rentCost, int collectionId, int destination, int? ownerId, int? currentEdificationLevel) : base(id)
         {
             _squareType = squareType;
             _boardId = boardId;
@@ -35,7 +35,7 @@ namespace model{
             _currentEdificationLevel = currentEdificationLevel;
         }
 
-        public int SquareType
+        public SquareType SquareType
         {
             get => _squareType;
             set => _squareType = value;
@@ -107,7 +107,7 @@ namespace model{
             set => _ownerId = value;
         }
 
-        public int CurrentEdificationLevel
+        public int? CurrentEdificationLevel
         {
             get => _currentEdificationLevel;
             set => _currentEdificationLevel = value;
