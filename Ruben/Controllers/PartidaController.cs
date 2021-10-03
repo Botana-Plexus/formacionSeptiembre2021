@@ -503,7 +503,7 @@ namespace API_Botanapoly.Controllers
                                     case 4:
                                     case 8:
 
-                                        consulta = $"actualizarDeuda '{idJugador}','{idCasillaNueva}'";
+                                        consulta = $"actualizarDeuda '{idJugador}',null,'{tirada}'";
                                         return BD.ejecutarConsultaInsert(consulta);
 
 
@@ -533,7 +533,7 @@ namespace API_Botanapoly.Controllers
 
                                         else
                                         {
-                                            consulta = $"actualizarDeuda '{idJugador}','{idCarta}'";
+                                            consulta = $"actualizarDeuda '{idJugador}','{idCarta},'{tirada}'";
                                             return BD.ejecutarConsultaInsert(consulta);
                                         }
 
