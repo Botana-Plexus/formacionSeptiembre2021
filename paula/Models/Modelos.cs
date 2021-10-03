@@ -81,6 +81,13 @@ namespace BotanaPolyAPI.Models
                 get => tablero;
                 set => tablero = value;
             }
+
+            protected int tienePass;
+            public int TienePass
+            {
+                get => tienePass;
+                set => tienePass = value;
+            }
         }
         
 

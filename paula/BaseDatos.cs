@@ -36,7 +36,7 @@ namespace BotanaPolyAPI
                     command.ExecuteNonQuery();
                     command.Connection.Close();
 
-                    return "Acción realizada con éxito.";
+                    return "\nAcción realizada con éxito.";
                 }
                 catch (SqlException ex)
                 {

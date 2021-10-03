@@ -14,7 +14,7 @@ namespace BotanaPolyAPI.Controllers
     [ApiController]
     public class BotanaPolyController : ControllerBase
     {
-        private BaseDatos BD = new BaseDatos("localhost", "botanapoly_Botana", "pruebas", "pruebas");
+        private BaseDatos BD = new BaseDatos("localhost", "botanapoly", "pruebas", "pruebas");
 
 
         [HttpPost]
@@ -80,9 +80,9 @@ namespace BotanaPolyAPI.Controllers
         }
 
         [HttpPost]
-        public string vender(int usuario, int casilla)
+        public string vender(int idJugador, int casilla)
         {
-            string consulta = $"vender {usuario}, {casilla};";
+            string consulta = $"vender {idJugador}, {casilla};";
             return BD.ejecutarConsultaMod(consulta);
         }
 
@@ -128,13 +128,13 @@ namespace BotanaPolyAPI.Controllers
             switch (tipoCasilla)
             {
                 case 2: case 3: case 4: case 8:
-                    consulta = $"actualizarDeudaCompleta {idJugador}, NULL;";
+                    consulta = $"actualizarDeudaCompleta {idJugador}, NULL, {tirada};";
                     toret.Append(BD.ejecutarConsultaMod(consulta));
                     break;
                 case 5:
                     consulta = $"getCartaAleatoria {idJugador};";
                     System.Data.DataTable carta = BD.ejecutarConsulta(consulta);
-                    int idCarta = Convert.ToInt32(carta.Rows[0]["id"]);
+                    int idCarta = Convert.ToInt32(carta.Rows[0]["Column1"]);
                     consulta = $"getInfoCarta {idCarta}";
                     System.Data.DataTable tipoCarta = BD.ejecutarConsulta(consulta);
                     int tipo = Convert.ToInt32(tipoCarta.Rows[0]["tipo"]);
@@ -142,7 +142,7 @@ namespace BotanaPolyAPI.Controllers
                     switch (tipo)
                     {
                         case 2:
-                            consulta = $"actualizarDeudaCompleta {idJugador}, {idCarta};";
+                            consulta = $"actualizarDeudaCompleta {idJugador}, {idCarta}, {tirada};";
                             toret.Append(BD.ejecutarConsultaMod(consulta));
                             break;
                         case 3:
@@ -205,13 +205,14 @@ namespace BotanaPolyAPI.Controllers
             {
                 Modelos.Partida partida = new Modelos.Partida();
                 partida.Id = Convert.ToInt32(dt.Rows[i]["id"]);
-                partida.Estado = Convert.ToInt32(dt.Rows[i]["Estado"]);
+                partida.Estado = Convert.ToInt32(dt.Rows[i]["estado"]);
                 if(dt.Rows[i]["maxJugadores"] != System.DBNull.Value)
                     partida.MaxJugadores = Convert.ToInt32(dt.Rows[i]["maxJugadores"]);
                 if(dt.Rows[i]["maxTiempo"] != System.DBNull.Value)
                     partida.MaxTiempo = Convert.ToInt32(dt.Rows[i]["maxTiempo"]);
                 if (dt.Rows[i]["tiempoTranscurrido"] != System.DBNull.Value)
                     partida.TiempoTranscurrido = Convert.ToInt32(dt.Rows[i]["tiempoTranscurrido"]);
+                partida.TienePass = Convert.ToInt32(dt.Rows[i]["tienePass"]);
                 partida.Nombre = dt.Rows[i]["nombre"].ToString();
                 partida.NumJugadores = Convert.ToInt32(dt.Rows[i]["numJugadores"]);
                 partida.Tablero = Convert.ToInt32(dt.Rows[i]["tablero"]);
@@ -229,11 +230,14 @@ namespace BotanaPolyAPI.Controllers
 
             Modelos.Partida partida = new Modelos.Partida();
             partida.Id = Convert.ToInt32(dt.Rows[0]["id"]);
-            partida.Estado = Convert.ToInt32(dt.Rows[0]["Estado"]);
+            partida.Estado = Convert.ToInt32(dt.Rows[0]["estado"]);
             if (dt.Rows[0]["maxJugadores"] != System.DBNull.Value)
                 partida.MaxJugadores = Convert.ToInt32(dt.Rows[0]["maxJugadores"]);
             if (dt.Rows[0]["maxTiempo"] != System.DBNull.Value)
                 partida.MaxTiempo = Convert.ToInt32(dt.Rows[0]["maxTiempo"]);
+            if (dt.Rows[0]["tiempoTranscurrido"] != System.DBNull.Value)
+                partida.TiempoTranscurrido = Convert.ToInt32(dt.Rows[0]["tiempoTranscurrido"]);
+            partida.TienePass = Convert.ToInt32(dt.Rows[0]["tienePass"]);
             partida.Nombre = dt.Rows[0]["nombre"].ToString();
             partida.NumJugadores = Convert.ToInt32(dt.Rows[0]["numJugadores"]);
             partida.Tablero = Convert.ToInt32(dt.Rows[0]["tablero"]);
@@ -301,7 +305,7 @@ namespace BotanaPolyAPI.Controllers
                 if (dt.Rows[i]["coste1"] != System.DBNull.Value)
                     tablero.Coste1 = Convert.ToInt32(dt.Rows[i]["coste1"]);
                 if (dt.Rows[i]["coste2"] != System.DBNull.Value)
-                tablero.Coste2 = Convert.ToInt32(dt.Rows[i]["coste2"]);
+                    tablero.Coste2 = Convert.ToInt32(dt.Rows[i]["coste2"]);
                 if (dt.Rows[i]["coste3"] != System.DBNull.Value)
                     tablero.Coste3 = Convert.ToInt32(dt.Rows[i]["coste3"]);
                 if (dt.Rows[i]["coste4"] != System.DBNull.Value)
@@ -401,9 +405,9 @@ namespace BotanaPolyAPI.Controllers
         }
 
         [HttpGet]
-        public string getTurno(int idPartida, int idJugador)
+        public string getTurno(int idJugador)
         {
-            string consulta = $"getTurno {idPartida}, {idJugador}";
+            string consulta = $"getTurno {idJugador}";
             System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
 
             return dt.Rows[0]["Column2"].ToString();
@@ -414,7 +418,8 @@ namespace BotanaPolyAPI.Controllers
         public string setDobles(int idJugador, int dobles)
         {
             string consulta = $"setDobles {idJugador}, {dobles};";
-            return BD.ejecutarConsulta(consulta).Rows[0]["Column2"].ToString();
+            System.Data.DataTable dt = BD.ejecutarConsulta(consulta);
+            return dt.Rows[0]["Column2"].ToString() + dt.Rows[0]["Column3"].ToString();
         }
 
 
