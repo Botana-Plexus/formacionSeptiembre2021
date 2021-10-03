@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using QC = Microsoft.Data.SqlClient;
 using DT = System.Data;
 
-namespace botanapoli_api
+namespace botanapoly_api
 {
     public class Program
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace botanapoli_api.Models
+namespace botanapoly_api.Models
 {
     public class Modelos
     {

@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Data;
-using botanapoli_api.Models;
+using botanapoly_api.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace botanapoli_api.Controllers
+namespace botanapoly_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
