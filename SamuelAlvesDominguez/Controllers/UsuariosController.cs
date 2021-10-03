@@ -13,8 +13,6 @@ namespace Botanapoly.Controllers
     [ApiController]
     public class UsuariosController : ControllerBase
     {
-        // GET: api/<UsuairosController>
-        
 
         // GET api/<UsuairosController>/5
         [HttpGet("{email}, {pass}")]
@@ -31,12 +29,5 @@ namespace Botanapoly.Controllers
         {
             BDConnection.RegistrarUsuario(usuario);
         }
-
-
-        // PUT api/<UsuairosController>/5
-
-
-        // DELETE api/<UsuairosController>/5
-
     }
 }

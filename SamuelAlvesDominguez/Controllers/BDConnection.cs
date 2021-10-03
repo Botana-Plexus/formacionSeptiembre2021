@@ -48,7 +48,7 @@ namespace Botanapoly.Controllers
             try
             {
                 connection.Open();
-                string resultado = "no entra";
+                //string resultado = "no entra";
                 SqlCommand cmd = new("autenticar", connection)
                 {
                     CommandType = DT.CommandType.StoredProcedure
@@ -556,7 +556,7 @@ namespace Botanapoly.Controllers
 
                 while (reader.Read())
                 {
-                    Propiedades p = new();
+                    //Propiedades p = new();
 
 
                 }
@@ -681,7 +681,7 @@ namespace Botanapoly.Controllers
                 Cartas carta = new();
                 while (reader.Read())
                 {
-
+                    //
                 }
                 return carta;
             }
@@ -726,7 +726,7 @@ namespace Botanapoly.Controllers
             }
         }
 
-        public static void GetTurno(int partida, int jugador)
+        public static void GetTurno(int jugador)
         {
             try
             {
@@ -735,7 +735,6 @@ namespace Botanapoly.Controllers
                 {
                     CommandType = DT.CommandType.StoredProcedure
                 };
-                cmd.Parameters.Add(new SqlParameter("@idPartida", partida));
                 cmd.Parameters.Add(new SqlParameter("@idJugador", jugador));
 
                 cmd.ExecuteReader();
@@ -773,7 +772,7 @@ namespace Botanapoly.Controllers
             }
         }
 
-        public static void ActualizarDeudaCompleta(int jugador, int carta)
+        public static void ActualizarDeudaCompleta(int jugador, int carta, int tiradaMulti)
         {
             try
             {
@@ -784,6 +783,53 @@ namespace Botanapoly.Controllers
                 };
                 cmd.Parameters.Add(new SqlParameter("@idJugador", jugador));
                 cmd.Parameters.Add(new SqlParameter("@idCarta", carta));
+                cmd.Parameters.Add(new SqlParameter("@tiradaMultiplicador", tiradaMulti));
+
+                cmd.ExecuteReader();
+
+            }
+            finally
+            {
+                if (connection != null)
+                {
+                    connection.Close();
+                }
+            }
+        }
+
+        public static void GetTiempo(int partida)
+        {
+            try
+            {
+                connection.Open();
+                SqlCommand cmd = new("getTiempo", connection)
+                {
+                    CommandType = DT.CommandType.StoredProcedure
+                };
+                cmd.Parameters.Add(new SqlParameter("@idPartida", partida));
+
+                cmd.ExecuteReader();
+
+            }
+            finally
+            {
+                if (connection != null)
+                {
+                    connection.Close();
+                }
+            }
+        }
+
+        public static void GetMasRico(int partida)
+        {
+            try
+            {
+                connection.Open();
+                SqlCommand cmd = new("getMasRico", connection)
+                {
+                    CommandType = DT.CommandType.StoredProcedure
+                };
+                cmd.Parameters.Add(new SqlParameter("@idPartida", partida));
 
                 cmd.ExecuteReader();
 

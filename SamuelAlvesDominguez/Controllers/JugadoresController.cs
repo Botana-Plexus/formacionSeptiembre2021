@@ -12,25 +12,6 @@ namespace Botanapoly.Controllers
     [ApiController]
     public class JugadoresController : ControllerBase
     {
-        // GET: api/<JugadoresController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<JugadoresController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<JugadoresController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
 
         // PUT api/<JugadoresController>/5
         [HttpPut]

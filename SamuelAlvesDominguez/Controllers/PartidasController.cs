@@ -27,6 +27,18 @@ namespace Botanapoly.Controllers
             return BDConnection.GetJugadoresInfo(idPartida);
         }
 
+        [HttpGet("{tiempo}")]
+        public void GetTiempo(int partida)
+        {
+            BDConnection.GetTiempo(partida);
+        }
+
+        [HttpGet("{partida}")]
+        public void GetMasRico(int partida)
+        {
+            BDConnection.GetMasRico(partida);
+        }
+
         // POST api/<PartidasController>
         [HttpPost]
         public void CrearPartida([FromBody] Partidas partida)
@@ -48,7 +60,7 @@ namespace Botanapoly.Controllers
         }
 
         [HttpPut("{partida}/{jugador}")]
-        public void Finalizarturno(int partida, int jugador)
+        public void FinalizarTurno(int partida, int jugador)
         {
             BDConnection.FinalizarTurno(partida, jugador);
         }

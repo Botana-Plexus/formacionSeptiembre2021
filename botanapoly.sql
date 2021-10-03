@@ -1,5 +1,4 @@
 /*
-
 use master
 drop database botanapoly
 create database botanapoly
@@ -869,7 +868,6 @@ exec crearPartida 'partida1',1,4,null,'1234',2
 exec anadirJugador 2,2,'1234'
 exec anadirJugador null,2,'1234'
 exec comenzarPartida 3
-
 select * from usuarios
 exec registrar 'alberto3o@plexus.es','botana3','1234','19770620'
 exec registrar 'alberto4@plexus.es','botana4','1234','19770620'
@@ -877,7 +875,6 @@ exec crearPartida 'partida2',1,4,null,'1234',2
 exec anadirJugador 2,1,'1234'
 exec anadirJugador null,1,'1234'
 exec comenzarPartida 1
-
 select * from partidas
 update partidas set maxTiempo = 1 where id = 1
 select datediff(mi,fechaInicio,getdate()) from partidas where id = 1
@@ -903,11 +900,9 @@ autenticar 'alberto.botanafidalgo@plexus.es','1234'
 */
 
 /* prueba de crear partida
-
 select * from tableros
 select * from casillas
 exec crearPartida 'partida7',1,4,null,null,2
-
 select * from partidas
 select * from jugadores
 */
@@ -936,11 +931,9 @@ exec actualizarNivelConstruccion 1,3
 delete from propiedades 
 select * from propiedades
 insert into propiedades values (1,1,9,0)
-
 insert into propiedades values (3,2,25,2)
 update jugadores set posicion = 24 where id = 4
 exec
-
 */
 
 /*
@@ -982,7 +975,6 @@ update  jugadores set deuda = 20010, acreedor = 3 where id = 1
 exec retirarJugador 1
 exec abandonarPartida 2
 exec abandonarPartida 1
-
 */
 
 /* pruebas movimiento
@@ -991,7 +983,6 @@ mover 1,4
 select * from jugadores
 mover 2,1
 select * from jugadores
-
 mover 1,1
 select * from jugadores
 */
@@ -1000,25 +991,19 @@ exec getPropiedades 1
 */
 
 /* prueba de actualizarDeuda
-
 Actualizar cuando no es una carta
-
 select * from jugadores
 actualizarDeuda 1
 select * from jugadores
-
 Actualizar cuando es una carta
 select * from jugadores
 actualizarDeuda 1,2
 select * from jugadores
-
 */
 
 /* prueba de pagar
-
 pagar 1
 select * from jugadores
-
 */
 
 /* prueba de finalizarTurno
@@ -1033,11 +1018,9 @@ select * from partidas
 */
 
 /* prueba de getTurno
-
 	getTurno 2
 	select * from partidas
 	select * from jugadores
-
 	update partidas set turno = 2
 */
 
@@ -1048,13 +1031,10 @@ select * from partidas
 */
 
 /* prueba getTiempo
-
 	exec comenzarPartida 1
-
 	select * from partidas
 	update partidas set maxTiempo = 1 where id = 1
 	getTiempo 1
-
 */
 
 /* prueba getMasRico
