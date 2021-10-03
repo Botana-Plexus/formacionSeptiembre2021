@@ -15,7 +15,7 @@ namespace botanapoli_api.Controllers
     public class usersController : ControllerBase
     {
         // POST api/<ValuesController>
-        [HttpPost]
+        [HttpPost("AutenticarJugador")]
         [ActionName("AutenticarJugador")]
         public int AutenticarJugador([FromBody] Modelos.Usuario user)
         {
@@ -25,7 +25,7 @@ namespace botanapoli_api.Controllers
         }
 
         // POST api/<ValuesController>
-        [HttpPost]
+        [HttpPost("RegistrarJugador")]
         [ActionName("RegistrarJugador")]
         public object RegistrarJugador([FromBody] Modelos.Usuario user)
         {
@@ -35,7 +35,7 @@ namespace botanapoli_api.Controllers
         }
 
         // POST api/<ValuesController>
-        [HttpPost]
+        [HttpPost("AñadirJugador")]
         [ActionName("AñadirJugador")]
         public int AñadirJugador(int idUsuario, int idPartida, string pass)
         {
@@ -47,7 +47,7 @@ namespace botanapoli_api.Controllers
         }
 
         // POST api/<ValuesController>
-        [HttpPost]
+        [HttpPost("AñadirBot")]
         [ActionName("AñadirBot")]
         public object AddBot([FromBody] int idPartida, string pass)
         {

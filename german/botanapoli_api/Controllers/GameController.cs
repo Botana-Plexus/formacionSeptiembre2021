@@ -50,9 +50,9 @@ namespace botanapoli_api.Controllers
         }
 
         // Get turno de jugador en una partida
-        [HttpGet]
+        [HttpPost]
         [ActionName("GetTurnoJugador")]
-        public object[] GetTurnoJugador(int idJugador, int idPartida)
+        public object[] GetTurnoJugador(int idJugador)
         {
             object[] resTurno = new object[2];
             DbController conexion = new DbController();
@@ -64,9 +64,9 @@ namespace botanapoli_api.Controllers
         }
 
         // Post edificar en una casilla
-        [HttpPost]
+        [HttpPost("Edificar")]
         [ActionName("Edificar")]
-        public object[] Edificar(int idJugador, int idCasilla)
+        public object[] Edificar([FromBody] int idJugador, int idCasilla)
         {
             object[] resEdificar = new object[2];
             DbController conexion = new DbController();
@@ -78,31 +78,30 @@ namespace botanapoli_api.Controllers
         }
 
         // Post vender propiedad
-        [HttpPost]
+        [HttpPost("VenderPropiedad")]
         [ActionName("VenderPropiedad")]
         public object[] VenderPropiedad(int idJugador, int idCasilla)
         {
             DbController conexion = new DbController();
             DataTable res = conexion.DbRetrieveQuery($"vender {idJugador}, {idCasilla}");
             return new object[] { res.Rows[0][0], res.Rows[0][1] };
-        
         }
 
         // Post comprar propiedad
-        [HttpPost]
+        [HttpPost("ComprarPropiedad")]
         [ActionName("ComprarPropiedad")]
         public object[] ComprarPropiedad(int idJugador)
         {
             DbController conexion = new DbController();
 
             DataTable res = conexion.DbRetrieveQuery($"comprar {idJugador}");
-            return new object[] { res.Rows[0][0], res.Rows[0][1]};
+            return new object[] { res.Rows[0][0], res.Rows[0][1] };
         }
 
         // Post vender nivel de edificacion
-        [HttpPost]
+        [HttpPost("VenderEdificacion")]
         [ActionName("VenderEdificacion")]
-        public object[] VenderEdificacion (int idJUgador, int idcasilla)
+        public object[] VenderEdificacion(int idJUgador, int idcasilla)
         {
             DbController conexion = new DbController();
 
@@ -111,7 +110,7 @@ namespace botanapoli_api.Controllers
         }
 
         // Post pagar deuda
-        [HttpPost]
+        [HttpPost("PagarDeuda")]
         [ActionName("PagarDeuda")]
         public object[] PagarDeuda(int idJUgador)
         {
@@ -122,7 +121,7 @@ namespace botanapoli_api.Controllers
         }
 
         // Post Finalizar turno
-        [HttpPost]
+        [HttpPost("FinalizarTurno")]
         [ActionName("FinalizarTurno")]
         public int FinalizarTurno([FromBody] int idPartida, int idJugador)
         {
@@ -132,7 +131,7 @@ namespace botanapoli_api.Controllers
         }
 
         // Post retirar Jugador
-        [HttpPost]
+        [HttpPost("RetirarJugador")]
         [ActionName("RetirarJugador")]
         public int RetirarJugador(int idJugador)
         {
@@ -144,7 +143,7 @@ namespace botanapoli_api.Controllers
         }
 
         // Post Abandonar Jugador
-        [HttpPost]
+        [HttpPost("AbandonarJugador")]
         [ActionName("AbandonarJugador")]
         public int AbandonarPartida(int idJugador)
         {
@@ -154,74 +153,74 @@ namespace botanapoli_api.Controllers
         }
 
         // establecer dobles
-        //[HttpPost]
-        //[ActionName("SetDobles")]
-        //public string SetDobles(int idJugador, bool dobles)
-        //{
-        //    DbController conexion = new DbController();
-        //    string query = dobles ? 
-        //        $"setDobles {idJugador}, 0" 
-        //        : $"setDobles {idJugador}, 1";
+        [HttpPost("SetDobles")]
+        [ActionName("SetDobles")]
+        public string SetDobles(int idJugador, bool dobles)
+        {
+            DbController conexion = new DbController();
+            string query = dobles ?
+                $"setDobles {idJugador}, 0"
+                : $"setDobles {idJugador}, 1";
 
-        //    DataTable dt = conexion.DbRetrieveQuery(query);
-        //    return dt.Rows[0]["Column2"].ToString() + dt.Rows[0]["Column3"].ToString();
-        //}
+            DataTable dt = conexion.DbRetrieveQuery(query);
+            return dt.Rows[0]["Column2"].ToString() + dt.Rows[0]["Column3"].ToString();
+        }
 
-        //// Comprobar si queda tiempo restante de la partida
-        //[HttpPost]
-        //[ActionName("ComprobarTiempo")]
-        //public int ComprobarTiempo(int idPartida)
-        //{
-        //    var conexion = new DbController();
-        //    DataTable dt = conexion.DbRetrieveQuery($"getTiempo {idPartida}");
-        //    if((int)dt.Rows[0][0] == 0)
-        //    {
-        //        return ObtenerMasRico(idPartida).Id;
-        //    }
-        //    else
-        //    {
-        //        return 0;
-        //    }
-        //}
+        // Comprobar si queda tiempo restante de la partida
+        [HttpPost("ComprobarTiempo")]
+        [ActionName("ComprobarTiempo")]
+        public int ComprobarTiempo(int idPartida)
+        {
+            var conexion = new DbController();
+            DataTable dt = conexion.DbRetrieveQuery($"getTiempo {idPartida}");
+            if ((int)dt.Rows[0][0] == 0)
+            {
+                return ObtenerMasRico(idPartida).Id;
+            }
+            else
+            {
+                return 0;
+            }
+        }
 
-        //// Obtener jugador mas rico
-        //private Modelos.Jugador ObtenerMasRico(int idPartida)
-        //{
-        //    var conexion = new DbController();
-        //    string query = $"getJugadoresInfo {idPartida}";
-        //    DataTable dt = conexion.DbRetrieveQuery(query);
+        // Obtener jugador mas rico
+        private Modelos.Jugador ObtenerMasRico(int idPartida)
+        {
+            var conexion = new DbController();
+            string query = $"getJugadoresInfo {idPartida}";
+            DataTable dt = conexion.DbRetrieveQuery(query);
 
-        //    var ganador = new Modelos.Jugador();
+            var ganador = new Modelos.Jugador();
 
-        //    for(int i = 0; i < dt.Rows.Count; i++)
-        //    {
-        //        int idJugador = (int)dt.Rows[i]["id"];
-        //        DataTable props = conexion.DbRetrieveQuery($"getPropiedades {idJugador}");
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                int idJugador = (int)dt.Rows[i]["id"];
+                DataTable props = conexion.DbRetrieveQuery($"getPropiedades {idJugador}");
 
-        //        for (int j = 0; j < props.Rows.Count; j++)
-        //        {
-        //            int propiedad = (int)props.Rows[j]["id"];
-        //            int nivelEdificacion = (int)props.Rows[j]["nivelEdificacion"];
+                for (int j = 0; j < props.Rows.Count; j++)
+                {
+                    int propiedad = (int)props.Rows[j]["id"];
+                    int nivelEdificacion = (int)props.Rows[j]["nivelEdificacion"];
 
-        //            for (int k = 0; k < nivelEdificacion; k++)
-        //            {
-        //                VenderEdificacion(idJugador, propiedad);
-        //            }
-        //            VenderPropiedad(idJugador, propiedad);
-        //        }
-        //    }
+                    for (int k = 0; k < nivelEdificacion; k++)
+                    {
+                        VenderEdificacion(idJugador, propiedad);
+                    }
+                    VenderPropiedad(idJugador, propiedad);
+                }
+            }
 
-        //    DataTable dt2 = conexion.DbRetrieveQuery($"getMasRico {idPartida}");
-        //    ganador.Id = (int)dt2.Rows[0]["id"];
-        //    ganador.IdPartida = (int)dt2.Rows[0]["idPartida"];
-        //    ganador.Orden = (int)dt2.Rows[0]["orden"];
-        //    ganador.Saldo = (int)dt2.Rows[0]["saldo"];
-        //    ganador.Dobles = (int)dt2.Rows[0]["dobles"];
-        //    ganador.TurnosDeCastigo = (int)dt2.Rows[0]["turnosDeCastigo"];
-        //    ganador.IdUsuario = System.DBNull.Value != dt2.Rows[0]["idUsuario"] ? (int)dt2.Rows[0]["idUsuario"] : null;
-        //    ganador.Posicion = System.DBNull.Value != dt2.Rows[0]["posicion"] ? (int)dt2.Rows[0]["posicion"] : null;
+            DataTable dt2 = conexion.DbRetrieveQuery($"getMasRico {idPartida}");
+            ganador.Id = (int)dt2.Rows[0]["id"];
+            ganador.IdPartida = (int)dt2.Rows[0]["idPartida"];
+            ganador.Orden = (int)dt2.Rows[0]["orden"];
+            ganador.Saldo = (int)dt2.Rows[0]["saldo"];
+            ganador.Dobles = (int)dt2.Rows[0]["dobles"];
+            ganador.TurnosDeCastigo = (int)dt2.Rows[0]["turnosDeCastigo"];
+            ganador.IdUsuario = System.DBNull.Value != dt2.Rows[0]["idUsuario"] ? (int)dt2.Rows[0]["idUsuario"] : null;
+            ganador.Posicion = System.DBNull.Value != dt2.Rows[0]["posicion"] ? (int)dt2.Rows[0]["posicion"] : null;
 
-        //    return ganador;
-        //}
+            return ganador;
+        }
     }
 }
