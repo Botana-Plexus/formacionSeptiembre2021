@@ -3,7 +3,6 @@ using model;
 
 namespace controller{
     public class GiveUp : IUseCaseFunctionality<int>{
-
         private readonly IMatchRepository _matchRepository;
         private readonly PlayerInfo _playerInfo;
         private readonly bool _watch;
@@ -18,13 +17,9 @@ namespace controller{
         public int execute()
         {
             if (_watch)
-            {
-                this._matchRepository.switchToObserver(_playerInfo);
-            }
+                _matchRepository.switchToObserver(_playerInfo.Id);
             else
-            {
-                this._matchRepository.leaveMatch(_playerInfo);
-            }
+                _matchRepository.leaveMatch(_playerInfo.Id);
             return 0;
         }
     }

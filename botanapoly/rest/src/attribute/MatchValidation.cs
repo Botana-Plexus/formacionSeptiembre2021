@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace rest {
-    [AttributeUsage(validOn: AttributeTargets.Class | AttributeTargets.Method)]
+namespace rest{
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class MatchValidation : Attribute, IAsyncActionFilter{
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
@@ -22,8 +22,8 @@ namespace rest {
                 };
                 return;
             }
-            
-            context.RouteData.Values.TryGetValue("matchId", out object matchId);
+
+            context.RouteData.Values.TryGetValue("matchId", out var matchId);
             if (!Configuration.Instance.MatchRepository.getMatches(match => match.Id.Equals(int.Parse((string) matchId))).Any())
             {
                 context.Result = new ContentResult()

@@ -6,7 +6,6 @@ using model;
 
 namespace controller{
     public class ListMatches : IUseCaseFunctionality<List<MatchInfo>>{
-
         private readonly IMatchRepository _matchRepository;
         private readonly Func<MatchInfo, bool> _filter;
 
@@ -18,7 +17,7 @@ namespace controller{
 
         public List<MatchInfo> execute()
         {
-            return this._matchRepository.getMatches(_filter).ToList();
+            return _matchRepository.getMatches(_filter).ToList();
         }
     }
 }

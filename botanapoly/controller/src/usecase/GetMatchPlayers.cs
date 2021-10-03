@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using database;
 using model;
 
 namespace controller{
     public class GetMatchPlayers : IUseCaseFunctionality<List<PlayerInfo>>{
-
         private readonly IMatchRepository _matchRepository;
         private readonly MatchInfo _matchInfo;
         private readonly Func<PlayerInfo, bool> _filter;
@@ -19,7 +19,7 @@ namespace controller{
 
         public List<PlayerInfo> execute()
         {
-            return _matchRepository.getMatchPlayers(_matchInfo, _filter);
+            return _matchRepository.getMatchPlayers(_matchInfo.Id, _filter).ToList();
         }
     }
 }

@@ -1,9 +1,8 @@
 ﻿using database;
 using model;
 
-namespace controller {
+namespace controller{
     public class RegisterUser : IUseCaseFunctionality<int>{
-
         private readonly IMatchRepository _matchRepository;
         private readonly UserInfo _userInfo;
 

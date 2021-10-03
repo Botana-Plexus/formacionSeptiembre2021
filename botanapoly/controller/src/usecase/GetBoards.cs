@@ -5,8 +5,7 @@ using database;
 using model;
 
 namespace controller{
-    public class GetBoards : IUseCaseFunctionality<List<BoardInfo>> {
-
+    public class GetBoards : IUseCaseFunctionality<List<BoardInfo>>{
         private readonly IMatchRepository _matchRepository;
         private readonly Func<BoardInfo, bool> _filter;
 

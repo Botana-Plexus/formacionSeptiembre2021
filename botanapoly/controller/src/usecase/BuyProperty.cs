@@ -3,19 +3,19 @@ using database.model.codes;
 using model;
 
 namespace controller{
-    public class GetTurnInfo : IUseCaseFunctionality<TurnInfoCode>{
+    public class BuyProperty : IUseCaseFunctionality<BuyPropertyCode>{
         private readonly IMatchRepository _matchRepository;
         private readonly PlayerInfo _playerInfo;
 
-        public GetTurnInfo(IMatchRepository matchRepository, PlayerInfo playerInfo)
+        public BuyProperty(IMatchRepository matchRepository, PlayerInfo playerInfo)
         {
             _matchRepository = matchRepository;
             _playerInfo = playerInfo;
         }
 
-        public TurnInfoCode execute()
+        public BuyPropertyCode execute()
         {
-            return _matchRepository.getTurnInfo(_playerInfo.Id);
+            return _matchRepository.buyProperty(_playerInfo.Id);
         }
     }
 }

@@ -1,4 +1,4 @@
-namespace rest {
+namespace rest{
     public class CreateUserDto{
         public string email { get; set; }
         public string username { get; set; }

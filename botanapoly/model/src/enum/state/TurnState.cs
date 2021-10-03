@@ -1,5 +1,5 @@
 ﻿namespace controller{
-    public enum TurnState {
+    public enum TurnState{
         NULL,
         INITIALIZED,
         ROLLED,

@@ -5,7 +5,6 @@ using model;
 
 namespace controller{
     public class CreateMatch : IUseCaseFunctionality<int>{
-
         private readonly IMatchRepository _matchRepository;
         private readonly int _hostId;
         private readonly string _name;

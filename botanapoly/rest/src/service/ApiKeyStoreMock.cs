@@ -5,16 +5,15 @@ using database;
 using model;
 using rest.service;
 
-namespace rest {
+namespace rest{
     public class ApiKeyStoreMock : IApiKeyStore{
-
         private readonly Dictionary<string, int> store;
         private readonly IMatchRepository _matchRepository;
 
         public ApiKeyStoreMock(IMatchRepository matchRepository)
         {
             _matchRepository = matchRepository;
-            this.store = new Dictionary<string, int>();
+            store = new Dictionary<string, int>();
         }
 
         public Dictionary<string, int> findAll(Func<string, bool> filter)
@@ -35,6 +34,7 @@ namespace rest {
                 store[apiKey] = userId;
                 result = userId;
             }
+
             return result;
         }
     }

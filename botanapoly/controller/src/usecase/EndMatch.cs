@@ -10,8 +10,8 @@ namespace controller{
 
         public EndMatch(IMatchRepository matchRepository, int matchId)
         {
-            this._matchRepository = matchRepository;
-            this._matchId = matchId;
+            _matchRepository = matchRepository;
+            _matchId = matchId;
         }
 
         public int execute()

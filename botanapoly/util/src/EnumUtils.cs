@@ -1,7 +1,8 @@
 ﻿using System;
 
-namespace util {
-    public class EnumUtils{    public static int getEnumIndexFor<T>(T value)
+namespace util{
+    public class EnumUtils{
+        public static int getEnumIndexFor<T>(T value)
         {
             return Array.IndexOf(Enum.GetValues(value.GetType()), value);
         }

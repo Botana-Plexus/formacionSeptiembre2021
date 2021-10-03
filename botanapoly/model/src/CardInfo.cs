@@ -5,10 +5,10 @@ namespace model{
         private int _boardId;
         private string _text;
         private string _set;
-        private int _type;
-        private double _value;
+        private CardType _type;
+        private int _value;
 
-        public CardInfo(int id, int boardId, string text, string set, int type, double value) : base(id)
+        public CardInfo(int id, int boardId, string text, string set, CardType type, int value) : base(id)
         {
             _boardId = boardId;
             _text = text;
@@ -35,13 +35,13 @@ namespace model{
             set => _set = value;
         }
 
-        public int Type
+        public CardType Type
         {
             get => _type;
             set => _type = value;
         }
 
-        public double Value
+        public int Value
         {
             get => _value;
             set => _value = value;

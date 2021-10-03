@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace controller{
-    public class GameStateControlFlow<S, A> {
+    public class GameStateControlFlow<S, A>{
         private List<A> _enabledActions;
         private Dictionary<S, List<S>> _stateFlow;
 
@@ -18,10 +18,7 @@ namespace controller{
 
         public S execute(S currentState, A action)
         {
-            if (_enabledActions.Contains(action))
-            {
-                return _stateFlow[currentState][_enabledActions.IndexOf(action)];
-            }
+            if (_enabledActions.Contains(action)) return _stateFlow[currentState][_enabledActions.IndexOf(action)];
             throw new NullReferenceException();
         }
     }

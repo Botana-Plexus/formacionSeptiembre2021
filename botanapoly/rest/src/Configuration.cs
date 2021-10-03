@@ -7,11 +7,10 @@ using model;
 using rest.service;
 
 namespace rest{
-    public class Configuration {
-        
+    public class Configuration{
         private static Configuration _instance;
-        private static object _lock = new Object();
-        
+        private static object _lock = new();
+
         private readonly GameStateControlFlow<TurnState, TurnAction> _states;
         private readonly IMatchRepository _matchRepository;
         private readonly IApiKeyStore _apiKeyStore;
@@ -19,7 +18,7 @@ namespace rest{
 
         private protected Configuration()
         {
-            TurnAction[] actions = new[]
+            var actions = new[]
             {
                 TurnAction.ROLL_1_2,
                 TurnAction.ROLL_3,
@@ -34,59 +33,65 @@ namespace rest{
                 TurnAction.DECREASE_EDIFICATION_LEVEL,
                 TurnAction.INCREASE_EDIFICATION_LEVEL
             };
-            Dictionary<TurnState, List<TurnState>> states = new Dictionary<TurnState, List<TurnState>>()
+            var states = new Dictionary<TurnState, List<TurnState>>()
             {
-                {TurnState.INITIALIZED, new TurnState[]{
-                    TurnState.ROLLED,
-                    TurnState.FINALIZED,
-                    TurnState.FINALIZED,
-                    TurnState.NULL,
-                    TurnState.NULL,
-                    TurnState.NULL,
-                    TurnState.NULL,
-                    TurnState.NULL,
-                    TurnState.NULL,
-                    TurnState.NULL,
-                    TurnState.NULL,
-                    TurnState.INITIALIZED
-                }.ToList()},
-                {TurnState.ROLLED, new TurnState[]{
-                    TurnState.NULL,
-                    TurnState.NULL,
-                    TurnState.FINALIZED,
-                    TurnState.FINALIZED,
-                    TurnState.ROLLED,
-                    TurnState.FINALIZED,
-                    TurnState.NULL,
-                    TurnState.FINALIZED,
-                    TurnState.ROLLED,
-                    TurnState.FINALIZED,
-                    TurnState.ROLLED,
-                    TurnState.NULL
-                }.ToList()},
-                {TurnState.FINALIZED, new TurnState[]{
-                    TurnState.NULL,
-                    TurnState.NULL,
-                    TurnState.NULL,
-                    TurnState.NULL,
-                    TurnState.NULL,
-                    TurnState.NULL,
-                    TurnState.NULL,
-                    TurnState.NULL,
-                    TurnState.NULL,
-                    TurnState.NULL,
-                    TurnState.NULL,
-                    TurnState.NULL
-                }.ToList()}
+                {
+                    TurnState.INITIALIZED, new TurnState[]
+                    {
+                        TurnState.ROLLED,
+                        TurnState.FINALIZED,
+                        TurnState.FINALIZED,
+                        TurnState.NULL,
+                        TurnState.NULL,
+                        TurnState.NULL,
+                        TurnState.NULL,
+                        TurnState.NULL,
+                        TurnState.NULL,
+                        TurnState.NULL,
+                        TurnState.NULL,
+                        TurnState.INITIALIZED
+                    }.ToList()
+                },
+                {
+                    TurnState.ROLLED, new TurnState[]
+                    {
+                        TurnState.NULL,
+                        TurnState.NULL,
+                        TurnState.FINALIZED,
+                        TurnState.FINALIZED,
+                        TurnState.ROLLED,
+                        TurnState.FINALIZED,
+                        TurnState.NULL,
+                        TurnState.FINALIZED,
+                        TurnState.ROLLED,
+                        TurnState.FINALIZED,
+                        TurnState.ROLLED,
+                        TurnState.NULL
+                    }.ToList()
+                },
+                {
+                    TurnState.FINALIZED, new TurnState[]
+                    {
+                        TurnState.NULL,
+                        TurnState.NULL,
+                        TurnState.NULL,
+                        TurnState.NULL,
+                        TurnState.NULL,
+                        TurnState.NULL,
+                        TurnState.NULL,
+                        TurnState.NULL,
+                        TurnState.NULL,
+                        TurnState.NULL,
+                        TurnState.NULL,
+                        TurnState.NULL
+                    }.ToList()
+                }
             };
             _states = new GameStateControlFlow<TurnState, TurnAction>(actions.ToList(), states);
             _connectionFactory = new SqlServerConnectionFactory("localhost", "botanapoly", "pruebas", "pruebas");
             _matchRepository = new MatchRepositorySqlServerDb(_connectionFactory);
             _apiKeyStore = new ApiKeyStoreMock(_matchRepository);
-            foreach (UserInfo user in _matchRepository.getUsers(u => true))
-            {
-                _apiKeyStore.register(string.Format("asda1sda{0}sd", user.Id), user.Id);
-            }
+            foreach (var user in _matchRepository.getUsers(u => true)) _apiKeyStore.register(string.Format("asda1sda{0}sd", user.Id), user.Id);
         }
 
         public static Configuration Instance
@@ -94,15 +99,11 @@ namespace rest{
             get
             {
                 if (_instance == null)
-                {
                     lock (_lock)
                     {
-                        if (_instance == null)
-                        {
-                            _instance = new Configuration();
-                        }
+                        if (_instance == null) _instance = new Configuration();
                     }
-                }
+
                 return _instance;
             }
         }

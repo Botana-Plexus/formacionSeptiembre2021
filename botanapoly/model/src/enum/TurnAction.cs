@@ -1,5 +1,5 @@
-﻿namespace controller {
-    public enum TurnAction {
+﻿namespace controller{
+    public enum TurnAction{
         INCREASE_EDIFICATION_LEVEL,
         DECREASE_EDIFICATION_LEVEL,
         ROLL_1_2,

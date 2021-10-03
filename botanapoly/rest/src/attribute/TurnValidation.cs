@@ -10,33 +10,32 @@ using model;
 using rest.service;
 
 namespace rest{
-    [AttributeUsage(validOn: AttributeTargets.Class | AttributeTargets.Method)]
-    public class TurnValidation : Attribute, IAsyncActionFilter {
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    public class TurnValidation : Attribute, IAsyncActionFilter{
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            IMatchRepository repository = Configuration.Instance.MatchRepository;
-            IApiKeyStore apiKeyStore = Configuration.Instance.ApiKeyStore;
-            HttpRequest request = context.HttpContext.Request;
+            var repository = Configuration.Instance.MatchRepository;
+            var apiKeyStore = Configuration.Instance.ApiKeyStore;
+            var request = context.HttpContext.Request;
             if (context.HttpContext.Request.RouteValues.TryGetValue("matchId", out var extractedMatchID))
-            {
                 if (request.Headers.TryGetValue("ApiKey", out var extractedApiKey))
                 {
-                    int matchId = int.Parse((string) extractedMatchID);
-                    int? userId = apiKeyStore.find(extractedApiKey);
+                    var matchId = int.Parse((string) extractedMatchID);
+                    var userId = apiKeyStore.find(extractedApiKey);
                     if (userId.HasValue)
                     {
-                        IEnumerable<MatchInfo> matches = repository.getMatches(match => match.Id.Equals(matchId) && match.HostId.Equals(userId));
+                        var matches = repository.getMatches(match => match.Id.Equals(matchId) && match.HostId.Equals(userId));
                         if (matches.Any())
                         {
-                            MatchInfo match = matches.First();
-                            IEnumerable<PlayerInfo> players = repository.getMatchPlayers(match.Id, player => player.Turn.Equals(match.Turn));
+                            var match = matches.First();
+                            var players = repository.getMatchPlayers(match.Id, player => player.Turn.Equals(match.Turn));
                             {
                                 await next();
                             }
                         }
                     }
                 }
-            }
+
             context.Result = new ContentResult()
             {
                 StatusCode = 404,

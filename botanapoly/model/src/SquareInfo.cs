@@ -3,22 +3,21 @@ using controller;
 
 namespace model{
     public class SquareInfo : ModelEntity{
-        
         private SquareType _squareType;
         private int _boardId;
         private string _title;
         private int _order;
-        private double _buyCost;
-        private double _sellCost;
-        private double _edificationLevelBuyCost;
-        private double _edificationLevelSellCost;
-        private List<double> _rentCost;
+        private int _buyCost;
+        private int _sellCost;
+        private int _edificationLevelBuyCost;
+        private int _edificationLevelSellCost;
+        private List<int> _rentCost;
         private int _collectionId;
         private int _destination;
         private int? _ownerId;
         private int? _currentEdificationLevel;
 
-        public SquareInfo(int id, SquareType squareType, int boardId, string title, int order, double buyCost, double sellCost, double edificationLevelBuyCost, double edificationLevelSellCost, List<double> rentCost, int collectionId, int destination, int? ownerId, int? currentEdificationLevel) : base(id)
+        public SquareInfo(int id, SquareType squareType, int boardId, string title, int order, int buyCost, int sellCost, int edificationLevelBuyCost, int edificationLevelSellCost, List<int> rentCost, int collectionId, int destination, int? ownerId, int? currentEdificationLevel) : base(id)
         {
             _squareType = squareType;
             _boardId = boardId;
@@ -59,31 +58,31 @@ namespace model{
             set => _order = value;
         }
 
-        public double BuyCost
+        public int BuyCost
         {
             get => _buyCost;
             set => _buyCost = value;
         }
 
-        public double SellCost
+        public int SellCost
         {
             get => _sellCost;
             set => _sellCost = value;
         }
 
-        public double EdificationLevelBuyCost
+        public int EdificationLevelBuyCost
         {
             get => _edificationLevelBuyCost;
             set => _edificationLevelBuyCost = value;
         }
 
-        public double EdificationLevelSellCost
+        public int EdificationLevelSellCost
         {
             get => _edificationLevelSellCost;
             set => _edificationLevelSellCost = value;
         }
 
-        public List<double> RentCost
+        public List<int> RentCost
         {
             get => _rentCost;
             set => _rentCost = value;

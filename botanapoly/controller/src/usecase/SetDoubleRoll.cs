@@ -3,7 +3,6 @@ using model;
 
 namespace controller{
     public class SetDoubleRoll : IUseCaseFunctionality<int>{
-
         private readonly IMatchRepository _matchRepository;
         private readonly PlayerInfo _playerInfo;
         private readonly bool _reset;
@@ -12,12 +11,12 @@ namespace controller{
         {
             _matchRepository = matchRepository;
             _playerInfo = playerInfo;
-            this._reset = reset;
+            _reset = reset;
         }
 
         public int execute()
         {
-            _matchRepository.setDoubleRoll(_playerInfo, _reset);
+            _matchRepository.setDoubleRoll(_playerInfo.Id, _reset);
             return 0;
         }
     }

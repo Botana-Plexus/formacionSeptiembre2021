@@ -1,9 +1,8 @@
 using database;
 using model;
 
-namespace controller {
-    public class PunishPlayer : IUseCaseFunctionality<int> {
-
+namespace controller{
+    public class PunishPlayer : IUseCaseFunctionality<int>{
         private readonly IMatchRepository _matchRepository;
         private readonly PlayerInfo _playerInfo;
 
@@ -15,7 +14,7 @@ namespace controller {
 
         public int execute()
         {
-            _matchRepository.punishPlayer(_playerInfo);
+            _matchRepository.punishPlayer(_playerInfo.Id);
             return 0;
         }
     }

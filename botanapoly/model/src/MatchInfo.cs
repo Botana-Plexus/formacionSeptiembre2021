@@ -5,7 +5,7 @@ namespace model{
     public class MatchInfo : ModelEntity{
         private string _code;
         private int _hostId;
-        private int _maxPlayerAmount;
+        private int? _maxPlayerAmount;
         private int? _maxDurationMinutes;
         private long _startDate;
         private bool _hasPassword;
@@ -15,7 +15,7 @@ namespace model{
         private int _boardId;
         private List<int> _playerIds;
 
-        public MatchInfo(int id, string code, int hostId, int maxPlayerAmount, int? maxDurationMinutes, long startDate, bool hasPassword, int currentPlayerAmount, int turn, int matchState, int boardId, List<int> playerIds) : base(id)
+        public MatchInfo(int id, string code, int hostId, int? maxPlayerAmount, int? maxDurationMinutes, long startDate, bool hasPassword, int currentPlayerAmount, int turn, int matchState, int boardId, List<int> playerIds) : base(id)
         {
             _code = code;
             _hostId = hostId;
@@ -42,7 +42,7 @@ namespace model{
             set => _hostId = value;
         }
 
-        public int MaxPlayerAmount
+        public int? MaxPlayerAmount
         {
             get => _maxPlayerAmount;
             set => _maxPlayerAmount = value;

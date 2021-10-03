@@ -1,9 +1,9 @@
 namespace model{
     public class UserInfo : ModelEntity{
-        private  string _email;
-        private  string _username;
-        private  string _password;
-        private  long _birth;
+        private string _email;
+        private string _username;
+        private string _password;
+        private long _birth;
 
         public UserInfo(int id, string email, string username, string password, long birth) : base(id)
         {

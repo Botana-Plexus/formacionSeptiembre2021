@@ -1,21 +1,22 @@
 ﻿using database;
 using model;
 
-namespace controller {
-    public class AuthenticateUser : IUseCaseFunctionality<int>{
-
+namespace controller{
+    public class AuthenticateUser : IUseCaseFunctionality<int?>{
         private readonly IMatchRepository _matchRepository;
-        private readonly UserInfo _userInfo;
+        private readonly string _username;
+        private readonly string _password;
 
-        public AuthenticateUser(IMatchRepository matchRepository, UserInfo userInfo)
+        public AuthenticateUser(IMatchRepository matchRepository, string username, string password)
         {
             _matchRepository = matchRepository;
-            _userInfo = userInfo;
+            _username = username;
+            this._password = password;
         }
 
-        public int execute()
+        public int? execute()
         {
-            return _matchRepository.authenticate(_userInfo);
+            return _matchRepository.authenticate(_username, _password);
         }
     }
 }

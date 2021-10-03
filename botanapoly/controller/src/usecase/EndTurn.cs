@@ -1,9 +1,8 @@
 using database;
 using model;
 
-namespace controller {
+namespace controller{
     public class EndTurn : IUseCaseFunctionality<int>{
-        
         private readonly IMatchRepository _matchRepository;
         private readonly PlayerInfo _playerInfo;
 
@@ -15,7 +14,7 @@ namespace controller {
 
         public int execute()
         {
-            this._matchRepository.endTurn(this._playerInfo);
+            _matchRepository.endTurn(_playerInfo.Id);
             return 0;
         }
     }

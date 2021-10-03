@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using database;
+using database.model.codes;
 using model;
 using util;
 
-namespace controller {
-    public class JoinMatch : IUseCaseFunctionality<int>{
-
+namespace controller{
+    public class JoinMatch : IUseCaseFunctionality<AddPlayerCode>{
         private readonly IMatchRepository _matchRepository;
         private readonly MatchInfo _matchInfo;
         private readonly UserInfo _userInfo;
@@ -21,9 +21,9 @@ namespace controller {
             _password = password;
         }
 
-        public int execute()
+        public AddPlayerCode execute()
         {
-            return _matchRepository.joinMatch(_matchInfo, _userInfo, _password);
+            return _matchRepository.joinMatch(_matchInfo.Id, _userInfo.Id, _password);
         }
     }
 }

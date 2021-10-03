@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 
 namespace model{
-    public class CollectionInfo : ModelEntity {
+    public class CollectionInfo : ModelEntity{
         private List<int> _squareIds;
 
         public CollectionInfo(int id, List<int> squareIds) : base(id)

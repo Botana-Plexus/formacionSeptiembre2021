@@ -12,7 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
-namespace rest {
+namespace rest{
     public class Startup{
         public Startup(IConfiguration configuration)
         {
@@ -47,9 +47,6 @@ namespace rest {
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
             app.UseMiddleware<ApiKeyValidationMiddleware>();
-            
         }
-        
-        
     }
 }

@@ -3,7 +3,6 @@ using model;
 
 namespace controller{
     public class MovePlayer : IUseCaseFunctionality<int>{
-
         private readonly IMatchRepository _matchRepository;
         private readonly PlayerInfo _playerInfo;
         private readonly int _amount;
@@ -17,7 +16,7 @@ namespace controller{
 
         public int execute()
         {
-            return _matchRepository.movePlayer(_playerInfo, _amount);
+            return _matchRepository.movePlayer(_playerInfo.Id, _amount);
         }
     }
 }

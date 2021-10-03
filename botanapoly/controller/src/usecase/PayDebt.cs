@@ -1,9 +1,9 @@
 using database;
+using database.model.codes;
 using model;
 
 namespace controller{
-    public class PayDebt : IUseCaseFunctionality<int>{
-
+    public class PayDebt : IUseCaseFunctionality<PayDebtCode>{
         private readonly IMatchRepository _matchRepository;
         private readonly PlayerInfo _playerInfo;
 
@@ -13,9 +13,9 @@ namespace controller{
             _playerInfo = playerInfo;
         }
 
-        public int execute()
+        public PayDebtCode execute()
         {
-            return _matchRepository.payDebt(_playerInfo);
+            return _matchRepository.payDebt(_playerInfo.Id);
         }
     }
 }

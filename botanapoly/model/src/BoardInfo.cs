@@ -5,9 +5,9 @@ namespace model{
     public class BoardInfo : ModelEntity{
         private List<int> _squareIds;
         private string description;
-        private double _initialBalance;
+        private int _initialBalance;
 
-        public BoardInfo(int id, string description, List<int> squareIds, double initialBalance) : base(id)
+        public BoardInfo(int id, string description, List<int> squareIds, int initialBalance) : base(id)
         {
             _squareIds = squareIds;
             _initialBalance = initialBalance;
@@ -25,7 +25,7 @@ namespace model{
             set => description = value;
         }
 
-        public double InitialBalance
+        public int InitialBalance
         {
             get => _initialBalance;
             set => _initialBalance = value;

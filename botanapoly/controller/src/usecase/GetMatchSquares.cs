@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using database;
 using model;
 
-namespace controller {
+namespace controller{
     public class GetMatchSquares : IUseCaseFunctionality<List<SquareInfo>>{
-
         private readonly IMatchRepository _matchRepository;
         private readonly BoardInfo _matchInfo;
         private readonly Func<SquareInfo, bool> _filter;
@@ -19,7 +19,7 @@ namespace controller {
 
         public List<SquareInfo> execute()
         {
-            return _matchRepository.getMatchSquares(_matchInfo, _filter);
+            return _matchRepository.getMatchSquares(_matchInfo.Id, _filter).ToList();
         }
     }
 }

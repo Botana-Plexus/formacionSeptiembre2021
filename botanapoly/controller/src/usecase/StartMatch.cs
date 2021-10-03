@@ -5,7 +5,6 @@ using util;
 
 namespace controller{
     public class StartMatch : IUseCaseFunctionality<int>{
-        
         private readonly IMatchRepository matchRepository;
         private readonly int matchId;
 

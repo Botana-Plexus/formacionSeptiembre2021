@@ -11,7 +11,7 @@ using rest.service;
 
 namespace rest{
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-    public class PlayerIsPenalizedValidation : Attribute, IAsyncActionFilter{
+    public class PlayerIsNotPenalizedValidation : Attribute, IAsyncActionFilter{
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             var repository = Configuration.Instance.MatchRepository;

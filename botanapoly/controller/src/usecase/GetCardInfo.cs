@@ -2,8 +2,7 @@
 using model;
 
 namespace controller{
-    public class GetCardInfo : IUseCaseFunctionality<CardInfo> {
-
+    public class GetCardInfo : IUseCaseFunctionality<CardInfo>{
         private readonly IMatchRepository _matchRepository;
         private readonly CardInfo _cardInfo;
 
@@ -15,7 +14,7 @@ namespace controller{
 
         public CardInfo execute()
         {
-            return _matchRepository.getCardInfo(_cardInfo);
+            return _matchRepository.getCardInfo(_cardInfo.Id);
         }
     }
 }

@@ -3,7 +3,6 @@ using model;
 
 namespace controller{
     public class GetRandomCard : IUseCaseFunctionality<int>{
-
         private readonly IMatchRepository _matchRepository;
         private readonly PlayerInfo _playerInfo;
 
@@ -15,7 +14,7 @@ namespace controller{
 
         public int execute()
         {
-            return _matchRepository.getRandomCard(_playerInfo);
+            return _matchRepository.getRandomCard(_playerInfo.Id);
         }
     }
 }

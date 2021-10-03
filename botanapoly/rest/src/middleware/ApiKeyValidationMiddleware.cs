@@ -1,9 +1,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace rest {
-    public class ApiKeyValidationMiddleware {
-
+namespace rest{
+    public class ApiKeyValidationMiddleware{
         private readonly RequestDelegate _next;
 
         public ApiKeyValidationMiddleware(RequestDelegate next)
@@ -19,7 +18,7 @@ namespace rest {
                 await context.Response.WriteAsync("Api Key was not provided");
                 return;
             }
-            
+
             //TODO: http://codingsonata.com/secure-asp-net-core-web-api-using-api-key-authentication/ in case ApiKey store is used
             await _next(context);
         }

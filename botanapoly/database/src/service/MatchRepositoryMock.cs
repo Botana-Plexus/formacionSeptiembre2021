@@ -7,7 +7,6 @@ using model;
 
 namespace database{
     public class MatchRepositoryMock : IMatchRepository{
-
         private List<MatchInfo> _matches;
         private List<BoardInfo> _boards;
         private List<PlayerInfo> _players;
@@ -17,22 +16,22 @@ namespace database{
         {
             _users = new List<UserInfo>()
             {
-                new UserInfo(1, "", "user1", "pass1", 127356178236871623L),
-                new UserInfo(2, "", "user2", "pass2", 182763871263872136L)
+                new(1, "", "user1", "pass1", 127356178236871623L),
+                new(2, "", "user2", "pass2", 182763871263872136L)
             };
             _players = new List<PlayerInfo>()
             {
-                new PlayerInfo(1, _users[0].Id, -1, 100D,-1,null,null,null,null,-1),
-                new PlayerInfo(2, _users[1].Id, -1, 100D,-1,null,null,null,null,-1)
+                new(1, _users[0].Id, -1, 100, -1, 1, 0, 0, 0, -1),
+                new(2, _users[1].Id, -1, 100, -1, 1, 0, 0, 0, -1)
             };
             _matches = new List<MatchInfo>()
             {
-                new MatchInfo(1, "", _players[0].Id, 6, 0, 0l, false, 0, 1, (int)MatchState.CREATED, 1, new List<int>()),
-                new MatchInfo(2, "", _players[1].Id, 6, 0, 0l, false, 0, 1, (int)MatchState.CREATED, 1, new List<int>())
+                new(1, "", _players[0].Id, 6, 0, 0l, false, 0, 1, (int) MatchState.CREATED, 1, new List<int>()),
+                new(2, "", _players[1].Id, 6, 0, 0l, false, 0, 1, (int) MatchState.CREATED, 1, new List<int>())
             };
             _boards = new List<BoardInfo>
             {
-                new BoardInfo(1, "", new List<int>(), 100D)
+                new(1, "", new List<int>(), 100)
             };
             _players[0].Match = _matches[0].Id;
             _players[1].Match = _matches[1].Id;
@@ -40,8 +39,8 @@ namespace database{
 
         public void createMatch(string name, int hostId, int maxPlayers, int? maxDuration, string password, int boardId)
         {
-            int id = _matches.Count + 1;
-            _matches.Add(new MatchInfo(id, name, hostId, maxPlayers, maxDuration, 0L, false, 0, 1, (int)MatchState.CREATED, boardId, null));
+            var id = _matches.Count + 1;
+            _matches.Add(new MatchInfo(id, name, hostId, maxPlayers, maxDuration, 0L, false, 0, 1, (int) MatchState.CREATED, boardId, null));
         }
 
         public IEnumerable<BoardInfo> getBoards(Func<BoardInfo, bool> filter)
@@ -76,12 +75,12 @@ namespace database{
 
         public void startMatch(int matchId)
         {
-            this.getMatches(match => match.Id.Equals(matchId)).First().MatchState = (int)MatchState.RUNNING;
+            getMatches(match => match.Id.Equals(matchId)).First().MatchState = (int) MatchState.RUNNING;
         }
 
         public void endMatch(int matchId)
         {
-            this.getMatches(match => match.Id.Equals(matchId)).First().MatchState = (int)MatchState.TERMINATED;
+            getMatches(match => match.Id.Equals(matchId)).First().MatchState = (int) MatchState.TERMINATED;
         }
 
         public void switchToObserver(int playerId)
@@ -106,15 +105,15 @@ namespace database{
 
         public AddPlayerCode joinMatch(int matchId, int userId, string password)
         {
-            int result = 1;
-            MatchInfo match = this.getMatches(match => match.Id.Equals(matchId)).First();
+            var result = 1;
+            var match = getMatches(match => match.Id.Equals(matchId)).First();
             if (match.MaxPlayerAmount > match.PlayerIds.Count)
             {
                 match.PlayerIds.Add(userId);
                 result = 0;
             }
 
-            return (AddPlayerCode)result;
+            return (AddPlayerCode) result;
         }
 
         public int getRandomCard(int playerId)
@@ -252,12 +251,12 @@ namespace database{
             throw new NotImplementedException();
         }
 
-        public void registerUser(UserInfo userInfo)
+        public UserInfo registerUser(UserInfo userInfo)
         {
             throw new NotImplementedException();
         }
 
-        public int authenticate(UserInfo userInfo)
+        public int? authenticate(string username, string password)
         {
             throw new NotImplementedException();
         }
@@ -265,6 +264,11 @@ namespace database{
         public IEnumerable<UserInfo> getUsers(Func<UserInfo, bool> filter)
         {
             return _users.Where(filter);
+        }
+
+        public PlayerInfo getFromUser(int userId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

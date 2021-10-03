@@ -32,9 +32,10 @@ namespace database{
         int setDoubleRoll(int playerId, bool reset);
         IEnumerable<SquareInfo> getPlayerProperties(int playerId, Func<SquareInfo, bool> filter);
 
-        void registerUser(UserInfo userInfo);
-        int authenticate(UserInfo userInfo);
+        UserInfo registerUser(UserInfo userInfo);
+        int? authenticate(string username, string password);
 
         IEnumerable<UserInfo> getUsers(Func<UserInfo, bool> filter);
+        PlayerInfo getFromUser(int userId);
     }
 }

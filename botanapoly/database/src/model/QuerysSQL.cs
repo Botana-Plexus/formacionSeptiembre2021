@@ -3,8 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 
 namespace database.model{
-    public class QuerysSQL {
-
+    public class QuerysSQL{
         private readonly SqlConnection _connection;
 
         public QuerysSQL(SqlConnection connection)
@@ -14,18 +13,13 @@ namespace database.model{
 
         public int executeStoredProcedureINT(string sql)
         {
-            int resultado = 1;
+            var resultado = 1;
 
             SqlCommand cmd = new(sql, _connection);
 
-            SqlDataReader reader = cmd.ExecuteReader();
+            var reader = cmd.ExecuteReader();
 
-            while (reader.Read())
-            {
-                resultado = reader.GetInt32(0);
-            }
-
-            _connection.Close();
+            while (reader.Read()) resultado = reader.GetInt32(0);
 
             return resultado;
         }
@@ -35,8 +29,7 @@ namespace database.model{
             SqlCommand cmd = new(sql, _connection);
             cmd.CommandType = CommandType.Text;
             cmd.ExecuteNonQuery();
-
-            _connection.Close();
+            
         }
 
         public List<object[]> executeStoredProcedureReader(string sql)
@@ -45,19 +38,22 @@ namespace database.model{
 
             SqlCommand cmd = new(sql, _connection);
 
-            SqlDataReader reader = cmd.ExecuteReader();
+            var reader = cmd.ExecuteReader();
 
             while (reader.Read())
             {
-                object[] values = new object[reader.FieldCount];
+                var values = new object[reader.FieldCount];
                 reader.GetValues(values);
 
                 resultado.Add(values);
             }
 
-            _connection.Close();
-
             return resultado;
+        }
+
+        public void close()
+        {
+            this._connection.Close();
         }
     }
 }
