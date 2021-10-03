@@ -2,23 +2,23 @@ using controller;
 
 namespace model{
     public class CardInfo : ModelEntity{
-        private BoardInfo _board;
+        private int _boardId;
         private string _set;
-        private CardType _type;
+        private int _type;
         private double _value;
 
-        public CardInfo(int id, BoardInfo board, string set, CardType type, double value) : base(id)
+        public CardInfo(int id, int boardId, string set, int type, double value) : base(id)
         {
-            _board = board;
+            _boardId = boardId;
             _set = set;
             _type = type;
             _value = value;
         }
 
-        public BoardInfo Board
+        public int BoardId
         {
-            get => _board;
-            set => _board = value;
+            get => _boardId;
+            set => _boardId = value;
         }
 
         public string Set
@@ -27,7 +27,7 @@ namespace model{
             set => _set = value;
         }
 
-        public CardType Type
+        public int Type
         {
             get => _type;
             set => _type = value;

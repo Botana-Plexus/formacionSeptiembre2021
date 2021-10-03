@@ -21,17 +21,17 @@ namespace database{
             };
             _players = new List<PlayerInfo>()
             {
-                new PlayerInfo(1, _users[0], -1, 100D,-1,null,null,null,null,-1),
-                new PlayerInfo(2, _users[1], -1, 100D,-1,null,null,null,null,-1)
+                new PlayerInfo(1, _users[0].Id, -1, 100D,-1,null,null,null,null,-1),
+                new PlayerInfo(2, _users[1].Id, -1, 100D,-1,null,null,null,null,-1)
             };
             _matches = new List<MatchInfo>()
             {
-                new MatchInfo(1, "", _players[0].Id, 6, 0, 0l, "asdf", 0, 1, MatchState.CREATED, 1, new List<int>()),
-                new MatchInfo(2, "", _players[1].Id, 6, 0, 0l, "asdf", 0, 1, MatchState.CREATED, 1, new List<int>())
+                new MatchInfo(1, "", _players[0].Id, 6, 0, 0l, "asdf", 0, 1, (int)MatchState.CREATED, 1, new List<int>()),
+                new MatchInfo(2, "", _players[1].Id, 6, 0, 0l, "asdf", 0, 1, (int)MatchState.CREATED, 1, new List<int>())
             };
             _boards = new List<BoardInfo>
             {
-                new BoardInfo(1, new List<SquareInfo>(), 100D)
+                new BoardInfo(1, new List<int>(), 100D)
             };
             _players[0].Match = _matches[0].Id;
             _players[1].Match = _matches[1].Id;
@@ -40,7 +40,7 @@ namespace database{
         public void createMatch(string name, int hostId, int maxPlayers, int? maxDuration, string password, int boardId)
         {
             int id = _matches.Count + 1;
-            _matches.Add(new MatchInfo(id, name, hostId, maxPlayers, maxDuration, 0L, password, 0, 1, MatchState.CREATED, boardId, null));
+            _matches.Add(new MatchInfo(id, name, hostId, maxPlayers, maxDuration, 0L, password, 0, 1, (int)MatchState.CREATED, boardId, null));
         }
 
         public IEnumerable<BoardInfo> getBoards(Func<BoardInfo, bool> filter)
@@ -65,12 +65,12 @@ namespace database{
 
         public void startMatch(int matchId)
         {
-            this.getMatches(match => match.Id.Equals(matchId)).First().MatchState = MatchState.RUNNING;
+            this.getMatches(match => match.Id.Equals(matchId)).First().MatchState = (int)MatchState.RUNNING;
         }
 
         public void endMatch(int matchId)
         {
-            this.getMatches(match => match.Id.Equals(matchId)).First().MatchState = MatchState.TERMINATED;
+            this.getMatches(match => match.Id.Equals(matchId)).First().MatchState = (int)MatchState.TERMINATED;
         }
 
         public void switchToObserver(PlayerInfo playerInfo)

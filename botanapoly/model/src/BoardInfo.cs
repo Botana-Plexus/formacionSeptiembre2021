@@ -3,19 +3,19 @@ using System.Collections.ObjectModel;
 
 namespace model{
     public class BoardInfo : ModelEntity{
-        private List<SquareInfo> _squares;
+        private List<int> _squareIds;
         private double _initialBalance;
 
-        public BoardInfo(int id ,List<SquareInfo> squares, double initialBalance) : base(id)
+        public BoardInfo(int id ,List<int> squareIds, double initialBalance) : base(id)
         {
-            _squares = squares;
+            _squareIds = squareIds;
             _initialBalance = initialBalance;
         }
 
-        public List<SquareInfo> Squares
+        public List<int> SquareIds
         {
-            get => _squares;
-            set => _squares = value;
+            get => _squareIds;
+            set => _squareIds = value;
         }
 
         public double InitialBalance
