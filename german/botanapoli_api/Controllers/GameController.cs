@@ -222,5 +222,49 @@ namespace botanapoli_api.Controllers
 
             return ganador;
         }
+
+        // Flujo de turno
+        [HttpPost("MoverJugador")]
+        [ActionName("MoverJugador")]
+        public string MoverJugador(int idJugador, int numMovs)
+        {
+            var conexion = new DbController();
+            string query = $"mover {idJugador}, {numMovs}";
+            DataTable dt = conexion.DbRetrieveQuery(query);
+
+            int newPosition = (int)dt.Rows[0][0];
+            DataTable casilla = conexion.DbRetrieveQuery($"getCasillas null, {newPosition}");
+            int tipoCasilla = (int)(casilla.Rows[0]["tipo"]);
+
+            switch(tipoCasilla)
+            {
+                case 1: case 6:
+                    return "casilla neutra";
+
+                case 2: case 3: case 4: case 8:
+                    return (string)conexion.DbRetrieveQuery($"actualizarDeuda {idJugador}, null, {newPosition}").Rows[0][1];
+
+                case 7:
+                    return (string)conexion.DbRetrieveQuery($"castigar {idJugador}").Rows[0][1];
+
+                case 5:
+                    DataTable carta = conexion.DbRetrieveQuery($"getCartaAleatoria {idJugador}");
+                    int cartaId = (int)carta.Rows[0][0];
+
+                    DataTable infoCarta = conexion.DbRetrieveQuery($"getInfocarta {cartaId}");
+                    int tipoCarta = (int)infoCarta.Rows[0]["tipo"];
+                    int valorCarta = (int)infoCarta.Rows[0]["valor"];
+
+                    if(tipoCarta == 2)
+                    {
+                        return (string)conexion.DbRetrieveQuery($"actualizarDeuda {idJugador}, {cartaId}, {numMovs}").Rows[0][1];
+                    }
+                    else
+                    {
+                            return MoverJugador(idJugador, valorCarta);
+                    }
+            }
+                return "";
+        }
     }
 }
