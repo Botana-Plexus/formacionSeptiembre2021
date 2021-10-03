@@ -29,7 +29,7 @@ namespace rest{
                         if (matches.Any())
                         {
                             MatchInfo match = matches.First();
-                            IEnumerable<PlayerInfo> players = repository.getMatchPlayers(match, player => player.Turn.Equals(match.Turn));
+                            IEnumerable<PlayerInfo> players = repository.getMatchPlayers(match.Id, player => player.Turn.Equals(match.Turn));
                             {
                                 await next();
                             }

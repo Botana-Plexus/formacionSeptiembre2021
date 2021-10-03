@@ -4,9 +4,10 @@ using System.Collections.ObjectModel;
 namespace model{
     public class BoardInfo : ModelEntity{
         private List<int> _squareIds;
+        private string description;
         private double _initialBalance;
 
-        public BoardInfo(int id ,List<int> squareIds, double initialBalance) : base(id)
+        public BoardInfo(int id, string description, List<int> squareIds, double initialBalance) : base(id)
         {
             _squareIds = squareIds;
             _initialBalance = initialBalance;
@@ -16,6 +17,12 @@ namespace model{
         {
             get => _squareIds;
             set => _squareIds = value;
+        }
+
+        public string Description
+        {
+            get => description;
+            set => description = value;
         }
 
         public double InitialBalance

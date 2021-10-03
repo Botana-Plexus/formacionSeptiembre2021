@@ -15,6 +15,7 @@ namespace rest{
         private readonly GameStateControlFlow<TurnState, TurnAction> _states;
         private readonly IMatchRepository _matchRepository;
         private readonly IApiKeyStore _apiKeyStore;
+        private readonly IConnectionFactory _connectionFactory;
 
         private protected Configuration()
         {
@@ -79,7 +80,8 @@ namespace rest{
                 }.ToList()}
             };
             _states = new GameStateControlFlow<TurnState, TurnAction>(actions.ToList(), states);
-            _matchRepository = new MatchRepositoryMock();
+            _connectionFactory = new SqlServerConnectionFactory("localhost", "botanapoly", "pruebas", "pruebas");
+            _matchRepository = new MatchRepositorySqlServerDb(_connectionFactory);
             _apiKeyStore = new ApiKeyStoreMock(_matchRepository);
             foreach (UserInfo user in _matchRepository.getUsers(u => true))
             {
@@ -110,5 +112,7 @@ namespace rest{
         public IMatchRepository MatchRepository => _matchRepository;
 
         public IApiKeyStore ApiKeyStore => _apiKeyStore;
+
+        public IConnectionFactory ConnectionFactory => _connectionFactory;
     }
 }

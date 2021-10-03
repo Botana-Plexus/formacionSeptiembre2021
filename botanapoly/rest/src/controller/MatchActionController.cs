@@ -25,6 +25,7 @@ namespace rest {
         [Route("move")]
         public MatchInfo move([FromRoute] int matchId, [FromHeader] string apiKey, [FromBody] int amount)
         {
+            //TODO: make all the logic required after moving a player
             return null;
         }
 

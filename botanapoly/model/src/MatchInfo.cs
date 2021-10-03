@@ -7,22 +7,22 @@ namespace model{
         private int _hostId;
         private int _maxPlayerAmount;
         private int? _maxDurationMinutes;
-        private long _startedDate;
-        private string _password;
+        private long _startDate;
+        private bool _hasPassword;
         private int _currentPlayerAmount;
         private int _turn;
         private int _matchState;
         private int _boardId;
         private List<int> _playerIds;
 
-        public MatchInfo(int id, string code, int hostId, int maxPlayerAmount, int? maxDurationMinutes, long startedDate, string password, int currentPlayerAmount, int turn, int matchState, int boardId, List<int> playerIds) : base(id)
+        public MatchInfo(int id, string code, int hostId, int maxPlayerAmount, int? maxDurationMinutes, long startDate, bool hasPassword, int currentPlayerAmount, int turn, int matchState, int boardId, List<int> playerIds) : base(id)
         {
             _code = code;
             _hostId = hostId;
             _maxPlayerAmount = maxPlayerAmount;
             _maxDurationMinutes = maxDurationMinutes;
-            _startedDate = startedDate;
-            _password = password;
+            _startDate = startDate;
+            _hasPassword = hasPassword;
             _currentPlayerAmount = currentPlayerAmount;
             _turn = turn;
             _matchState = matchState;
@@ -56,14 +56,14 @@ namespace model{
 
         public long StartedDate
         {
-            get => _startedDate;
-            set => _startedDate = value;
+            get => _startDate;
+            set => _startDate = value;
         }
 
-        public string Password
+        public bool Password
         {
-            get => _password;
-            set => _password = value;
+            get => _hasPassword;
+            set => _hasPassword = value;
         }
 
         public int CurrentPlayerAmount

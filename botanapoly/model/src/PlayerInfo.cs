@@ -10,10 +10,10 @@ namespace model{
         private  int? _turn;
         private int? _remainingPunishmentRounds;
         private int? _doubleRollsCounter;
-        private int? _debt;
+        private double? _debt;
         private int _creditorId;
 
-        public PlayerInfo(int id, int userId, int matchId, double balance, int squareId, int? turn, int? remainingPunishmentRounds, int? doubleRollsCounter, int? debt, int creditorId) : base(id)
+        public PlayerInfo(int id, int userId, int matchId, double balance, int squareId, int? turn, int? remainingPunishmentRounds, int? doubleRollsCounter, double? debt, int creditorId) : base(id)
         {
             _userId = userId;
             _matchId = matchId;
@@ -68,7 +68,7 @@ namespace model{
             set => _doubleRollsCounter = value;
         }
 
-        public int? Debt
+        public double? Debt
         {
             get => _debt;
             set => _debt = value;

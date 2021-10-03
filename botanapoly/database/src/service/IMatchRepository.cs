@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using database.model.codes;
 using model;
 
 namespace database{
@@ -8,27 +10,27 @@ namespace database{
         void createMatch(string name, int hostId, int maxPlayers, int? maxDuration, string password, int boardId);
         IEnumerable<BoardInfo> getBoards(Func<BoardInfo, bool> filter);
         IEnumerable<MatchInfo> getMatches(Func<MatchInfo, bool> filter);
-        List<PlayerInfo> getMatchPlayers(MatchInfo matchInfo, Func<PlayerInfo, bool> filter);
-        List<SquareInfo> getMatchSquares(BoardInfo matchInfo, Func<SquareInfo, bool> filter);
+        IEnumerable<PlayerInfo> getMatchPlayers(int matchId, Func<PlayerInfo, bool> filter);
+        IEnumerable<SquareInfo> getMatchSquares(int? boardId, Func<SquareInfo, bool> filter);
         void startMatch(int matchId);
         void endMatch(int matchId);
-        void switchToObserver(PlayerInfo playerInfo);
-        void leaveMatch(PlayerInfo playerInfo);
-        int joinMatch(int matchId, int userId, string password);
-        int getRandomCard(PlayerInfo playerInfo);
-        CardInfo getCardInfo(CardInfo cardInfo);
-        int getTurnInfo(PlayerInfo playerInfo);
-        void endTurn(int userId);
-        void punishPlayer(PlayerInfo playerInfo);
-        int movePlayer(PlayerInfo playerInfo, int amount);
-        int buyProperty(PlayerInfo playerInfo, SquareInfo squareInfo);
-        int sellProperty(PlayerInfo playerInfo, SquareInfo squareInfo);
-        int addEdification(PlayerInfo playerInfo, SquareInfo squareInfo); //edificar vs venderEdificacion
-        int removeEdification(PlayerInfo playerInfo, SquareInfo squareInfo);
-        void updateDebt(PlayerInfo playerInfo, CardInfo cardInfo);
-        int payDebt(PlayerInfo playerInfo);
-        void setDoubleRoll(PlayerInfo player, bool reset);
-        object getPlayerProperties(PlayerInfo playerInfo, Func<PlayerInfo, bool> filter);
+        void switchToObserver(int playerId);
+        void leaveMatch(int playerId);
+        AddPlayerCode joinMatch(int matchId, int userId, string password);
+        int getRandomCard(int playerId);
+        CardInfo getCardInfo(int cardId);
+        TurnInfoCode getTurnInfo(int playerId);
+        void endTurn(int playerId);
+        void punishPlayer(int playerId);
+        int movePlayer(int playerId, int amount);
+        BuyPropertyCode buyProperty(int playerId);
+        SellPropertyCode sellProperty(int playerId, int squareId);
+        BuyEdificationCode addEdification(int playerId, int squareId);
+        SellEdificationCode removeEdification(int playerId, int squareId);
+        void updateDebt(int playerId, int? cardId, int multiplier);
+        PayDebtCode payDebt(int playerId);
+        int setDoubleRoll(int playerId, bool reset);
+        IEnumerable<SquareInfo> getPlayerProperties(int playerId, Func<SquareInfo, bool> filter);
 
         void registerUser(UserInfo userInfo);
         int authenticate(UserInfo userInfo);
