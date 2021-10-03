@@ -600,7 +600,8 @@ descripción: Actualiza la deuda de un jugador
 go 
 create procedure actualizarDeuda
 	@idJugador int,
-	@idCarta int = null
+	@idCarta int = null,
+	@tiradaMultiplicador int
 as
 	declare @idCasilla int
 	declare @tipoCasilla int
@@ -610,21 +611,26 @@ as
 	select @idCasilla = posicion from jugadores where id = @idJugador
 	select @tipoCasilla = tipo,@nivelEdificacion  =(p.nivelEdificacion+1),@propietario=p.jugador from casillas c left join propiedades p on p.casilla=c.id where c.id=@idCasilla
 
-	if @idJugador != @propietario
+	if @idJugador != ISNULL(@propietario,0)
 		begin
 			if ISNULL(@idCarta,0) != 0
 				update jugadores set deuda = (select valor from cartas where id = @idCarta) where id = @idJugador
 			else
 				begin
-					begin tran
+					if @tipoCasilla = 8
+						update jugadores set deuda = (select precioCompra from casillas where id = @idCasilla) where id = @idJugador		
+					else if  @tipoCasilla = 2 or @tipoCasilla = 3 or @tipoCasilla = 4
+						begin
+							if @tipoCasilla=2 or @tipoCasilla =4
+								begin 
+									set @tiradaMultiplicador = 1
+									exec('update jugadores set acreedor ='+@propietario+',deuda = (select coste'+@nivelEdificacion+' from casillas where id = '+@idCasilla+') * '+ @tiradaMultiplicador +' where id = ' +@idJugador)
+								end
+							else
+								exec('update jugadores set acreedor ='+@propietario+',deuda = (select coste'+@nivelEdificacion+' from casillas where id = '+@idCasilla+') * '+ @tiradaMultiplicador +' where id = ' +@idJugador)
+						end
 
-						if @tipoCasilla = 2 or @tipoCasilla = 3 or @tipoCasilla = 4
-							begin 
-								exec('update jugadores set acreedor ='+@propietario+',deuda = (select coste'+@nivelEdificacion+' from casillas where id = '+@idCasilla+') where id = ' +@idJugador)
-							end
-						else if @tipoCasilla = 8
-							update jugadores set deuda = (select precioCompra from casillas where id = @idCasilla) where id = @idJugador
-					commit
+
 				end
 		end
 
