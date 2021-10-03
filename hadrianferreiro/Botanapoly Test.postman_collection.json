@@ -1,0 +1,672 @@
+{
+	"info": {
+		"_postman_id": "541aceeb-8ab8-483b-8a71-685cd581b8be",
+		"name": "Botanapoly Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Registro",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"test@email.es\",\r\n  \"nick\": \"testnick\",\r\n  \"pass\": \"abc123.\",\r\n  \"fechaNacimiento\": \"2021-10-02\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44397/register",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44397",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"test@email.es\",\r\n  \"pass\": \"abc123.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44397/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44397",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Partidas",
+			"item": [
+				{
+					"name": "Nueva",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"test partida1\",\r\n  \"administrador\": 1,\r\n  \"maxJugadores\": 5,\r\n  \"maxTiempo\": 60,\r\n  \"pass\": \"abc123.\",\r\n  \"tablero\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44397/nueva",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44397",
+							"path": [
+								"nueva"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AñadirBot",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idUsuario\": 0,\r\n  \"idPartida\": 1,\r\n  \"partidaPass\": \"abc123.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44397/new",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44397",
+							"path": [
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(Simulación) Usuario se une a la partida",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idUsuario\": 2,\r\n  \"idPartida\": 1,\r\n  \"partidaPass\": \"abc123.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44397/new",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44397",
+							"path": [
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Iniciar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44397/iniciar_partida",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44397",
+							"path": [
+								"iniciar_partida"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Vender",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"casillaVender\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44397/vendercasilla",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44397",
+							"path": [
+								"vendercasilla"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edificar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"casillaEspecifica\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44397/edificacion",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44397",
+							"path": [
+								"edificacion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "VenderEdificar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"casillaEspecifica\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44397/vender_edificacion",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44397",
+							"path": [
+								"vender_edificacion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mover",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"tirada\": 4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44397/mover",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44397",
+							"path": [
+								"mover"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PagarDeuda",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44397/pagardeuda",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44397",
+							"path": [
+								"pagardeuda"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FinalizarTurno",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44397/finalizarturno",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44397",
+							"path": [
+								"finalizarturno"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retirarse",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44397/retirar",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44397",
+							"path": [
+								"retirar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Abandonar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44397/abandonar",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44397",
+							"path": [
+								"abandonar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FinalizarPartida",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44397/finalizarpartida",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44397",
+							"path": [
+								"finalizarpartida"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SetDobles",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    1\r\n]"
+						},
+						"url": {
+							"raw": "https://localhost:44397/dobles",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44397",
+							"path": [
+								"dobles"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Peticiones Front (para pintar o peticiones ciclicas)",
+			"item": [
+				{
+					"name": "GetCasillas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44397/casillas?idTablero=2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44397",
+							"path": [
+								"casillas"
+							],
+							"query": [
+								{
+									"key": "idTablero",
+									"value": "2"
+								},
+								{
+									"key": "idCasilla",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetJugadores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44397/jugadoresinfo?idPartida=1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44397",
+							"path": [
+								"jugadoresinfo"
+							],
+							"query": [
+								{
+									"key": "idPartida",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetPartidas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44397/partidas?id=0",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44397",
+							"path": [
+								"partidas"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetInfoCarta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44397/infocarta?id=5",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44397",
+							"path": [
+								"infocarta"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetPropiedades",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44397/propiedades?id=1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44397",
+							"path": [
+								"propiedades"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTableros",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44397/tableros",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44397",
+							"path": [
+								"tableros"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ComprobarTurno",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44397/turno",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44397",
+							"path": [
+								"turno"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ComprobarTiempo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44397/comprobartiempo?id=1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44397",
+							"path": [
+								"comprobartiempo"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
