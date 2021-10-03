@@ -9,6 +9,9 @@ namespace rest {
     [ApiController]
     [Route("/api/match/{matchId}/execute/")]
     [MatchValidation]
+    [UserInMatchValidation]
+    [TurnValidation]
+    [PlayerIsPenalizedValidation]
     public class MatchActionController : ControllerBase {
 
         [HttpPost]
