@@ -83,9 +83,17 @@ namespace database{
             throw new NotImplementedException();
         }
 
-        public int joinMatch(MatchInfo matchInfo, UserInfo userInfo, string password)
+        public int joinMatch(int matchId, int userId, string password)
         {
-            throw new NotImplementedException();
+            int result = 1;
+            MatchInfo match = this.getMatches(match => match.Id.Equals(matchId)).First();
+            if (match.MaxPlayerAmount > match.PlayerIds.Count)
+            {
+                match.PlayerIds.Add(userId);
+                result = 0;
+            }
+
+            return result;
         }
 
         public int getRandomCard(PlayerInfo playerInfo)
