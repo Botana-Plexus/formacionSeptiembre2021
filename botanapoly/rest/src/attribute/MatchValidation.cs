@@ -24,7 +24,7 @@ namespace rest {
             }
             
             context.RouteData.Values.TryGetValue("matchId", out object matchId);
-            if (matchId == null || !Configuration.Instance.MatchRepository.getMatches(match => match.Id.Equals(int.Parse((string) matchId))).Any())
+            if (!Configuration.Instance.MatchRepository.getMatches(match => match.Id.Equals(int.Parse((string) matchId))).Any())
             {
                 context.Result = new ContentResult()
                 {
