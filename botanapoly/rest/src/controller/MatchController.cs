@@ -76,9 +76,12 @@ namespace rest{
         [Route("{matchId}/join/")]
         [MatchValidation]
         [UserNotInMatchValidation]
-        public MatchInfo joinMatch([FromHeader] string apiKey, [FromBody] UserJoinDto configuration)
+        public ObjectResult joinMatch([FromHeader] string apiKey, [FromBody] UserJoinDto configuration)
         {
-            return null;
+            IApiKeyStore apiKeyStore = Configuration.Instance.ApiKeyStore;
+            IMatchRepository repository = Configuration.Instance.MatchRepository;
+            repository.joinMatch(configuration.matchId, apiKeyStore.find(apiKey).Value, configuration.password);
+            return Ok(repository.getMatches(match => match.Id.Equals(configuration.matchId)).First());
         }
         
         [HttpGet]

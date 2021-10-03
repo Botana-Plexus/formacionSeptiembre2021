@@ -14,7 +14,7 @@ namespace database{
         void endMatch(int matchId);
         void switchToObserver(PlayerInfo playerInfo);
         void leaveMatch(PlayerInfo playerInfo);
-        int joinMatch(MatchInfo matchInfo, UserInfo userInfo, string password);
+        int joinMatch(int matchId, int userId, string password);
         int getRandomCard(PlayerInfo playerInfo);
         CardInfo getCardInfo(CardInfo cardInfo);
         int getTurnInfo(PlayerInfo playerInfo);
