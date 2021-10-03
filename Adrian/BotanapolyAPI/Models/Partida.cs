@@ -101,16 +101,14 @@ namespace BotanapolyAPI.Models
         {
             this.id = info[0] != System.DBNull.Value ? (int)info[0] : null ;
             this.nombre = info[1] != System.DBNull.Value ? (string)info[1] : null;
-            this.administrador = info[2] != System.DBNull.Value ? (int)info[2] : null;
-            this.maxJugadores = info[3] != System.DBNull.Value ? (int)info[3] : null;
-            this.maxTiempo = info[4] != System.DBNull.Value ? (int)info[4] : null;
-            this.fechaInicio = info[5] != System.DBNull.Value ? (DateTime)info[5] : null;
-            this.tiempoTranscurrido = info[6] != System.DBNull.Value ? (int)info[6] : null;
-            this.pass = info[7] != System.DBNull.Value ? (string)info[7] : null;
-            this.numJugadores = info[8] != System.DBNull.Value ? (int)info[8] : null;
-            this.turno = info[9] != System.DBNull.Value ? (int)info[9] : null;
-            this.estado = info[10] != System.DBNull.Value ? (int)info[10] : null;
-            this.tablero = info[11] != System.DBNull.Value ? (int)info[11] : null;
+            this.maxJugadores = info[2] != System.DBNull.Value ? (int)info[2] : null;
+            this.maxTiempo = info[3] != System.DBNull.Value ? (int)info[3] : null;
+            this.tiempoTranscurrido = info[4] != System.DBNull.Value ? (int)info[4] : null;
+            this.pass = info[5] != System.DBNull.Value ? info[5].ToString() : null;
+            this.numJugadores = info[6] != System.DBNull.Value ? (int)info[6] : null;
+            this.turno = info[7] != System.DBNull.Value ? (int)info[7] : null;
+            this.estado = info[8] != System.DBNull.Value ? (int)info[8] : null;
+            this.tablero = info[9] != System.DBNull.Value ? (int)info[9] : null;
         }
     }
 }
