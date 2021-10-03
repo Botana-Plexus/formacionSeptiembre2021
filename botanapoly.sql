@@ -346,7 +346,7 @@ as
     case when pass is not null then 1 else 0 end as tienePass, numJugadores,turno,estado,tablero from partidas
   where @id is null or @id = id 
 
-getPartidas
+
 
 /*
 Autor: Alberto Botana
