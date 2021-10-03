@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\samuel.alvesdomingue\\Desktop\\Formación\\Workspace\\Net\\Botanapoly\\Botanapoly.csproj": {}
+    "C:\\Users\\samuel.alvesdomingue\\Desktop\\Formación\\Workspace\\Repositorios git\\Botanapoly\\formacionSeptiembre2021\\SamuelAlvesDominguez\\Botanapoly.csproj": {}
   },
   "projects": {
-    "C:\\Users\\samuel.alvesdomingue\\Desktop\\Formación\\Workspace\\Net\\Botanapoly\\Botanapoly.csproj": {
+    "C:\\Users\\samuel.alvesdomingue\\Desktop\\Formación\\Workspace\\Repositorios git\\Botanapoly\\formacionSeptiembre2021\\SamuelAlvesDominguez\\Botanapoly.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\samuel.alvesdomingue\\Desktop\\Formación\\Workspace\\Net\\Botanapoly\\Botanapoly.csproj",
+        "projectUniqueName": "C:\\Users\\samuel.alvesdomingue\\Desktop\\Formación\\Workspace\\Repositorios git\\Botanapoly\\formacionSeptiembre2021\\SamuelAlvesDominguez\\Botanapoly.csproj",
         "projectName": "Botanapoly",
-        "projectPath": "C:\\Users\\samuel.alvesdomingue\\Desktop\\Formación\\Workspace\\Net\\Botanapoly\\Botanapoly.csproj",
+        "projectPath": "C:\\Users\\samuel.alvesdomingue\\Desktop\\Formación\\Workspace\\Repositorios git\\Botanapoly\\formacionSeptiembre2021\\SamuelAlvesDominguez\\Botanapoly.csproj",
         "packagesPath": "C:\\Users\\samuel.alvesdomingue\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\samuel.alvesdomingue\\Desktop\\Formación\\Workspace\\Net\\Botanapoly\\obj\\",
+        "outputPath": "C:\\Users\\samuel.alvesdomingue\\Desktop\\Formación\\Workspace\\Repositorios git\\Botanapoly\\formacionSeptiembre2021\\SamuelAlvesDominguez\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\samuel.alvesdomingue\\AppData\\Roaming\\NuGet\\NuGet.Config",

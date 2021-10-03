@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3o5BfKn1bZF1UCYObfmFsbR1R+sokRrtVSSOAK/rJP7PFn8bwBQXV/LUdSWDRK5y0o5jm+ckVZIahgdNRQdWkw==",
+  "dgSpecHash": "6niDdeuEWVro7ImW1wcxuRK5dFWGzBnwPdwP8UfVeGDKhCIdES+hX3QbG+zo9oT0DRVxzhGBPHQ04vaeHJ+0Pg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\samuel.alvesdomingue\\Desktop\\Formación\\Workspace\\Net\\Botanapoly\\Botanapoly.csproj",
+  "projectFilePath": "C:\\Users\\samuel.alvesdomingue\\Desktop\\Formación\\Workspace\\Repositorios git\\Botanapoly\\formacionSeptiembre2021\\SamuelAlvesDominguez\\Botanapoly.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\samuel.alvesdomingue\\.nuget\\packages\\azure.core\\1.6.0\\azure.core.1.6.0.nupkg.sha512",
     "C:\\Users\\samuel.alvesdomingue\\.nuget\\packages\\azure.identity\\1.3.0\\azure.identity.1.3.0.nupkg.sha512",
