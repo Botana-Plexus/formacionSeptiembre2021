@@ -75,6 +75,7 @@ namespace rest{
         [HttpPost]
         [Route("{matchId}/join/")]
         [MatchValidation]
+        [UserNotInMatchValidation]
         public MatchInfo joinMatch([FromHeader] string apiKey, [FromBody] UserJoinDto configuration)
         {
             return null;
@@ -83,6 +84,8 @@ namespace rest{
         [HttpGet]
         [Route("{matchId}/end_turn/")]
         [MatchValidation]
+        [UserInMatchValidation]
+        [TurnValidation]
         public MatchInfo endTurn([FromHeader] string apiKey, [FromRoute] int matchId)
         {
             return null;
@@ -91,6 +94,7 @@ namespace rest{
         [HttpPost]
         [Route("leave_game")]
         [MatchValidation]
+        [UserInMatchValidation]
         public MatchInfo leaveGame([FromRoute] int matchId, [FromHeader] string apiKey, [FromBody] bool watch)
         {
             return null;
