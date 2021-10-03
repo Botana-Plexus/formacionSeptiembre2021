@@ -10,6 +10,7 @@ using model;
 using rest.service;
 
 namespace rest{
+    [AttributeUsage(validOn: AttributeTargets.Class | AttributeTargets.Method)]
     public class UserHostsMatchValidation : Attribute, IAsyncActionFilter{
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
