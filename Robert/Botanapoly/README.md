@@ -1,6 +1,6 @@
 # PROYECTO FINAL FORMACION PLEXUS:
 ## Botanapoly API v1.0.0 (como el monopoly, pero mejor).
-![Texto alternativo](botanapoly.jpg)
+![Texto alternativo](https://github.com/Botana-Plexus/formacionSeptiembre2021/blob/master/Robert/Botanapoly/Doc/botanapoly.jpg)
 ### 
 ## Tecnologias usadas:
 * SQL Server para la base de datos.
