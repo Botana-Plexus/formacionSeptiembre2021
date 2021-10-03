@@ -111,9 +111,9 @@ namespace database{
             throw new NotImplementedException();
         }
 
-        public void endTurn(PlayerInfo playerInfo)
+        public void endTurn(int userId)
         {
-            throw new NotImplementedException();
+            //do nothing
         }
 
         public void punishPlayer(PlayerInfo playerInfo)

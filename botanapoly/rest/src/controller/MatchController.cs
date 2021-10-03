@@ -89,16 +89,19 @@ namespace rest{
         [MatchValidation]
         [UserInMatchValidation]
         [TurnValidation]
-        public MatchInfo endTurn([FromHeader] string apiKey, [FromRoute] int matchId)
+        public ObjectResult endTurn([FromHeader] string apiKey, [FromRoute] int matchId)
         {
-            return null;
+            IApiKeyStore apiKeyStore = Configuration.Instance.ApiKeyStore;
+            IMatchRepository repository = Configuration.Instance.MatchRepository;
+            repository.endTurn(apiKeyStore.find(apiKey).Value);
+            return Ok(repository.getMatches(match => match.Id.Equals(matchId)).First());
         }
         
         [HttpPost]
         [Route("leave_game")]
         [MatchValidation]
         [UserInMatchValidation]
-        public MatchInfo leaveGame([FromRoute] int matchId, [FromHeader] string apiKey, [FromBody] bool watch)
+        public MatchInfo leaveGame([FromHeader] string apiKey, [FromRoute] int matchId, [FromBody] bool watch)
         {
             return null;
         }

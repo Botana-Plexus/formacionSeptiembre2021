@@ -18,7 +18,7 @@ namespace database{
         int getRandomCard(PlayerInfo playerInfo);
         CardInfo getCardInfo(CardInfo cardInfo);
         int getTurnInfo(PlayerInfo playerInfo);
-        void endTurn(PlayerInfo playerInfo);
+        void endTurn(int userId);
         void punishPlayer(PlayerInfo playerInfo);
         int movePlayer(PlayerInfo playerInfo, int amount);
         int buyProperty(PlayerInfo playerInfo, SquareInfo squareInfo);
