@@ -4,8 +4,8 @@ using controller;
 namespace model{
     public class SquareInfo : ModelEntity{
         
-        private SquareType _squareType;
-        private BoardInfo _boardInfo;
+        private int _squareType;
+        private int _boardId;
         private string _title;
         private int _order;
         private double _buyCost;
@@ -13,15 +13,15 @@ namespace model{
         private double _edificationLevelBuyCost;
         private double _edificationLevelSellCost;
         private List<double> _rentCost;
-        private CollectionInfo _collectionInfo;
+        private int _collectionId;
         private int _destination;
-        private PlayerInfo _owner;
+        private int? _ownerId;
         private int _currentEdificationLevel;
 
-        public SquareInfo(int id, SquareType squareType, BoardInfo boardInfo, string title, int order, double buyCost, double sellCost, double edificationLevelBuyCost, double edificationLevelSellCost, List<double> rentCost, CollectionInfo collectionInfo, int destination, PlayerInfo owner, int currentEdificationLevel) : base(id)
+        public SquareInfo(int id, int squareType, int boardId, string title, int order, double buyCost, double sellCost, double edificationLevelBuyCost, double edificationLevelSellCost, List<double> rentCost, int collectionId, int destination, int? ownerId, int currentEdificationLevel) : base(id)
         {
             _squareType = squareType;
-            _boardInfo = boardInfo;
+            _boardId = boardId;
             _title = title;
             _order = order;
             _buyCost = buyCost;
@@ -29,22 +29,22 @@ namespace model{
             _edificationLevelBuyCost = edificationLevelBuyCost;
             _edificationLevelSellCost = edificationLevelSellCost;
             _rentCost = rentCost;
-            _collectionInfo = collectionInfo;
+            _collectionId = collectionId;
             _destination = destination;
-            _owner = owner;
+            _ownerId = ownerId;
             _currentEdificationLevel = currentEdificationLevel;
         }
 
-        public SquareType SquareType
+        public int SquareType
         {
             get => _squareType;
             set => _squareType = value;
         }
 
-        public BoardInfo BoardInfo
+        public int Boardid
         {
-            get => _boardInfo;
-            set => _boardInfo = value;
+            get => _boardId;
+            set => _boardId = value;
         }
 
         public string Title
@@ -89,10 +89,10 @@ namespace model{
             set => _rentCost = value;
         }
 
-        public CollectionInfo CollectionInfo
+        public int CollectionId
         {
-            get => _collectionInfo;
-            set => _collectionInfo = value;
+            get => _collectionId;
+            set => _collectionId = value;
         }
 
         public int Destination
@@ -101,10 +101,10 @@ namespace model{
             set => _destination = value;
         }
 
-        public PlayerInfo Owner
+        public int? OwnerId
         {
-            get => _owner;
-            set => _owner = value;
+            get => _ownerId;
+            set => _ownerId = value;
         }
 
         public int CurrentEdificationLevel

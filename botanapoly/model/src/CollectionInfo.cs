@@ -2,17 +2,17 @@ using System.Collections.Generic;
 
 namespace model{
     public class CollectionInfo : ModelEntity {
-        private List<SquareInfo> _squares;
+        private List<int> _squareIds;
 
-        public CollectionInfo(int id, List<SquareInfo> squares) : base(id)
+        public CollectionInfo(int id, List<int> squareIds) : base(id)
         {
-            _squares = squares;
+            _squareIds = squareIds;
         }
 
-        public List<SquareInfo> Squares
+        public List<int> SquareIds
         {
-            get => _squares;
-            set => _squares = value;
+            get => _squareIds;
+            set => _squareIds = value;
         }
 
         public int Id1 => _id;

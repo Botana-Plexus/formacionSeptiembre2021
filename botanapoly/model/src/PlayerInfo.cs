@@ -3,7 +3,7 @@
 namespace model{
     public class PlayerInfo : ModelEntity{
         
-        private  UserInfo _user;
+        private  int _userId;
         private  int _matchId;
         private  double _balance;
         private  int _squareId;
@@ -13,9 +13,9 @@ namespace model{
         private int? _debt;
         private int _creditorId;
 
-        public PlayerInfo(int id, UserInfo user, int matchId, double balance, int squareId, int? turn, int? remainingPunishmentRounds, int? doubleRollsCounter, int? debt, int creditorId) : base(id)
+        public PlayerInfo(int id, int userId, int matchId, double balance, int squareId, int? turn, int? remainingPunishmentRounds, int? doubleRollsCounter, int? debt, int creditorId) : base(id)
         {
-            _user = user;
+            _userId = userId;
             _matchId = matchId;
             _balance = balance;
             _squareId = squareId;
@@ -26,10 +26,10 @@ namespace model{
             _creditorId = creditorId;
         }
 
-        public UserInfo User
+        public int UserId
         {
-            get => _user;
-            set => _user = value;
+            get => _userId;
+            set => _userId = value;
         }
 
         public int Match

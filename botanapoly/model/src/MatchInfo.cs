@@ -11,11 +11,11 @@ namespace model{
         private string _password;
         private int _currentPlayerAmount;
         private int _turn;
-        private MatchState _matchState;
+        private int _matchState;
         private int _boardId;
         private List<int> _playerIds;
 
-        public MatchInfo(int id, string code, int hostId, int maxPlayerAmount, int? maxDurationMinutes, long startedDate, string password, int currentPlayerAmount, int turn, MatchState matchState, int boardId, List<int> playerIds) : base(id)
+        public MatchInfo(int id, string code, int hostId, int maxPlayerAmount, int? maxDurationMinutes, long startedDate, string password, int currentPlayerAmount, int turn, int matchState, int boardId, List<int> playerIds) : base(id)
         {
             _code = code;
             _hostId = hostId;
@@ -78,7 +78,7 @@ namespace model{
             set => _turn = value;
         }
 
-        public MatchState MatchState
+        public int MatchState
         {
             get => _matchState;
             set => _matchState = value;
