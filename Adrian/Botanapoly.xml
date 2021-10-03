@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="906b695f-0483-42d8-8c2a-b6f92482f3a4" activeEnvironment="Default" name="REST Project 1" soapui-version="5.6.0" abortOnError="false" runType="SEQUENTIAL" resourceRoot="" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:RestService" id="787cf4d6-611b-4cf0-9a92-eef06b0f756f" wadlVersion="http://wadl.dev.java.net/2009/02" name="https://localhost:44377" type="rest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache/><con:endpoints><con:endpoint>https://localhost:44377</con:endpoint></con:endpoints><con:resource name="" path="" id="0ab53347-bf4e-430c-a221-8cf860bd63ea"><con:settings/><con:parameters><con:parameter><con:name>idPartida</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>idTablero</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>idJugador</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>pass</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>reset</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:method name="Registro/Autenticacion" id="c2a53ba7-84c1-45dd-82ba-e92c5ba1d011" method="POST"><con:settings/><con:parameters/><con:request name="Registrarse" id="092e8148-7e0a-4caf-82d1-8d86f8b0712f" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://localhost:44377/api/Botanapoly/Registrar</con:endpoint><con:request>{
+  "email": "email@test.com",
+  "nick": "nick",
+  "pass": "xxx",
+  "fechaNacimiento": "2021-10-02"
+}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="idTablero" value=""/>
+  <con:entry key="idJugador" value=""/>
+  <con:entry key="idPartida" value=""/>
+  <con:entry key="pass" value=""/>
+  <con:entry key="reset" value=""/>
+</con:parameters><con:parameterOrder><con:entry>idPartida</con:entry><con:entry>idTablero</con:entry><con:entry>idJugador</con:entry><con:entry>pass</con:entry><con:entry>reset</con:entry></con:parameterOrder></con:request><con:request name="Autenticar" id="e8dd082e-f79e-40c6-a2a4-fa84f136f082" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://localhost:44377/api/Botanapoly/Autenticar</con:endpoint><con:request>{
+  "email": "test@gmail.com",
+  "pass": "xxx"
+}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="idTablero" value=""/>
+  <con:entry key="idJugador" value=""/>
+  <con:entry key="idPartida" value=""/>
+  <con:entry key="pass" value=""/>
+  <con:entry key="reset" value=""/>
+</con:parameters><con:parameterOrder><con:entry>idPartida</con:entry><con:entry>idTablero</con:entry><con:entry>idJugador</con:entry><con:entry>pass</con:entry><con:entry>reset</con:entry></con:parameterOrder></con:request></con:method><con:method name="Listado" id="9db3189d-212a-4870-a70d-5eef5fef94bc" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>204</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>204</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element>Response</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:request name="ObtenerTableros" id="43f05777-f4af-4ab9-b583-ab06de8a4403" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://localhost:44377/api/Botanapoly/ObtenerTableros</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="idJugador" value=""/>
+  <con:entry key="idPartida" value=""/>
+  <con:entry key="pass" value=""/>
+  <con:entry key="reset" value=""/>
+</con:parameters><con:parameterOrder><con:entry>idPartida</con:entry><con:entry>idTablero</con:entry><con:entry>idJugador</con:entry><con:entry>pass</con:entry><con:entry>reset</con:entry></con:parameterOrder></con:request><con:request name="ObtenerListadoPartidas" id="60f91558-04fa-4e94-a6d2-01c710448a18" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://localhost:44377/api/Botanapoly/ObtenerListadoPartidas</con:endpoint><con:request/><con:originalUri>https://localhost/api/Botanapoly/ObtenerListadoPartidas</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="idTablero" value=""/>
+  <con:entry key="idJugador" value=""/>
+  <con:entry key="idPartida" value=""/>
+  <con:entry key="pass" value=""/>
+  <con:entry key="reset" value=""/>
+</con:parameters><con:parameterOrder><con:entry>idPartida</con:entry><con:entry>idTablero</con:entry><con:entry>idJugador</con:entry><con:entry>pass</con:entry><con:entry>reset</con:entry></con:parameterOrder></con:request><con:request name="ObtenerDatosPartida" id="ed9a175d-26ed-42b9-bf75-a479c0b56f74" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://localhost:44377/api/Botanapoly/ObtenerDatosPartida</con:endpoint><con:request/><con:originalUri>https://localhost/api/Botanapoly/ObtenerDatosPartida</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="idTablero" value=""/>
+  <con:entry key="idJugador" value=""/>
+  <con:entry key="idPartida" value="3"/>
+  <con:entry key="pass" value=""/>
+  <con:entry key="reset" value=""/>
+</con:parameters><con:parameterOrder><con:entry>idPartida</con:entry><con:entry>idTablero</con:entry><con:entry>idJugador</con:entry><con:entry>pass</con:entry><con:entry>reset</con:entry></con:parameterOrder></con:request><con:request name="GetTablero" id="a4d3e274-484e-4d06-be5d-908b6da0fffd" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://localhost:44377/api/Botanapoly/GetTablero</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="idTablero" value="2"/>
+  <con:entry key="idJugador" value=""/>
+  <con:entry key="idPartida" value=""/>
+  <con:entry key="pass" value=""/>
+  <con:entry key="reset" value=""/>
+</con:parameters><con:parameterOrder><con:entry>idPartida</con:entry><con:entry>idTablero</con:entry><con:entry>idJugador</con:entry><con:entry>pass</con:entry><con:entry>reset</con:entry></con:parameterOrder></con:request><con:request name="GetJugadores" id="5e48a81d-055b-4176-9f56-49a9cb1ec941" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://localhost:44377/api/Botanapoly/GetJugadores</con:endpoint><con:request/><con:originalUri>https://localhost/api/Botanapoly/GetJugadores</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="idTablero" value=""/>
+  <con:entry key="idJugador" value=""/>
+  <con:entry key="idPartida" value="3"/>
+  <con:entry key="pass" value=""/>
+  <con:entry key="reset" value=""/>
+</con:parameters><con:parameterOrder><con:entry>idPartida</con:entry><con:entry>idTablero</con:entry><con:entry>idJugador</con:entry><con:entry>pass</con:entry><con:entry>reset</con:entry></con:parameterOrder></con:request><con:request name="GetPropiedadesJugador" id="4046fb2e-c6d6-4fd4-8891-e37f2e449b5d" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://localhost:44377/api/Botanapoly/GetPropiedadesJugador</con:endpoint><con:request/><con:originalUri>https://localhost/api/Botanapoly/GetPropiedadesJugador</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="idTablero" value=""/>
+  <con:entry key="idJugador" value="3"/>
+  <con:entry key="pass" value=""/>
+  <con:entry key="reset" value=""/>
+</con:parameters><con:parameterOrder><con:entry>idPartida</con:entry><con:entry>idTablero</con:entry><con:entry>idJugador</con:entry><con:entry>pass</con:entry><con:entry>reset</con:entry></con:parameterOrder></con:request><con:request name="GetTurno" id="bbd39195-ec7d-4708-b20a-dcf6963b6a9e" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://localhost:44377/api/Botanapoly/GetTurno</con:endpoint><con:request/><con:originalUri>https://localhost/api/Botanapoly/GetTurno</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="idTablero" value=""/>
+  <con:entry key="idJugador" value="3"/>
+  <con:entry key="idPartida" value=""/>
+  <con:entry key="pass" value=""/>
+  <con:entry key="reset" value=""/>
+</con:parameters><con:parameterOrder><con:entry>idPartida</con:entry><con:entry>idTablero</con:entry><con:entry>idJugador</con:entry><con:entry>pass</con:entry><con:entry>reset</con:entry></con:parameterOrder></con:request></con:method><con:method name="Partida" id="2e422468-4d69-456a-a454-6bb86cbb46b2" method="POST"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/></con:representation><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:request name="CrearPartida" id="881f50e2-493f-41ca-9682-a1eae1a032ed" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://localhost:44377/api/Botanapoly/CrearPartida</con:endpoint><con:request>{
+  "nombre": "pachanga",
+  "administrador": 1,
+  "maxJugadores": 6,
+  "maxTiempo": 20,
+  "pass": "pass",
+  "tablero": 2
+}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="idTablero" value=""/>
+  <con:entry key="idJugador" value=""/>
+  <con:entry key="idPartida" value=""/>
+  <con:entry key="pass" value=""/>
+  <con:entry key="reset" value=""/>
+</con:parameters><con:parameterOrder><con:entry>idPartida</con:entry><con:entry>idTablero</con:entry><con:entry>idJugador</con:entry><con:entry>pass</con:entry><con:entry>reset</con:entry></con:parameterOrder></con:request><con:request name="UnirsePartida" id="7c16d45f-e2d0-49db-80a8-6666f98a6483" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://localhost:44377/api/Botanapoly/UnirsePartida</con:endpoint><con:request>{
+  "idUsuario": 2,
+  "idPartida": 1,
+  "pass": "xxx"
+}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="idTablero" value=""/>
+  <con:entry key="idJugador" value=""/>
+  <con:entry key="idPartida" value=""/>
+  <con:entry key="pass" value=""/>
+  <con:entry key="reset" value=""/>
+</con:parameters><con:parameterOrder><con:entry>idPartida</con:entry><con:entry>idTablero</con:entry><con:entry>idJugador</con:entry><con:entry>pass</con:entry><con:entry>reset</con:entry></con:parameterOrder></con:request><con:request name="CrearBot" id="d1523325-0a5e-4f41-95fd-b6a3158f896a" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://localhost:44377/api/Botanapoly/CrearBot</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="idTablero" value=""/>
+  <con:entry key="idJugador" value=""/>
+  <con:entry key="idPartida" value="1"/>
+  <con:entry key="pass" value="xxx"/>
+  <con:entry key="reset" value=""/>
+</con:parameters><con:parameterOrder><con:entry>idPartida</con:entry><con:entry>idTablero</con:entry><con:entry>idJugador</con:entry><con:entry>pass</con:entry><con:entry>reset</con:entry></con:parameterOrder></con:request><con:request name="IniciarPartida" id="c04f2f22-569b-42b7-ab50-cbbc9ad7f433" mediaType="application/json" postQueryString="false"><con:settings/><con:endpoint>https://localhost:44377/api/Botanapoly/IniciarPartida</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="idTablero" value=""/>
+  <con:entry key="idJugador" value=""/>
+  <con:entry key="idPartida" value="1"/>
+  <con:entry key="pass" value=""/>
+  <con:entry key="reset" value=""/>
+</con:parameters><con:parameterOrder><con:entry>idPartida</con:entry><con:entry>idTablero</con:entry><con:entry>idJugador</con:entry><con:entry>pass</con:entry><con:entry>reset</con:entry></con:parameterOrder></con:request><con:request name="Edificar" id="5e9f7de4-c78d-4286-9f0f-17b1165b86e0" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://localhost:44377/api/Botanapoly/Edificar</con:endpoint><con:request>{
+  "idJugador": 3,
+  "idCasilla": 3
+}</con:request><con:originalUri>https://localhost/api/Botanapoly/Edificar</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="idTablero" value=""/>
+  <con:entry key="idJugador" value=""/>
+  <con:entry key="idPartida" value=""/>
+  <con:entry key="pass" value=""/>
+  <con:entry key="reset" value=""/>
+</con:parameters><con:parameterOrder><con:entry>idPartida</con:entry><con:entry>idTablero</con:entry><con:entry>idJugador</con:entry><con:entry>pass</con:entry><con:entry>reset</con:entry></con:parameterOrder></con:request><con:request name="Moverse" id="7b14fd14-391d-4b5a-9c31-9637fe71503a" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://localhost:44377/api/Botanapoly/Moverse</con:endpoint><con:request>{
+  "idJugador": 4,
+  "tirada": 3
+}</con:request><con:originalUri>https://localhost/api/Botanapoly/Moverse</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="idTablero" value=""/>
+  <con:entry key="idJugador" value=""/>
+  <con:entry key="idPartida" value=""/>
+  <con:entry key="pass" value=""/>
+  <con:entry key="reset" value=""/>
+</con:parameters><con:parameterOrder><con:entry>idPartida</con:entry><con:entry>idTablero</con:entry><con:entry>idJugador</con:entry><con:entry>pass</con:entry><con:entry>reset</con:entry></con:parameterOrder></con:request><con:request name="Vender" id="f19255e7-9f7d-4cea-bbb4-f10663b6b0e7" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://localhost:44377/api/Botanapoly/Vender</con:endpoint><con:request>{
+  "idJugador": 1,
+  "idCasilla": 2
+}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="idTablero" value=""/>
+  <con:entry key="idJugador" value=""/>
+  <con:entry key="idPartida" value=""/>
+  <con:entry key="pass" value=""/>
+  <con:entry key="reset" value=""/>
+</con:parameters><con:parameterOrder><con:entry>idPartida</con:entry><con:entry>idTablero</con:entry><con:entry>idJugador</con:entry><con:entry>pass</con:entry><con:entry>reset</con:entry></con:parameterOrder></con:request><con:request name="Comprar" id="bdb62346-191e-497a-af9e-ee03199e1a81" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://localhost:44377/api/Botanapoly/Comprar</con:endpoint><con:request/><con:originalUri>https://localhost/api/Botanapoly/Comprar</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="idTablero" value=""/>
+  <con:entry key="idJugador" value="3"/>
+  <con:entry key="idPartida" value=""/>
+  <con:entry key="pass" value=""/>
+  <con:entry key="reset" value=""/>
+</con:parameters><con:parameterOrder><con:entry>idPartida</con:entry><con:entry>idTablero</con:entry><con:entry>idJugador</con:entry><con:entry>pass</con:entry><con:entry>reset</con:entry></con:parameterOrder></con:request><con:request name="VenderEdificacion" id="3191cb3f-8558-49a0-80a6-5f9048a43e7f" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://localhost:44377/api/Botanapoly/VenderEdificacion</con:endpoint><con:request>{
+  "idJugador": 1,
+  "idCasilla": 2
+}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="idTablero" value=""/>
+  <con:entry key="idJugador" value=""/>
+  <con:entry key="idPartida" value=""/>
+  <con:entry key="pass" value=""/>
+  <con:entry key="reset" value=""/>
+</con:parameters><con:parameterOrder><con:entry>idPartida</con:entry><con:entry>idTablero</con:entry><con:entry>idJugador</con:entry><con:entry>pass</con:entry><con:entry>reset</con:entry></con:parameterOrder></con:request><con:request name="FinalizarTurno" id="85c1c17a-624a-4b4f-97a5-04d2dec10be1" mediaType="application/json" postQueryString="false"><con:settings/><con:endpoint>https://localhost:44377/api/Botanapoly/FinalizarTurno</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="idTablero" value=""/>
+  <con:entry key="idJugador" value="1"/>
+  <con:entry key="idPartida" value=""/>
+  <con:entry key="pass" value=""/>
+  <con:entry key="reset" value=""/>
+</con:parameters><con:parameterOrder><con:entry>idPartida</con:entry><con:entry>idTablero</con:entry><con:entry>idJugador</con:entry><con:entry>pass</con:entry><con:entry>reset</con:entry></con:parameterOrder></con:request><con:request name="Retirarse" id="7cf18dcf-a0d8-4fc9-9e61-62b4caa8d7b2" mediaType="application/json" postQueryString="false"><con:settings/><con:endpoint>https://localhost:44377/api/Botanapoly/Retirarse</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="idTablero" value=""/>
+  <con:entry key="idJugador" value="1"/>
+  <con:entry key="idPartida" value=""/>
+  <con:entry key="pass" value=""/>
+  <con:entry key="reset" value=""/>
+</con:parameters><con:parameterOrder><con:entry>idPartida</con:entry><con:entry>idTablero</con:entry><con:entry>idJugador</con:entry><con:entry>pass</con:entry><con:entry>reset</con:entry></con:parameterOrder></con:request><con:request name="Abandonar" id="2ad7aecb-d6cf-4e3a-b924-bcef1fa2948d" mediaType="application/json" postQueryString="false"><con:settings/><con:endpoint>https://localhost:44377/api/Botanapoly/Abandonar</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="idTablero" value=""/>
+  <con:entry key="idJugador" value="1"/>
+  <con:entry key="idPartida" value=""/>
+  <con:entry key="pass" value=""/>
+  <con:entry key="reset" value=""/>
+</con:parameters><con:parameterOrder><con:entry>idPartida</con:entry><con:entry>idTablero</con:entry><con:entry>idJugador</con:entry><con:entry>pass</con:entry><con:entry>reset</con:entry></con:parameterOrder></con:request><con:request name="Pagar" id="220900d8-e07b-48b3-bebe-393d7106693a" mediaType="application/json" postQueryString="false"><con:settings/><con:endpoint>https://localhost:44377/api/Botanapoly/Pagar</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="idTablero" value=""/>
+  <con:entry key="idJugador" value="1"/>
+  <con:entry key="idPartida" value=""/>
+  <con:entry key="pass" value=""/>
+  <con:entry key="reset" value=""/>
+</con:parameters><con:parameterOrder><con:entry>idPartida</con:entry><con:entry>idTablero</con:entry><con:entry>idJugador</con:entry><con:entry>pass</con:entry><con:entry>reset</con:entry></con:parameterOrder></con:request><con:request name="SetDobles" id="c923886e-79eb-491a-8841-f5b16956de8d" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://localhost:44377/api/Botanapoly/SetDobles</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="idTablero" value=""/>
+  <con:entry key="idJugador" value="1"/>
+  <con:entry key="idPartida" value=""/>
+  <con:entry key="pass" value=""/>
+  <con:entry key="reset" value="1"/>
+</con:parameters><con:parameterOrder><con:entry>idPartida</con:entry><con:entry>idTablero</con:entry><con:entry>idJugador</con:entry><con:entry>pass</con:entry><con:entry>reset</con:entry></con:parameterOrder></con:request><con:request name="ComprobarTiempo" id="0cfb8144-3852-4d58-83dc-2e02aec4a8b5" mediaType="application/json" postQueryString="false"><con:settings/><con:endpoint>https://localhost:44377/api/Botanapoly/ComprobarTiempo</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="idTablero" value=""/>
+  <con:entry key="idJugador" value=""/>
+  <con:entry key="idPartida" value="1"/>
+  <con:entry key="pass" value=""/>
+  <con:entry key="reset" value=""/>
+</con:parameters><con:parameterOrder><con:entry>idPartida</con:entry><con:entry>idTablero</con:entry><con:entry>idJugador</con:entry><con:entry>pass</con:entry><con:entry>reset</con:entry></con:parameterOrder></con:request></con:method></con:resource></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
