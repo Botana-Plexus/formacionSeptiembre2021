@@ -572,7 +572,7 @@ as
   if @dobles = 3
 	begin
 		update jugadores set dobles = 0 where id = @idJugador
-		exec castigarDobles @idJugador
+		exec castigar @idJugador
 	end
 
   select 0, 'Número de dobles ', @dobles
