@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Data;
-using botanapoly_api.Models;
+using botanapoli_api.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace botanapoly_api.Controllers
+namespace botanapoli_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -21,40 +21,32 @@ namespace botanapoly_api.Controllers
         {
             string query = $"getPropiedades {idJugador}";
             DbController conexion = new DbController();
-            List <Modelos.PropiedadesJugador> listaPropiedadesJugador = new List<Modelos.PropiedadesJugador>();
+            var listaPropiedadesJugador = new List<Modelos.PropiedadesJugador>();
 
-            try
-            {
-                DataTable dt = conexion.DbRetrieveQuery(query);
+            DataTable dt = conexion.DbRetrieveQuery(query);
 
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {
-                    Modelos.PropiedadesJugador propiedad = new Modelos.PropiedadesJugador();
-                    propiedad.Id = (int)dt.Rows[i]["id"];
-                    propiedad.Tipo = (int)dt.Rows[i]["tipo"];
-                    propiedad.Tablero = (int)dt.Rows[i]["tablero"];
-                    propiedad.Nombre = (string)dt.Rows[i]["nombre"];
-                    propiedad.Orden = (int)dt.Rows[i]["orden"];
-                    propiedad.PrecioCompra = (int)dt.Rows[i]["precioCompra"];
-                    propiedad.PrecioVenta = (int)dt.Rows[i]["precioVenta"];
-                    propiedad.PrecioVentaEdificacion= (int)dt.Rows[i]["precioVentaEdificacion"];
-                    propiedad.Coste1 = (int)dt.Rows[i]["coste1"];
-                    propiedad.Coste2 = (int)dt.Rows[i]["coste2"];
-                    propiedad.Coste3 = (int)dt.Rows[i]["coste3"];
-                    propiedad.Coste4 = (int)dt.Rows[i]["coste4"];
-                    propiedad.Coste5 = (int)dt.Rows[i]["coste5"];
-                    propiedad.Coste6 = (int)dt.Rows[i]["coste6"];
-                    propiedad.Conjunto = (int)dt.Rows[i]["conjunto"];
-                    propiedad.Destino = (int)dt.Rows[i]["destino"];
-                    propiedad.NivelEdificacion = (int)dt.Rows[i]["nivelEdificacion"];
-                    listaPropiedadesJugador.Add(propiedad);
-                }
-                return listaPropiedadesJugador;
-            }
-            catch(Exception e)
+            for (int i = 0; i < dt.Rows.Count; i++)
             {
-                throw new Exception(e.GetType() + ": " + e.Message);
+                Modelos.PropiedadesJugador propiedad = new Modelos.PropiedadesJugador();
+                propiedad.Id = (int)dt.Rows[i]["id"];
+                propiedad.Tipo = (int)dt.Rows[i]["tipo"];
+                propiedad.Tablero = (int)dt.Rows[i]["tablero"];
+                propiedad.Nombre = (string)dt.Rows[i]["nombre"];
+                propiedad.NivelEdificacion = (int)dt.Rows[i]["nivelEdificacion"];
+                propiedad.Coste1 = System.DBNull.Value != dt.Rows[i]["coste1"] ? (int)dt.Rows[i]["coste1"] : null;
+                propiedad.Coste2 = System.DBNull.Value != dt.Rows[i]["coste2"] ? (int)dt.Rows[i]["coste2"] : null;
+                propiedad.Coste3 = System.DBNull.Value != dt.Rows[i]["coste3"] ? (int)dt.Rows[i]["coste3"] : null;
+                propiedad.Coste4 = System.DBNull.Value != dt.Rows[i]["coste4"] ? (int)dt.Rows[i]["coste4"] : null;
+                propiedad.Coste5 = System.DBNull.Value != dt.Rows[i]["coste5"] ? (int)dt.Rows[i]["coste5"] : null;
+                propiedad.Coste6 = System.DBNull.Value != dt.Rows[i]["coste6"] ? (int)dt.Rows[i]["coste6"] : null;
+                propiedad.Coste6 = System.DBNull.Value != dt.Rows[i]["conjunto"] ? (int)dt.Rows[i]["conjunto"] : null;
+                propiedad.PrecioCompra = System.DBNull.Value != dt.Rows[i]["precioCompra"] ? (int)dt.Rows[i]["precioCompra"] : null;
+                propiedad.PrecioVenta = System.DBNull.Value != dt.Rows[i]["precioVenta"] ? (int)dt.Rows[i]["precioVenta"] : null;
+                propiedad.PrecioVentaEdificacion = System.DBNull.Value != dt.Rows[i]["precioVentaEdificacion"] ? (int)dt.Rows[i]["precioVentaEdificacion"] : null;
+                propiedad.Conjunto = System.DBNull.Value != dt.Rows[i]["conjunto"] ? (int)dt.Rows[i]["conjunto"] : null;
+                listaPropiedadesJugador.Add(propiedad);
             }
+            return listaPropiedadesJugador;
         }
 
         // Get turno de jugador en una partida
@@ -65,17 +57,10 @@ namespace botanapoly_api.Controllers
             object[] resTurno = new object[2];
             DbController conexion = new DbController();
 
-            try
-            {
-                DataTable res = conexion.DbRetrieveQuery($"getTurno {idPartida}, {idJugador}");
-                resTurno[0] = res.Rows[0][0];
-                resTurno[1] = res.Rows[0][1];
-                return resTurno;
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.GetType() + ": " + e.Message);
-            }
+            DataTable res = conexion.DbRetrieveQuery($"getTurno {idJugador}");
+            resTurno[0] = res.Rows[0][0];
+            resTurno[1] = res.Rows[0][1];
+            return resTurno;
         }
 
         // Post edificar en una casilla
@@ -86,35 +71,10 @@ namespace botanapoly_api.Controllers
             object[] resEdificar = new object[2];
             DbController conexion = new DbController();
 
-            try
-            {
-                DataTable res = conexion.DbRetrieveQuery($"edificar {idJugador}, {idCasilla}");
-                resEdificar[0] = res.Rows[0][0];
-                resEdificar[1] = res.Rows[0][1];
-                return resEdificar;
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.GetType() + ": " + e.Message);
-            }
-        }
-
-        // Post moverse por el tablero
-        [HttpPost]
-        [ActionName("MoverJugador")]
-        public string MoverJugador(int idJugador, int tirada)
-        {
-            DbController conexion = new DbController();
-
-            try
-            {
-                DataTable res = conexion.DbRetrieveQuery($"mover {idJugador}, {tirada}");
-                return (string)res.Rows[0][0];
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.GetType() + ": " + e.Message);
-            }
+            DataTable res = conexion.DbRetrieveQuery($"edificar {idJugador}, {idCasilla}");
+            resEdificar[0] = res.Rows[0][0];
+            resEdificar[1] = res.Rows[0][1];
+            return resEdificar;
         }
 
         // Post vender propiedad
@@ -122,20 +82,10 @@ namespace botanapoly_api.Controllers
         [ActionName("VenderPropiedad")]
         public object[] VenderPropiedad(int idJugador, int idCasilla)
         {
-            object[] resVender = new object[2];
             DbController conexion = new DbController();
-
-            try
-            {
-                DataTable res = conexion.DbRetrieveQuery($"vender {idJugador}, {idCasilla}");
-                resVender[0] = res.Rows[0][0];
-                resVender[1] = res.Rows[0][1];
-                return resVender;
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.GetType() + ": " + e.Message);
-            }
+            DataTable res = conexion.DbRetrieveQuery($"vender {idJugador}, {idCasilla}");
+            return new object[] { res.Rows[0][0], res.Rows[0][1] };
+        
         }
 
         // Post comprar propiedad
@@ -143,20 +93,10 @@ namespace botanapoly_api.Controllers
         [ActionName("ComprarPropiedad")]
         public object[] ComprarPropiedad(int idJugador)
         {
-            object[] resComprar = new object[2];
             DbController conexion = new DbController();
 
-            try
-            {
-                DataTable res = conexion.DbRetrieveQuery($"comprar {idJugador}");
-                resComprar[0] = res.Rows[0][0];
-                resComprar[1] = res.Rows[0][1];
-                return resComprar;
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.GetType() + ": " + e.Message);
-            }
+            DataTable res = conexion.DbRetrieveQuery($"comprar {idJugador}");
+            return new object[] { res.Rows[0][0], res.Rows[0][1]};
         }
 
         // Post vender nivel de edificacion
@@ -164,20 +104,10 @@ namespace botanapoly_api.Controllers
         [ActionName("VenderEdificacion")]
         public object[] VenderEdificacion (int idJUgador, int idcasilla)
         {
-            object[] resVender = new object[2];
             DbController conexion = new DbController();
 
-            try
-            {
-                DataTable res = conexion.DbRetrieveQuery($"venderEdificacion {idJUgador}, {idcasilla}");
-                resVender[0] = res.Rows[0][0];
-                resVender[1] = res.Rows[0][1];
-                return resVender;
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.GetType() + ": " + e.Message);
-            }
+            DataTable res = conexion.DbRetrieveQuery($"venderEdificacion {idJUgador}, {idcasilla}");
+            return new object[] { res.Rows[0][0], res.Rows[0][1] };
         }
 
         // Post pagar deuda
@@ -185,83 +115,10 @@ namespace botanapoly_api.Controllers
         [ActionName("PagarDeuda")]
         public object[] PagarDeuda(int idJUgador)
         {
-            object[] resPagar = new object[2];
             DbController conexion = new DbController();
 
-            try
-            {
-                DataTable res = conexion.DbRetrieveQuery($"pagarDeuda {idJUgador}");
-                resPagar[0] = res.Rows[0][0];
-                resPagar[1] = res.Rows[0][1];
-                return resPagar;
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.GetType() + ": " + e.Message);
-            }
-        }
-
-        // Get carta
-        [HttpGet]
-        [ActionName("ObtenerCarta")]
-        public Modelos.Carta ObtenerCarta(int idJUgador)
-        {
-            Modelos.Carta carta = new Modelos.Carta();
-            DbController conexion = new DbController();
-
-            try
-            {
-                DataTable res = conexion.DbRetrieveQuery($"getCartaAleatoria {idJUgador}");
-                int idCarta = (int)res.Rows[0][0];
-                
-                DataTable info = conexion.DbRetrieveQuery("getInfoCarta");
-                carta.Id = (int)info.Rows[0]["id"];
-                carta.Texto = (string)info.Rows[0]["texto"];
-                carta.Valor = (int)info.Rows[0]["valor"];
-                carta.Tipo = (int)info.Rows[0]["tipo"];
-
-                return carta;
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.GetType() + ": " + e.Message);
-            }
-        }
-
-        // Post retirar Jugador
-        [HttpPost]
-        [ActionName("RetirarJugador")]
-        public int RetirarJugador(int idJugador)
-        {
-            DbController conexion = new DbController();
-
-            try
-            {
-                int res = conexion.DbInsertQuery($"retirarJugador {idJugador}");
-                return res;
-            }
-            catch(Exception e)
-            {
-                throw new Exception(e.GetType() + ": " + e.Message);
-            }
-        }
-
-        // Post Abandonar Jugador
-        [HttpPost]
-        [ActionName("AbandonarJugador")]
-        public int AbandonarPartida(int idJugador)
-        {
-            DbController conexion = new DbController();
-
-            try
-            {
-                int res = conexion.DbInsertQuery($"abandonarPartida {idJugador}");
-                return res;
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.GetType() + ": " + e.Message);
-            }
+            DataTable res = conexion.DbRetrieveQuery($"pagarDeuda {idJUgador}");
+            return new object[] { res.Rows[0][0], res.Rows[0][1] };
         }
 
         // Post Finalizar turno
@@ -271,20 +128,100 @@ namespace botanapoly_api.Controllers
         {
             DbController conexion = new DbController();
 
-            try
-            {
-                int res = conexion.DbInsertQuery($"finalizarTurno {idJugador}, {idPartida}");
-                return res;
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.GetType() + ": " + e.Message);
-            }
+            return conexion.DbInsertQuery($"finalizarTurno {idJugador}, {idPartida}");
         }
 
-        // Post Hacer Tirada
+        // Post retirar Jugador
         [HttpPost]
-        [ActionName("HacerTirada")]
+        [ActionName("RetirarJugador")]
+        public int RetirarJugador(int idJugador)
+        {
+            DbController conexion = new DbController();
 
+            int res = conexion.DbInsertQuery($"retirarJugador {idJugador}");
+            conexion.DbInsertQuery($"finalizarTurno {idJugador}");
+            return res;
+        }
+
+        // Post Abandonar Jugador
+        [HttpPost]
+        [ActionName("AbandonarJugador")]
+        public int AbandonarPartida(int idJugador)
+        {
+            DbController conexion = new DbController();
+
+            return conexion.DbInsertQuery($"abandonarPartida {idJugador}");
+        }
+
+        // establecer dobles
+        //[HttpPost]
+        //[ActionName("SetDobles")]
+        //public string SetDobles(int idJugador, bool dobles)
+        //{
+        //    DbController conexion = new DbController();
+        //    string query = dobles ? 
+        //        $"setDobles {idJugador}, 0" 
+        //        : $"setDobles {idJugador}, 1";
+
+        //    DataTable dt = conexion.DbRetrieveQuery(query);
+        //    return dt.Rows[0]["Column2"].ToString() + dt.Rows[0]["Column3"].ToString();
+        //}
+
+        //// Comprobar si queda tiempo restante de la partida
+        //[HttpPost]
+        //[ActionName("ComprobarTiempo")]
+        //public int ComprobarTiempo(int idPartida)
+        //{
+        //    var conexion = new DbController();
+        //    DataTable dt = conexion.DbRetrieveQuery($"getTiempo {idPartida}");
+        //    if((int)dt.Rows[0][0] == 0)
+        //    {
+        //        return ObtenerMasRico(idPartida).Id;
+        //    }
+        //    else
+        //    {
+        //        return 0;
+        //    }
+        //}
+
+        //// Obtener jugador mas rico
+        //private Modelos.Jugador ObtenerMasRico(int idPartida)
+        //{
+        //    var conexion = new DbController();
+        //    string query = $"getJugadoresInfo {idPartida}";
+        //    DataTable dt = conexion.DbRetrieveQuery(query);
+
+        //    var ganador = new Modelos.Jugador();
+
+        //    for(int i = 0; i < dt.Rows.Count; i++)
+        //    {
+        //        int idJugador = (int)dt.Rows[i]["id"];
+        //        DataTable props = conexion.DbRetrieveQuery($"getPropiedades {idJugador}");
+
+        //        for (int j = 0; j < props.Rows.Count; j++)
+        //        {
+        //            int propiedad = (int)props.Rows[j]["id"];
+        //            int nivelEdificacion = (int)props.Rows[j]["nivelEdificacion"];
+
+        //            for (int k = 0; k < nivelEdificacion; k++)
+        //            {
+        //                VenderEdificacion(idJugador, propiedad);
+        //            }
+        //            VenderPropiedad(idJugador, propiedad);
+        //        }
+        //    }
+
+        //    DataTable dt2 = conexion.DbRetrieveQuery($"getMasRico {idPartida}");
+        //    ganador.Id = (int)dt2.Rows[0]["id"];
+        //    ganador.IdPartida = (int)dt2.Rows[0]["idPartida"];
+        //    ganador.Orden = (int)dt2.Rows[0]["orden"];
+        //    ganador.Saldo = (int)dt2.Rows[0]["saldo"];
+        //    ganador.Dobles = (int)dt2.Rows[0]["dobles"];
+        //    ganador.TurnosDeCastigo = (int)dt2.Rows[0]["turnosDeCastigo"];
+        //    ganador.IdUsuario = System.DBNull.Value != dt2.Rows[0]["idUsuario"] ? (int)dt2.Rows[0]["idUsuario"] : null;
+        //    ganador.Posicion = System.DBNull.Value != dt2.Rows[0]["posicion"] ? (int)dt2.Rows[0]["posicion"] : null;
+
+        //    return ganador;
+        //}
     }
 }

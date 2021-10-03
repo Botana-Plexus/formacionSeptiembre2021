@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace botanapoly_api
+namespace botanapoli_api
 {
     public class Startup
     {

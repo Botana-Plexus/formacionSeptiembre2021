@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace botanapoly_api.Models
+namespace botanapoli_api.Models
 {
     public class Modelos
     {
@@ -27,14 +27,14 @@ namespace botanapoly_api.Models
                 get => administrador;
                 set => administrador = value;
             }
-            protected int maxJugadores;
-            public int MaxJugadores
+            protected int? maxJugadores;
+            public int? MaxJugadores
             {
                 get => maxJugadores;
                 set => maxJugadores = value;
             }
-            protected int maxTiempo;
-            public int MaxTiempo
+            protected int? maxTiempo;
+            public int? MaxTiempo
             {
                 get => maxTiempo;
                 set => maxTiempo = value;
@@ -45,8 +45,8 @@ namespace botanapoly_api.Models
                 get => fechaInicio;
                 set => fechaInicio = value;
             }
-            protected int tiempoTranscurrido;
-            public int TiempoTranscurrido
+            protected int? tiempoTranscurrido;
+            public int? TiempoTranscurrido
             {
                 get => tiempoTranscurrido;
                 set => tiempoTranscurrido = value;
@@ -110,8 +110,8 @@ namespace botanapoly_api.Models
                 get => dobles;
                 set => dobles = value;
             }
-            protected int idUsuario;
-            public int IdUsuario
+            protected int? idUsuario;
+            public int? IdUsuario
             {
                 get => idUsuario;
                 set => idUsuario = value;
@@ -134,8 +134,8 @@ namespace botanapoly_api.Models
                 get => orden;
                 set => orden = value;
             }
-            protected int posicion;
-            public int Posicion
+            protected int? posicion;
+            public int? Posicion
             {
                 get => posicion;
                 set => posicion = value;
@@ -325,41 +325,14 @@ namespace botanapoly_api.Models
                 get => destino;
                 set => destino = value;
             }
+            protected int? propietario;
+            public int? Propietario
+            {
+                get => propietario;
+                set => propietario = value;
+            }
         }
 
-        public class Propiedad
-        {
-            protected int id;
-            public int Id
-            {
-                get => id;
-                set => id = value;
-            }
-            protected int jugador;
-            public int Jugador
-            {
-                get => jugador;
-                set => jugador = value;
-            }
-            protected int partida;
-            public int Partida
-            {
-                get => partida;
-                set => partida = value;
-            }
-            protected int casilla;
-            public int Casilla
-            {
-                get => casilla;
-                set => casilla = value;
-            }
-            protected int nivelEdificacion;
-            public int NivelEdificacion
-            {
-                get => nivelEdificacion;
-                set => nivelEdificacion = value;
-            }
-        }
         public class PropiedadesJugador
         {
             protected int id;
@@ -392,14 +365,14 @@ namespace botanapoly_api.Models
                 get => orden;
                 set => orden = value;
             }
-            protected int precioCompra;
-            public int PrecioCompra
+            protected int? precioCompra;
+            public int? PrecioCompra
             {
                 get => precioCompra;
                 set => precioCompra = value;
             }
-            protected int precioVenta;
-            public int PrecioVenta
+            protected int? precioVenta;
+            public int? PrecioVenta
             {
                 get => precioVenta;
                 set => precioVenta = value;
@@ -410,50 +383,50 @@ namespace botanapoly_api.Models
                 get => costeEdificacion;
                 set => costeEdificacion = value;
             }
-            protected int precioVentaEdificacion;
-            public int PrecioVentaEdificacion
+            protected int? precioVentaEdificacion;
+            public int? PrecioVentaEdificacion
             {
                 get => precioVentaEdificacion;
                 set => precioVentaEdificacion = value;
             }
-            protected int coste1;
-            public int Coste1
+            protected int? coste1;
+            public int? Coste1
             {
                 get => coste1;
                 set => coste1 = value;
             }
-            protected int coste2;
-            public int Coste2
+            protected int? coste2;
+            public int? Coste2
             {
                 get => coste2;
                 set => coste2 = value;
             }
-            protected int coste3;
-            public int Coste3
+            protected int? coste3;
+            public int? Coste3
             {
                 get => coste3;
                 set => coste3 = value;
             }
-            protected int coste4;
-            public int Coste4
+            protected int? coste4;
+            public int? Coste4
             {
                 get => coste4;
                 set => coste4 = value;
             }
-            protected int coste5;
-            public int Coste5
+            protected int? coste5;
+            public int? Coste5
             {
                 get => coste5;
                 set => coste5 = value;
             }
-            protected int coste6;
-            public int Coste6
+            protected int? coste6;
+            public int? Coste6
             {
                 get => coste6;
                 set => coste6 = value;
             }
-            protected int conjunto;
-            public int Conjunto
+            protected int? conjunto;
+            public int? Conjunto
             {
                 get => conjunto;
                 set => conjunto = value;
