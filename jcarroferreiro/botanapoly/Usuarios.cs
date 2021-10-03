@@ -43,6 +43,7 @@ namespace botanapoly
     {
         public int idUsuario { get; set; }
         public int idPartida { get; set; }
+        public string pass { get; set; }
     }
     public class getPartidas
     {
@@ -50,7 +51,7 @@ namespace botanapoly
         public string nombre { get; set; }
         public int maxJugadores { get; set; }
         public int? maxTiempo { get; set; }
-        public int tiempoTranscurrido { get; set; }
+        public int? tiempoTranscurrido { get; set; }
         public int numJugadores { get; set; }
         public int turno { get; set; }
         public int estado { get; set; }
@@ -95,8 +96,10 @@ namespace botanapoly
         public int? Coste3 { get; set; }
         public int? Coste4 { get; set; }
         public int? Coste5 { get; set; }
+        public int? Coste6 { get; set; }
         public int? conjunto { get; set; }
         public int? destino { get; set; }
+        public int? jugador { get; set; }
     }
 
     //public class ActualizarNivelConstruccion

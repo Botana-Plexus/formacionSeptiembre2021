@@ -72,7 +72,7 @@ namespace botanapoly.Controllers
             //DATOS: descripcion, importe, numCasillas
 
             string mensaje = "";
-            string SQL = $"INSERT into tableros (descripcion, importe, numCasillas) VALUES ('{tablero.descripcion}', '{tablero.importe}', '{tablero.numCasillas}')";
+            string SQL = $"INSERT into tableros (id, descripcion, importe, numCasillas) VALUES ('{tablero.id}','{tablero.descripcion}', '{tablero.importe}', '{tablero.numCasillas}')";
             cnx.consultas(SQL);
             return mensaje;
         }
@@ -92,9 +92,9 @@ namespace botanapoly.Controllers
             cnx.consultas(SQL);
             return mensaje;
         }
-        //LISTADO PARTIDAS
-        [HttpPost("ListadoPartidas")]
-        public List<getPartidas> PostListaPartidas(int idPartida)
+        //INFO PARTIDA
+        [HttpPost("InfoPartida")]
+        public List<getPartidas> infoPartida(int idPartida)
         {
             //DATOS: id, descripcion, importe, numCasillas
 
@@ -109,7 +109,33 @@ namespace botanapoly.Controllers
                 par.nombre = Convert.ToString(dt.Rows[i]["nombre"]);
                 par.maxJugadores = Convert.ToInt32(dt.Rows[i]["maxJugadores"]);
                 par.maxTiempo = System.DBNull.Value != dt.Rows[i]["maxTiempo"] ? Convert.ToInt32(dt.Rows[i]["maxTiempo"]) : null;
-                par.tiempoTranscurrido = Convert.ToInt32(dt.Rows[i]["tiempoTranscurrido"]);
+                par.tiempoTranscurrido = System.DBNull.Value != dt.Rows[i]["tiempoTranscurrido"] ? Convert.ToInt32(dt.Rows[i]["tiempoTranscurrido"]) : null;
+                par.numJugadores = Convert.ToInt32(dt.Rows[i]["numJugadores"]);
+                par.turno = Convert.ToInt32(dt.Rows[i]["turno"]);
+                par.estado = Convert.ToInt32(dt.Rows[i]["estado"]);
+                par.tablero = Convert.ToInt32(dt.Rows[i]["tablero"]);
+                lista.Add(par);
+            }
+            return lista;
+        }
+        //LISTADO PARTIDAS
+        [HttpPost("ListadoPartidas")]
+        public List<getPartidas> PostListaPartidas()
+        {
+            //DATOS: id, descripcion, importe, numCasillas
+
+            string SQL = "SELECT * FROM partidas";
+            List<getPartidas> lista = new List<getPartidas>();
+            DataTable dt = cnx.consultas(SQL);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                getPartidas par = new getPartidas();
+
+                par.id = Convert.ToInt32(dt.Rows[i]["id"]);
+                par.nombre = Convert.ToString(dt.Rows[i]["nombre"]);
+                par.maxJugadores = Convert.ToInt32(dt.Rows[i]["maxJugadores"]);
+                par.maxTiempo = System.DBNull.Value != dt.Rows[i]["maxTiempo"] ? Convert.ToInt32(dt.Rows[i]["maxTiempo"]) : null;
+                par.tiempoTranscurrido = System.DBNull.Value != dt.Rows[i]["tiempoTranscurrido"] ? Convert.ToInt32(dt.Rows[i]["tiempoTranscurrido"]) : null;
                 par.numJugadores = Convert.ToInt32(dt.Rows[i]["numJugadores"]);
                 par.turno = Convert.ToInt32(dt.Rows[i]["turno"]);
                 par.estado = Convert.ToInt32(dt.Rows[i]["estado"]);
@@ -125,7 +151,7 @@ namespace botanapoly.Controllers
             //DATOS: idUsuario, idPartida 
 
             string mensaje = "";
-            string SQL = $"anadirJugador '{anadirJugador.idUsuario}', '{anadirJugador.idPartida}'";
+            string SQL = $"anadirJugador '{anadirJugador.idUsuario}', '{anadirJugador.idPartida}', '{anadirJugador.pass}'";
             cnx.consultas(SQL);
             return mensaje;
         }
@@ -160,6 +186,51 @@ namespace botanapoly.Controllers
             }
             return lista;
         }
+        //INFO CASILLA
+        [HttpPost("InfoCasilla")]
+        public List<getCasillas> PostInfoCasilla(int idCasilla)
+        {
+            //DATOS: idPartida
+
+            string SQL = $"getCasillas null, '{idCasilla}'";
+            List<getCasillas> lista = new List<getCasillas>();
+            DataTable dt = cnx.consultas(SQL);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                getCasillas cas = new getCasillas();
+                cas.id = Convert.ToInt32(dt.Rows[i]["id"]);
+                cas.tipo = Convert.ToInt32(dt.Rows[i]["tipo"]);
+                cas.nombre = Convert.ToString(dt.Rows[i]["nombre"]);
+                cas.orden = Convert.ToInt32(dt.Rows[i]["orden"]);
+                cas.precioCompra = System.DBNull.Value != dt.Rows[i]["precioCompra"] ? Convert.ToInt32(dt.Rows[i]["precioCompra"]) : null;
+                cas.precioVenta = System.DBNull.Value != dt.Rows[i]["precioVenta"] ? Convert.ToInt32(dt.Rows[i]["precioVenta"]) : null;
+                cas.costeEdificacion = System.DBNull.Value != dt.Rows[i]["costeEdificacion"] ? Convert.ToInt32(dt.Rows[i]["costeEdificacion"]) : null;
+                cas.precioVentaEdificacion = System.DBNull.Value != dt.Rows[i]["precioVentaEdificacion"] ? Convert.ToInt32(dt.Rows[i]["precioVentaEdificacion"]) : null;
+                cas.Coste1 = System.DBNull.Value != dt.Rows[i]["Coste1"] ? Convert.ToInt32(dt.Rows[i]["Coste1"]) : null;
+                cas.Coste2 = System.DBNull.Value != dt.Rows[i]["Coste2"] ? Convert.ToInt32(dt.Rows[i]["Coste2"]) : null;
+                cas.Coste3 = System.DBNull.Value != dt.Rows[i]["Coste3"] ? Convert.ToInt32(dt.Rows[i]["Coste3"]) : null;
+                cas.Coste4 = System.DBNull.Value != dt.Rows[i]["Coste4"] ? Convert.ToInt32(dt.Rows[i]["Coste4"]) : null;
+                cas.Coste5 = System.DBNull.Value != dt.Rows[i]["Coste5"] ? Convert.ToInt32(dt.Rows[i]["Coste5"]) : null;
+                cas.Coste6 = System.DBNull.Value != dt.Rows[i]["Coste6"] ? Convert.ToInt32(dt.Rows[i]["Coste6"]) : null;
+                cas.conjunto = System.DBNull.Value != dt.Rows[i]["conjunto"] ? Convert.ToInt32(dt.Rows[i]["conjunto"]) : null;
+                cas.destino = System.DBNull.Value != dt.Rows[i]["destino"] ? Convert.ToInt32(dt.Rows[i]["destino"]) : null;
+                cas.jugador = System.DBNull.Value != dt.Rows[i]["jugador"] ? Convert.ToInt32(dt.Rows[i]["jugador"]) : null;
+                lista.Add(cas);
+
+            }
+            return lista;
+        }
+        //INFO PROPIEDADES
+        [HttpPost("infoPropiedadesJugador")]
+        public string propiedadesJugador([FromBody] int idJugador)
+        {
+            //DATOS: idPartida 
+
+            string mensaje = "";
+            string SQL = $"getPropiedades '{idJugador}'";
+            cnx.consultas(SQL);
+            return mensaje;
+        }
         //LISTAR CASILLAS
         [HttpPost("ListarCasillas")]
         public List<getCasillas> PostListaCasillas(int idTablero)
@@ -185,13 +256,15 @@ namespace botanapoly.Controllers
                 cas.Coste3 = System.DBNull.Value != dt.Rows[i]["Coste3"] ? Convert.ToInt32(dt.Rows[i]["Coste3"]) : null;
                 cas.Coste4 = System.DBNull.Value != dt.Rows[i]["Coste4"] ? Convert.ToInt32(dt.Rows[i]["Coste4"]) : null;
                 cas.Coste5 = System.DBNull.Value != dt.Rows[i]["Coste5"] ? Convert.ToInt32(dt.Rows[i]["Coste5"]) : null;
+                cas.Coste6 = System.DBNull.Value != dt.Rows[i]["Coste6"] ? Convert.ToInt32(dt.Rows[i]["Coste6"]) : null;
                 cas.conjunto = System.DBNull.Value != dt.Rows[i]["conjunto"] ? Convert.ToInt32(dt.Rows[i]["conjunto"]) : null;
                 cas.destino = System.DBNull.Value != dt.Rows[i]["destino"] ? Convert.ToInt32(dt.Rows[i]["destino"]) : null;
+                cas.jugador = System.DBNull.Value != dt.Rows[i]["jugador"] ? Convert.ToInt32(dt.Rows[i]["jugador"]) : null;
                 lista.Add(cas);
-
-            }
+                }
             return lista;
         }
+        
         //LISTAR JUGADORES
         [HttpPost("ListarJugadores")]
         public List<getJugadoresInfo> PostListaJugadores(int idPartida)
@@ -220,7 +293,7 @@ namespace botanapoly.Controllers
         [HttpPost("RetirarJugador")]
         public string retirarJugador(int idJugadorRetirar)
         {
-            //DATOS: idJugador 
+            //DATOS: idJugadorRetirar 
 
             string mensaje = "";
             string SQL = $"retirarJugador '{idJugadorRetirar}'";
@@ -231,24 +304,24 @@ namespace botanapoly.Controllers
         [HttpPost("AbandonarJugador")]
         public string abandonarJugador(int idJugadorAbandona)
         {
-            //DATOS: idJugador 
+            //DATOS: idJugadorAbandona 
 
             string mensaje = "";
             string SQL = $"abandonarPartida '{idJugadorAbandona}'";
             cnx.consultas(SQL);
             return mensaje;
         }
-        ////MOSTRAR TURNO
-        //[HttpPost("MostrarTurno")]
-        //public string mostrarTurno(int id)
-        //{
-        //    //DATOS: idJugador, idCasilla 
+        //MOSTRAR TURNO
+        [HttpPost("MostrarTurno")]
+        public string mostrarTurno(int idJugador, int idPartida)
+        {
+            //DATOS: idJugador, idPartida 
 
-        //    string mensaje = "";
-        //    string SQL = $"getPartidas '{id}'";
-        //    cnx.consultas(SQL);
-        //    return mensaje;
-        //}
+            string mensaje = "";
+            string SQL = $"getTurno '{idJugador}', '{idPartida}'";
+            cnx.consultas(SQL);
+            return mensaje;
+        }
         //EDIFICAR
         [HttpPost("Edificar")]
         public string edificar(int idJugador, int idCasilla)
@@ -264,7 +337,7 @@ namespace botanapoly.Controllers
         [HttpPost("Mover")]
         public string mover(int idJugador, int tirada)
         {
-            //DATOS: idJugador 
+            //DATOS: idJugador, tirada 
 
             string mensaje = "";
             string SQL = $"mover '{idJugador}', '{tirada}'";
@@ -286,7 +359,7 @@ namespace botanapoly.Controllers
         [HttpPost("Vender")]
         public string vender(int idJugador, int idCasilla)
         {
-            //DATOS: idJugador 
+            //DATOS: idJugador , idCasilla
 
             string mensaje = "";
             string SQL = $"vender '{idJugador}', '{idCasilla}'";
@@ -297,10 +370,21 @@ namespace botanapoly.Controllers
         [HttpPost("VenderEdificacion")]
         public string venderEdificacion(int idJugador, int idCasilla)
         {
-            //DATOS: idJugador 
+            //DATOS: idJugador, idCasilla
 
             string mensaje = "";
             string SQL = $"venderEdificacion '{idJugador}', '{idCasilla}'";
+            cnx.consultas(SQL);
+            return mensaje;
+        }
+        //PAGAR DEUDA
+        [HttpPost("PagarDeuda")]
+        public string pagarDeuda(int idJugador)
+        {
+            //DATOS: idJugador 
+
+            string mensaje = "";
+            string SQL = $"pagarDeuda '{idJugador}'";
             cnx.consultas(SQL);
             return mensaje;
         }
@@ -312,6 +396,28 @@ namespace botanapoly.Controllers
 
             string mensaje = "";
             string SQL = $"setDobles '{idJugador}', '{reset}'";
+            cnx.consultas(SQL);
+            return mensaje;
+        }
+        //FINALIZAR TURNO
+        [HttpPost("FinalizarTurno")]
+        public string finalizarTurno(int idPartida, int idJugador)
+        {
+            //DATOS: idJugador, idPartida
+
+            string mensaje = "";
+            string SQL = $"finalizarTurno '{idPartida}', '{idJugador}'";
+            cnx.consultas(SQL);
+            return mensaje;
+        }
+        //FINALIZAR PARTIDA
+        [HttpPost("FinalizarPartida")]
+        public string finalizarPartida(int idPartida)
+        {
+            //DATOS: idPartida
+
+            string mensaje = "";
+            string SQL = $"finalizarTurno '{idPartida}'";
             cnx.consultas(SQL);
             return mensaje;
         }
