@@ -1,0 +1,6 @@
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\rest\obj\Debug\net5.0\rest.csproj.AssemblyReference.cache
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\rest\obj\Debug\net5.0\rest.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\rest\obj\Debug\net5.0\rest.AssemblyInfoInputs.cache
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\rest\obj\Debug\net5.0\rest.AssemblyInfo.cs
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\rest\obj\Debug\net5.0\rest.csproj.CoreCompileInputs.cache
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\rest\obj\Debug\net5.0\rest.MvcApplicationPartsAssemblyInfo.cache

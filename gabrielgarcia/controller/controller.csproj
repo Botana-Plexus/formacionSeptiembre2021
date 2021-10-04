@@ -10,4 +10,8 @@
       <ProjectReference Include="..\util\util.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="src" />
+    </ItemGroup>
+
 </Project>

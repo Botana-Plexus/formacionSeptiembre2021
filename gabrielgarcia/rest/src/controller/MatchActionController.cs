@@ -31,7 +31,7 @@ namespace rest{
             int playerId = repository.getFromUser(apiKeyStore.find(apiKey).Value).Id;
             int squareId = repository.movePlayer(playerId, amount);
             SquareInfo square = repository.getMatchSquares(null, square => square.Id.Equals(squareId)).First();
-            /*switch (square.SquareType)
+            switch (square.SquareType)
             {
                 case SquareType.PROPERTY:
                 case SquareType.COMPANY:
@@ -39,7 +39,7 @@ namespace rest{
                 case SquareType.PAYMENT:
                     repository.updateDebt(playerId, null, amount);
                     break;
-                case SquareType.CARD:
+                /*case SquareType.CARD:
                     int cardId = repository.getRandomCard(playerId);
                     CardInfo card = repository.getCardInfo(cardId);
                     switch (card.Type)
@@ -51,11 +51,11 @@ namespace rest{
                             repository.movePlayer(playerId, card.Value);
                             break;
                     }
-                    break;
+                    break;*/
                 case SquareType.PUNISHMENT:
                     repository.punishPlayer(playerId);
                     break;
-            }*/
+            }
             return Ok(repository.getMatches(match => match.Id.Equals(matchId)).First());
         }
 

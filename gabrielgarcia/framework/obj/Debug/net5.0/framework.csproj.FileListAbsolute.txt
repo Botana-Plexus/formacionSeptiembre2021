@@ -1,0 +1,12 @@
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\framework\bin\Debug\net5.0\framework.deps.json
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\framework\bin\Debug\net5.0\framework.dll
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\framework\bin\Debug\net5.0\ref\framework.dll
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\framework\bin\Debug\net5.0\framework.pdb
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\framework\obj\Debug\net5.0\framework.csproj.AssemblyReference.cache
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\framework\obj\Debug\net5.0\framework.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\framework\obj\Debug\net5.0\framework.AssemblyInfoInputs.cache
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\framework\obj\Debug\net5.0\framework.AssemblyInfo.cs
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\framework\obj\Debug\net5.0\framework.csproj.CoreCompileInputs.cache
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\framework\obj\Debug\net5.0\framework.dll
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\framework\obj\Debug\net5.0\ref\framework.dll
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\framework\obj\Debug\net5.0\framework.pdb

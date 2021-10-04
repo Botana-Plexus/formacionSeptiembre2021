@@ -5,6 +5,7 @@ using controller;
 using database;
 using model;
 using rest.service;
+using util;
 
 namespace rest{
     public class Configuration{
@@ -18,74 +19,12 @@ namespace rest{
 
         private protected Configuration()
         {
-            var actions = new[]
-            {
-                TurnAction.ROLL_1_2,
-                TurnAction.ROLL_3,
-                TurnAction.GIVE_UP,
-                TurnAction.PAY_RENT,
-                TurnAction.MOVEMENT,
-                TurnAction.PAY_TO_CARD,
-                TurnAction.CARD_ACTION,
-                TurnAction.BUY_PROPERTY,
-                TurnAction.SELL_PROPERTY,
-                TurnAction.RECEIVE_FROM_CARD,
-                TurnAction.DECREASE_EDIFICATION_LEVEL,
-                TurnAction.INCREASE_EDIFICATION_LEVEL
-            };
+            var actions = EnumUtils.toEnumArray<TurnAction>(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12).ToList();
             var states = new Dictionary<TurnState, List<TurnState>>()
             {
-                {
-                    TurnState.INITIALIZED, new TurnState[]
-                    {
-                        TurnState.ROLLED,
-                        TurnState.FINALIZED,
-                        TurnState.FINALIZED,
-                        TurnState.NULL,
-                        TurnState.NULL,
-                        TurnState.NULL,
-                        TurnState.NULL,
-                        TurnState.NULL,
-                        TurnState.NULL,
-                        TurnState.NULL,
-                        TurnState.NULL,
-                        TurnState.INITIALIZED
-                    }.ToList()
-                },
-                {
-                    TurnState.ROLLED, new TurnState[]
-                    {
-                        TurnState.NULL,
-                        TurnState.NULL,
-                        TurnState.FINALIZED,
-                        TurnState.FINALIZED,
-                        TurnState.ROLLED,
-                        TurnState.FINALIZED,
-                        TurnState.NULL,
-                        TurnState.FINALIZED,
-                        TurnState.ROLLED,
-                        TurnState.FINALIZED,
-                        TurnState.ROLLED,
-                        TurnState.NULL
-                    }.ToList()
-                },
-                {
-                    TurnState.FINALIZED, new TurnState[]
-                    {
-                        TurnState.NULL,
-                        TurnState.NULL,
-                        TurnState.NULL,
-                        TurnState.NULL,
-                        TurnState.NULL,
-                        TurnState.NULL,
-                        TurnState.NULL,
-                        TurnState.NULL,
-                        TurnState.NULL,
-                        TurnState.NULL,
-                        TurnState.NULL,
-                        TurnState.NULL
-                    }.ToList()
-                }
+                { TurnState.INITIALIZED, EnumUtils.toEnumArray<TurnState>(2,3,3,0,0,0,0,0,0,0,0,1).ToList()},
+                {TurnState.ROLLED, EnumUtils.toEnumArray<TurnState>(0,0,3,3,2,3,0,3,2,3,2,0).ToList()},
+                { TurnState.FINALIZED, EnumUtils.toEnumArray<TurnState>(0,0,0,0,0,0,0,0,0,0,0,0).ToList()}
             };
             _states = new GameStateControlFlow<TurnState, TurnAction>(actions.ToList(), states);
             _connectionFactory = new SqlServerConnectionFactory("localhost", "botanapoly", "pruebas", "pruebas");

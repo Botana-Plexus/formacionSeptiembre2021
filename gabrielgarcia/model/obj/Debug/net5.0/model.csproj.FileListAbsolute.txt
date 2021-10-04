@@ -1,0 +1,12 @@
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\model\bin\Debug\net5.0\model.deps.json
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\model\bin\Debug\net5.0\model.dll
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\model\bin\Debug\net5.0\ref\model.dll
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\model\bin\Debug\net5.0\model.pdb
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\model\obj\Debug\net5.0\model.csproj.AssemblyReference.cache
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\model\obj\Debug\net5.0\model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\model\obj\Debug\net5.0\model.AssemblyInfoInputs.cache
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\model\obj\Debug\net5.0\model.AssemblyInfo.cs
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\model\obj\Debug\net5.0\model.csproj.CoreCompileInputs.cache
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\model\obj\Debug\net5.0\model.dll
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\model\obj\Debug\net5.0\ref\model.dll
+C:\Users\ggarf\Desktop\formacionSeptiembre2021\gabrielgarcia\model\obj\Debug\net5.0\model.pdb
